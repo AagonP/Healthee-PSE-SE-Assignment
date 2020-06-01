@@ -6,6 +6,25 @@ class FilterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Column(children: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Card(
+                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search product..',
+                    prefixIcon: Icon(Icons.search),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.filter_list),
+              onPressed: () {},
+            ),
+          ],
+        ),
         Row(children: <Widget>[
           Expanded(
             child: Card(
@@ -17,10 +36,47 @@ class FilterScreen extends StatelessWidget {
               ),
             ),
           ),
+          //Input user setting
           IconButton(
             icon: Icon(Icons.add_box),
             iconSize: 40,
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Card(
+                    child: Column(
+                      children: <Widget>[
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
+                          ),
+                        ),
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
+                          ),
+                        ),
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ]),
         Expanded(
@@ -32,7 +88,7 @@ class FilterScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                margin: EdgeInsets.symmetric(vertical:10,horizontal:20),
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Text(
                   'Item $index',
                   style: Theme.of(context).textTheme.headline5,
