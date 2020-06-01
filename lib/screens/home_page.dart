@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './filter_screen.dart';
+import '../models/product.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -132,15 +133,49 @@ class HomePage extends StatelessWidget {
               child: GridView.count(
                 crossAxisCount: 2,
                 // Generate 100 widgets that display their index in the List.
-                children: List.generate(100, (index) {
+                children: List.generate(products.length, (index) {
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     margin: EdgeInsets.all(20),
-                    child: Text(
-                      'Item $index',
-                      style: Theme.of(context).textTheme.headline5,
+                    child: Expanded(
+                      child: Column(
+                        children: <Widget>[
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            margin: EdgeInsets.fromLTRB(5, 5, 5, 10),
+                            child: Image(
+                              image: NetworkImage(
+                                  products.elementAt(index).photoURL),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              products.elementAt(index).name,
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 10),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              products.elementAt(index).type,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }),
