@@ -23,7 +23,43 @@ class HomePage extends StatelessWidget {
                         EdgeInsets.symmetric(vertical: 20, horizontal: 150),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Card(
+                            child: Column(
+                              children: <Widget>[
+                                Card(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'Type of illness'),
+                                  ),
+                                ),
+                                Card(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'Type of illness'),
+                                  ),
+                                ),
+                                Card(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'Type of illness'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                     icon: Icon(Icons.account_circle),
                     iconSize: 30,
                   ),
