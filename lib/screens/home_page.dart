@@ -47,6 +47,7 @@ class HomePage extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: 'Search product..',
+                        prefixIcon: Icon(Icons.search),
                       ),
                     ),
                   ),
