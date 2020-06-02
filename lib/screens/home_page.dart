@@ -135,47 +135,46 @@ class HomePage extends StatelessWidget {
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(products.length, (index) {
                   return Card(
+                    shadowColor: Colors.red,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     margin: EdgeInsets.all(20),
-                    child: Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            margin: EdgeInsets.fromLTRB(5, 5, 5, 10),
-                            child: Image(
-                              image: NetworkImage(
-                                  products.elementAt(index).photoURL),
+                    child: Column(
+                      children: <Widget>[
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          margin: EdgeInsets.fromLTRB(10, 5, 5, 10),
+                          child: Image(
+                            image: NetworkImage(
+                                products.elementAt(index).photoURL),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            products.elementAt(index).name,
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 10),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              products.elementAt(index).name,
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 10),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            products.elementAt(index).type,
+                            style: TextStyle(
+                              fontSize: 14,
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 10),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              products.elementAt(index).type,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 }),
