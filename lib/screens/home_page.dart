@@ -142,10 +142,7 @@ class HomePage extends StatelessWidget {
                     margin: EdgeInsets.all(20),
                     child: Column(
                       children: <Widget>[
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
+                        Container(
                           margin: EdgeInsets.fromLTRB(10, 5, 5, 10),
                           child: Image(
                             image: NetworkImage(
