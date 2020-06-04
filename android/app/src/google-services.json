@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "903850621440",
+    "firebase_url": "https://healthee-84b6b.firebaseio.com",
+    "project_id": "healthee-84b6b",
+    "storage_bucket": "healthee-84b6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903850621440:android:e942a1c69de2a996feb6e5",
+        "android_client_info": {
+          "package_name": "com.example.pse_assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903850621440-evmlgcp9mj4me3kd911ctcbj0n2do26s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEivd7mBg-hO8fmMgJCtmTTmo8YcjiPws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903850621440-evmlgcp9mj4me3kd911ctcbj0n2do26s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
