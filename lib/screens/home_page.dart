@@ -67,13 +67,29 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              'Healthee',
-              style: TextStyle(fontSize: 50),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Healthee',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+              ),
             ),
-            Text(
-              'Nutrtion & Diet',
-              style: TextStyle(fontSize: 30),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                            child: Text(
+                  'Nutrtion & Diet',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -150,8 +166,8 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 10),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             products.elementAt(index).name,
@@ -161,8 +177,8 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 10),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             products.elementAt(index).type,
