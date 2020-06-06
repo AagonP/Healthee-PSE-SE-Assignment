@@ -24,6 +24,8 @@ dependencies:
   cloud_firestore: 
   flutter:
     sdk: flutter
+  provider: 3.0.0
+  multiselect_formfield: 
 
 
   # The following adds the Cupertino Icons font to your application.
