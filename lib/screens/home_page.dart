@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-// import '../models/product.dart';
-import '../widgets/health_input_form.dart';
+import '../models/product.dart';
+import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(vertical:20,horizontal: 0),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
               child: Row(
                 children: <Widget>[
                   IconButton(
@@ -21,12 +22,11 @@ class HomePage extends StatelessWidget {
                     iconSize: 30,
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 0, horizontal: 157),
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 157),
                   ),
                   IconButton(
                     onPressed: () {
-                     showHealthInputForm(context);
+                      Navigator.pushNamed(context, 'HealthInputScreen');
                     },
                     icon: Icon(Icons.account_circle),
                     iconSize: 30,
@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -49,10 +49,10 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Align(
                 alignment: Alignment.centerLeft,
-                            child: Text(
+                child: Text(
                   'Nutrtion & Diet',
                   style: TextStyle(fontSize: 30),
                 ),
@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                 Card(
                   child: IconButton(
                     onPressed: () {
-                     Navigator.pushNamed(context, 'FilterScreen');
+                      Navigator.pushNamed(context, 'FilterScreen');
                     },
                     icon: Icon(Icons.filter_list), //filter
                   ),
@@ -92,11 +92,26 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //Testing add method with listeners
+                    Product product1 = Product(
+                        barCode: '1',
+                        name: 'Hamburger',
+                        description: 'Hamburger',
+                        photoURL:
+                            'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
+                        qrCode: '1',
+                        type: 'Food',
+                        tags: ['Obesity', 'High Blood Pressure']);
+                    Provider.of<Products>(context).addProduct(product1);
+                  },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //Testing remove method with listeners
+                    Provider.of<Products>(context).removeProduct();
+                  },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(

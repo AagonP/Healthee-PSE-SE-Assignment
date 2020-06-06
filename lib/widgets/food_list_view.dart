@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../providers/products.dart';
 
-
 class FoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,9 +20,12 @@ class FoodListView extends StatelessWidget {
             margin: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(currentList.elementAt(index).photoURL),
+                Container(
+                  margin: EdgeInsets.all(5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(currentList.elementAt(index).photoURL),
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),

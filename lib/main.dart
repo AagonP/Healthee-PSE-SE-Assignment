@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
+import './screens/health_input_form.dart';
 import './screens/filter_screen.dart';
 import './screens/home_page.dart';
 import './providers/products.dart';
@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
+          'HealthInputScreen': (context) => Wrapper(),
           // 'HealthInput': (context) => InputText().
         },
       ),
