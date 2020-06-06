@@ -1,14 +1,20 @@
+import 'package:flutter/material.dart';
+
 class Product {
-  String type;
-  String name;
-  String description;
-  String photoURL;
-  String barCode;
-  String qrCode;
-  Product(this.barCode,this.description,this.name,this.photoURL,this.qrCode,this.type);
+  final String type;
+  final String name;
+  final String description;
+  final String photoURL;
+  final String barCode;
+  final String qrCode;
+  final List<String> tags;
+  bool isHealthy;
+  Product(
+      {@required this.barCode,
+      @required this.description,
+      @required this.name,
+      @required this.photoURL,
+      @required this.qrCode,
+      @required this.type,
+      @required this.tags});
 }
-
-
-Product product1 = new Product('1','Hamburger','Hamburger','https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg','1','Food');
-Product product2 = new Product('1','Hamburger','Hamburger','https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg','1','Food');
-List <Product> products = [product1,product2];

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import './filter_screen.dart';
 import '../models/product.dart';
+import '../providers/products.dart';
+import '../widgets/food_list_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -20,46 +22,11 @@ class HomePage extends StatelessWidget {
                     iconSize: 30,
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 20, horizontal: 150),
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 157),
                   ),
                   IconButton(
                     onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Card(
-                            child: Column(
-                              children: <Widget>[
-                                Card(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        hintText: 'Type of illness'),
-                                  ),
-                                ),
-                                Card(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        hintText: 'Type of illness'),
-                                  ),
-                                ),
-                                Card(
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        hintText: 'Type of illness'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
+                      Navigator.pushNamed(context, 'HealthInputScreen');
                     },
                     icon: Icon(Icons.account_circle),
                     iconSize: 30,
@@ -67,13 +34,29 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              'Healthee',
-              style: TextStyle(fontSize: 50),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Healthee',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontFamily: 'Pacifico',
+                  ),
+                ),
+              ),
             ),
-            Text(
-              'Nutrtion & Diet',
-              style: TextStyle(fontSize: 30),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Nutrtion & Diet',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -92,10 +75,7 @@ class HomePage extends StatelessWidget {
                 Card(
                   child: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FilterScreen()),
-                      );
+                      Navigator.pushNamed(context, 'FilterScreen');
                     },
                     icon: Icon(Icons.filter_list), //filter
                   ),
@@ -112,11 +92,26 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //Testing add method with listeners
+                    Product product1 = Product(
+                        barCode: '1',
+                        name: 'Hamburger',
+                        description: 'Hamburger',
+                        photoURL:
+                            'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
+                        qrCode: '1',
+                        type: 'Food',
+                        tags: ['Obesity', 'High Blood Pressure']);
+                    Provider.of<Products>(context).addProduct(product1);
+                  },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    //Testing remove method with listeners
+                    Provider.of<Products>(context).removeProduct();
+                  },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
@@ -129,54 +124,7 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(products.length, (index) {
-                  return Card(
-                    shadowColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    margin: EdgeInsets.all(20),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.fromLTRB(10, 5, 5, 10),
-                          child: Image(
-                            image: NetworkImage(
-                                products.elementAt(index).photoURL),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 10),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            products.elementAt(index).name,
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 10),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            products.elementAt(index).type,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-            )
+            FoodListView(),
           ],
         ),
       ),

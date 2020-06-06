@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import './screens/health_input_form.dart';
+import './screens/filter_screen.dart';
 import './screens/home_page.dart';
+import './providers/products.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -12,16 +18,22 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.grey,
-        fontFamily: 'Montserrat',
-        textTheme: TextTheme(
-          bodyText1: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+    return ChangeNotifierProvider(
+      builder: (ctx) => Products(),
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.grey,
+          fontFamily: 'Montserrat',
         ),
-        iconTheme: IconThemeData(size: 20),
+        home: HomePage(),
+        //Setting route for pages here
+        routes: {
+          'HomePage': (context) => HomePage(),
+          'FilterScreen': (context) => FilterScreen(),
+          'HealthInputScreen': (context) => Wrapper(),
+          // 'HealthInput': (context) => InputText().
+        },
       ),
-      home: HomePage(),
     );
   }
 }

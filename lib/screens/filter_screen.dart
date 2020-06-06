@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+// import 'package:multiselect_formfield/multiselect_formfield.dart';
+
+import '../widgets/food_list_view.dart';
+// import '../models/product.dart';
 
 class FilterScreen extends StatelessWidget {
   @override
@@ -41,7 +45,7 @@ class FilterScreen extends StatelessWidget {
             icon: Icon(Icons.add_box),
             iconSize: 40,
             onPressed: () {
-              showModalBottomSheet(
+                showModalBottomSheet(
                 context: context,
                 builder: (BuildContext context) {
                   return Card(
@@ -79,24 +83,7 @@ class FilterScreen extends StatelessWidget {
             },
           ),
         ]),
-        Expanded(
-          child: GridView.count(
-            crossAxisCount: 2,
-            // Generate 100 widgets that display their index in the List.
-            children: List.generate(100, (index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Text(
-                  'Item $index',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              );
-            }),
-          ),
-        ),
+        FoodListView(),
       ]),
     );
   }
