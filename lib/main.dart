@@ -18,8 +18,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (ctx) => Products(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
+        ChangeNotifierProvider<Products>(builder: (context) => Products()),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: Colors.grey,

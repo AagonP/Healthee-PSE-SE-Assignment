@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/products.dart';
 
 class FoodListView extends StatelessWidget {
+  void blurImage() {}
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
@@ -24,7 +25,12 @@ class FoodListView extends StatelessWidget {
                   margin: EdgeInsets.all(5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(currentList.elementAt(index).photoURL),
+                    child: Opacity( 
+                      opacity: (currentList[index].isHealthy == true) ? 1:0.3 ,
+                      child: Image.network(
+                        currentList.elementAt(index).photoURL,
+                      ),
+                    ),
                   ),
                 ),
                 Container(
