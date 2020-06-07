@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +13,18 @@ class Wrapper extends StatelessWidget {
   }
 }
 
-class ShowHealthInputForm extends StatelessWidget {
-  int _counter = 0;
-  List<bool> _isSelected = List<bool>.generate(5, (index) => false);
+class ShowHealthInputForm extends StatefulWidget {
+  @override
+  _ShowHealthInputFormState createState() => _ShowHealthInputFormState();
+}
+
+class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
+  static List<bool> _isSelected = List<bool>.generate(5, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Column(
         children: <Widget>[
           Padding(padding: EdgeInsets.all(5)),
@@ -32,8 +36,15 @@ class ShowHealthInputForm extends StatelessWidget {
                     title: Text(Provider.of<UserInput>(context).illness[index]),
                     value: _isSelected[index],
                     onChanged: (bool newValue) {
-                      Provider.of<UserInput>(context).updateInput(index, newValue);
-                      _isSelected[index] = newValue;
+                      Provider.of<UserInput>(context).updateInput(
+                          Provider.of<UserInput>(context).illness[index],
+                          newValue,
+                          0);
+                      setState(() {
+                        _isSelected[index] = newValue;
+                      });
+
+                      // print(Provider.of<UserInput>(context).healthInput[0].obesity);
                     },
                   );
                 }),
@@ -42,6 +53,7 @@ class ShowHealthInputForm extends StatelessWidget {
             child: Text('Compelete'),
             onPressed: () {
               Navigator.pushNamed(context, 'HomePage');
+              print(Provider.of<UserInput>(context).healthInput[0].obesity);
             },
           ),
         ],

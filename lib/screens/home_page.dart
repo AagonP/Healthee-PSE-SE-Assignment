@@ -76,6 +76,7 @@ class HomePage extends StatelessWidget {
                   child: IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, 'FilterScreen');
+                      print(Provider.of<UserInput>(context).healthInput[0].obesity);
                     },
                     icon: Icon(Icons.filter_list), //filter
                   ),
@@ -93,16 +94,25 @@ class HomePage extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
+                    print(Provider.of<UserInput>(context).healthInput[0].obesity);
                     //Testing add method with listeners
                     Product product1 = Product(
-                        barCode: '1',
-                        name: 'Hamburger',
-                        description: 'Hamburger',
-                        photoURL:
-                            'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
-                        qrCode: '1',
-                        type: 'Food',
-                        tags: ['Obesity', 'High Blood Pressure']);
+                      barCode: '1',
+                      name: 'Hamburger',
+                      description: 'Hamburger',
+                      photoURL:
+                          'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
+                      qrCode: '1',
+                      type: 'Food',
+                      tags: ['Obesity', 'High Blood Pressure'],
+                      illnesss: Illness(
+                        obesity: true,
+                        highBloodPressure: true,
+                        headache: false,
+                        stomache: false,
+                        covid19: false,
+                      ),
+                    );
                     Provider.of<Products>(context).addProduct(product1);
                   },
                   icon: Icon(Icons.add),
