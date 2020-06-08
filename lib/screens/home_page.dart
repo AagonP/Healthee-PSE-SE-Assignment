@@ -125,7 +125,9 @@ class HomePage extends StatelessWidget {
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'ScanScreen');
+                  },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
