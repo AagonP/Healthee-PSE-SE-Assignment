@@ -7,7 +7,7 @@ import '../providers/products.dart';
 // import '../models/product.dart';
 
 class FilterScreen extends StatelessWidget {
-  bool isFilterOn = false;
+  bool isFilterOn  = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
