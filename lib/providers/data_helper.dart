@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class Album {
-  final int userId;
-  final int id;
+  final List<int> id;
   final String title;
+  final String name;
 
-  Album({this.userId, this.id, this.title});
+  Album({this.id, this.title, this.name});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
+      id: json['posts'] as List,
+      title: json['posts']['title'],
+      name: json['profile']['name'],
     );
   }
 }
