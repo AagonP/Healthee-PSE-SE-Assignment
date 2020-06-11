@@ -4,6 +4,14 @@ import '../models/product.dart';
 
 // Mock products
 class Products with ChangeNotifier {
+  List<Product> _selectedProducts = [];
+  List<Product> get selectedProducts{
+    return [..._selectedProducts];
+  }
+  void addSelectedProducts(Product product){
+    _selectedProducts.add(product);
+    notifyListeners();
+  }
   List<Product> _products = [
     Product(
       barCode: '1',
