@@ -14,7 +14,41 @@ class HomePage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, 'HealthInputScreen');
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Card(
+                    child: Column(
+                      children: <Widget>[
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
+                          ),
+                        ),
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
+                          ),
+                        ),
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
             },
             icon: Icon(Icons.account_circle),
             iconSize: 30,
@@ -75,9 +109,10 @@ class HomePage extends StatelessWidget {
                     icon: Badge(
                         badgeColor: Colors.white,
                         animationType: BadgeAnimationType.scale,
-                        badgeContent: Text(
-                            (Provider.of<Products>(context).selectedProducts.length)
-                                .toString()),
+                        badgeContent: Text((Provider.of<Products>(context)
+                                .selectedProducts
+                                .length)
+                            .toString()),
                         child: Icon(Icons.shopping_cart)), //filter
                   ),
                 ),
@@ -137,7 +172,7 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-            FoodListView(Provider.of<Products>(context).products),
+            FoodListView(),
           ],
         ),
       ),
