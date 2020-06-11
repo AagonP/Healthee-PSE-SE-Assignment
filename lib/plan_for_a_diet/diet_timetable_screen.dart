@@ -73,8 +73,8 @@ class DietTimetableScreen extends StatelessWidget {
                       (index) => DailyDietItem(index),
                     )
                     .toList(),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 150,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                 ),
@@ -82,9 +82,9 @@ class DietTimetableScreen extends StatelessWidget {
             ),
           ],
         ),
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(15.0)),
         ),
       ),
     );
