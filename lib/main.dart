@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
           'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
           'HealthInputScreen': (context) => Wrapper(),
-          'ScanScreen': (context) => ScanScreen(),
+          // 'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
       ),
