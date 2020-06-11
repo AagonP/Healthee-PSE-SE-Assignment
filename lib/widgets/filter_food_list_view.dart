@@ -4,11 +4,10 @@ import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 
-class FoodListView extends StatelessWidget {
-  
+class FilterFoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<Product> _currentList = Provider.of<Products>(context).products;
+    final List<Product> _currentList = Provider.of<Products>(context).selectedProducts;
     return Expanded(
       child: GridView.count(
         crossAxisCount: 2,
@@ -25,8 +24,12 @@ class FoodListView extends StatelessWidget {
                   margin: EdgeInsets.all(5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      _currentList.elementAt(index).photoURL,
+                    child: Opacity(
+                      opacity:
+                          (_currentList[index].isHealthy == true) ? 1 : 0.3,
+                      child: Image.network(
+                        _currentList.elementAt(index).photoURL,
+                      ),
                     ),
                   ),
                 ),
@@ -60,12 +63,11 @@ class FoodListView extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(
-                        Icons.add,
+                        Icons.save,
                         size: 20,
                       ),
                       onPressed: () {
-                        Provider.of<Products>(context)
-                            .addSelectedProducts(_currentList.elementAt(index));
+                        //Save item here
                       },
                     ),
                   ],

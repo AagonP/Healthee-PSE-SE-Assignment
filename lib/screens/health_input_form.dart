@@ -52,7 +52,7 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
           RaisedButton(
             child: Text('Compelete'),
             onPressed: () {
-              Navigator.pushNamed(context, 'HomePage');
+              Navigator.pop(context);
               print(Provider.of<UserInput>(context).healthInput[0].obesity);
             },
           ),
