@@ -114,7 +114,7 @@ class FilterScreen extends StatelessWidget {
             },
           ),
         ]),
-        FoodListView(),
+        FoodListView(Provider.of<Products>(context).selectedProducts),
       ]),
     );
   }
