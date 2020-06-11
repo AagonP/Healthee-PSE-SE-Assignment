@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import './filter_screen.dart';
+import '../models/product.dart';
+import '../providers/products.dart';
+import '../widgets/food_list_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-              child: Row(
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.menu),
@@ -19,97 +22,127 @@ class HomePage extends StatelessWidget {
                     iconSize: 30,
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 20, horizontal: 150),
+                    padding: EdgeInsets.symmetric(vertical: 0, horizontal: 157),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'HealthInputScreen');
+                    },
                     icon: Icon(Icons.account_circle),
                     iconSize: 30,
                   ),
                 ],
               ),
-            ),
-            Text(
-              'Healthee',
-              style: TextStyle(fontSize: 50),
-            ),
-            Text(
-              'Nutrtion & Diet',
-              style: TextStyle(fontSize: 30),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Card(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search product..',
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Healthee',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 50,
+                      fontFamily: 'Pacifico',
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Nutrtion & Diet',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: Card(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search product..',
+                          prefixIcon: Icon(Icons.search),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Card(
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FilterScreen()),
-                      );
-                    },
-                    icon: Icon(Icons.filter_list), //filter
-                  ),
-                ),
-                Card(
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.scanner),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.add),
-                ),
-              ],
-            ),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(100, (index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                  Card(
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'FilterScreen');
+                        print(Provider.of<UserInput>(context)
+                            .healthInput[0]
+                            .obesity);
+                      },
+                      icon: Icon(Icons.filter_list), //filter
                     ),
-                    margin: EdgeInsets.all(20),
-                    child: Text(
-                      'Item $index',
-                      style: Theme.of(context).textTheme.headline5,
+                  ),
+                  Card(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.scanner),
                     ),
-                  );
-                }),
+                  ),
+                ],
               ),
-            )
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      print(Provider.of<UserInput>(context)
+                          .healthInput[0]
+                          .obesity);
+                      //Testing add method with listeners
+                      Product product1 = Product(
+                        barCode: '1',
+                        name: 'Hamburger',
+                        description: 'Hamburger',
+                        photoURL:
+                            'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
+                        qrCode: '1',
+                        type: 'Food',
+                        tags: ['Obesity', 'High Blood Pressure'],
+                        illnesss: Illness(
+                          obesity: true,
+                          highBloodPressure: true,
+                          headache: false,
+                          stomache: false,
+                          covid19: false,
+                        ),
+                      );
+                      Provider.of<Products>(context).addProduct(product1);
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      //Testing remove method with listeners
+                      Provider.of<Products>(context).removeProduct();
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'ScanScreen');
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.add),
+                  ),
+                ],
+              ),
+              FoodListView(),
+            ],
+          ),
         ),
       ),
     );
