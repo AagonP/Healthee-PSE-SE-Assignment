@@ -5,6 +5,8 @@ import './screens/health_input_form.dart';
 import './screens/filter_screen.dart';
 import './screens/home_page.dart';
 import './providers/products.dart';
+//testing
+import './providers/data_helper.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +36,7 @@ class _MyAppState extends State<MyApp> {
           'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
           'HealthInputScreen': (context) => Wrapper(),
+          'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
       ),

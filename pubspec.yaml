@@ -25,7 +25,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: 3.0.0
-  multiselect_formfield: 
+  http:
 
 
   # The following adds the Cupertino Icons font to your application.
