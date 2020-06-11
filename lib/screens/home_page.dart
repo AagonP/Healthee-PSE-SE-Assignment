@@ -162,7 +162,9 @@ class HomePage extends StatelessWidget {
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    fetchProduct("Chicken");
+                  },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
