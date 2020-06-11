@@ -8,3 +8,4 @@ Moreover, if the users are not sure about how their diet should be, they can ask
 We also intend to develop this app for QR-Barcode Scan as an additional feature. Then the users can choose between two options to search for information on a product – typing into SearchBar and QR-Barcode Scan.
 #HCMUT FACULTY OF COMPUTER SCIENCE AND ENGINEERING K18
 #Testing
+#Testing2
