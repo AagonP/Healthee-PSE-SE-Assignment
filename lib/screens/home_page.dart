@@ -5,6 +5,7 @@ import 'package:badges/badges.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
+import '../providers/data_helper.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -161,9 +162,7 @@ class HomePage extends StatelessWidget {
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'ScanScreen');
-                  },
+                  onPressed: () {},
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
