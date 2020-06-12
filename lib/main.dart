@@ -26,8 +26,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Colors.grey,
+          primaryColor: Colors.white,
           fontFamily: 'Montserrat',
         ),
         home: HomePage(),

@@ -7,9 +7,12 @@ import '../providers/products.dart';
 class FilterFoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<Product> _currentList = Provider.of<Products>(context).selectedProducts;
+    final List<Product> _currentList =
+        Provider.of<Products>(context).selectedProducts;
     return Expanded(
       child: GridView.count(
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
         crossAxisCount: 2,
         children: List.generate(_currentList.length, (index) {
           return Card(

@@ -8,10 +8,13 @@ import '../widgets/food_list_view.dart';
 import '../providers/data_helper.dart';
 
 class HomePage extends StatelessWidget {
+  var _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0.0,
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -21,12 +24,14 @@ class HomePage extends StatelessWidget {
                   return Card(
                     child: Column(
                       children: <Widget>[
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Type of illness'),
+                        Center(
+                          child: Card(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: TextField(
+                              decoration:
+                                  InputDecoration(hintText: 'Type of illness'),
+                            ),
                           ),
                         ),
                         Card(
@@ -59,7 +64,7 @@ class HomePage extends StatelessWidget {
       //Drawer here
       drawer: Drawer(),
       body: Container(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Container(
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -80,7 +85,7 @@ class HomePage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Nutrtion & Diet',
+                  'Nutrition & Diet',
                   style: TextStyle(fontSize: 30),
                 ),
               ),
@@ -90,11 +95,31 @@ class HomePage extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Card(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search product..',
-                        prefixIcon: Icon(Icons.search),
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    child: Container(
+                      height: 45.0,
+                      child: TextField(
+                        onSubmitted: (context) {
+                          print(context);
+                        },
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () => _controller.clear(),
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          hintText: 'Search product..',
+                          hintStyle: TextStyle(
+                            color: Colors.grey,
+                          ),
+                          prefixIcon: Icon(Icons.search),
+                        ),
                       ),
                     ),
                   ),
@@ -120,7 +145,7 @@ class HomePage extends StatelessWidget {
                 Card(
                   child: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.scanner),
+                    icon: Icon(Icons.camera_alt),
                   ),
                 ),
               ],
@@ -161,13 +186,41 @@ class HomePage extends StatelessWidget {
                   },
                   icon: Icon(Icons.add),
                 ),
-                IconButton(
+                RawMaterialButton(
+                  constraints: BoxConstraints.tightFor(
+                    width: 50.0,
+                    height: 50.0,
+                  ),
                   onPressed: () {},
-                  icon: Icon(Icons.add),
+                  elevation: 2.0,
+                  fillColor: Color(0xFFFEE1C7),
+                  child: Image.asset(
+                    'image/food.png',
+                    fit: BoxFit.cover,
+                    width: 30.0,
+                    height: 30.0,
+                  ),
+                  shape: CircleBorder(
+                    side: BorderSide(color: Colors.white),
+                  ),
                 ),
-                IconButton(
+                RawMaterialButton(
+                  constraints: BoxConstraints.tightFor(
+                    width: 50.0,
+                    height: 50.0,
+                  ),
                   onPressed: () {},
-                  icon: Icon(Icons.add),
+                  elevation: 2.0,
+                  fillColor: Color(0xFFFDDFFA),
+                  child: Image.asset(
+                    'image/flour.png',
+                    fit: BoxFit.cover,
+                    width: 30.0,
+                    height: 30.0,
+                  ),
+                  shape: CircleBorder(
+                    side: BorderSide(color: Colors.white),
+                  ),
                 ),
               ],
             ),

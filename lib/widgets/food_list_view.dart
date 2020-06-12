@@ -5,26 +5,28 @@ import '../models/product.dart';
 import '../providers/products.dart';
 
 class FoodListView extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     final List<Product> _currentList = Provider.of<Products>(context).products;
-    return Expanded(
-      child: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(_currentList.length, (index) {
-          return Card(
-            shadowColor: Colors.red,
+    return GridView.count(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      children: List.generate(_currentList.length, (index) {
+        return Container(
+          width: 50.0,
+          child: Card(
+            shadowColor: Colors.grey,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(20.0),
             ),
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.all(5),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(20.0),
                     child: Image.network(
                       _currentList.elementAt(index).photoURL,
                     ),
@@ -38,7 +40,7 @@ class FoodListView extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           child: Text(
                             _currentList.elementAt(index).name,
                             style: TextStyle(
@@ -48,7 +50,7 @@ class FoodListView extends StatelessWidget {
                         ),
                         Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           child: Text(
                             _currentList.elementAt(index).type,
                             style: TextStyle(
@@ -59,9 +61,13 @@ class FoodListView extends StatelessWidget {
                       ],
                     ),
                     IconButton(
+                      constraints: BoxConstraints(
+                        maxHeight: 40.0,
+                        maxWidth: 40.0,
+                      ),
                       icon: Icon(
                         Icons.add,
-                        size: 20,
+                        size: 20.0,
                       ),
                       onPressed: () {
                         Provider.of<Products>(context)
@@ -72,9 +78,9 @@ class FoodListView extends StatelessWidget {
                 ),
               ],
             ),
-          );
-        }),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
