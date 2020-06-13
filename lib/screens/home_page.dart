@@ -43,6 +43,18 @@ class _HomePageState extends State<HomePage> {
       bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
       String title = foodRecipeJson[i]['title'];
       String photoURL = foodRecipeJson[i]['image'];
+      List<String> Ingredients = [];
+      List<String> Amount = [];
+      List<String> Unit = [];
+      int numberofIngredients = foodRecipeJson[i]['extendedIngredients'].length;
+      for (int j = 0; j < numberofIngredients; j++) {
+        String ingredient = foodRecipeJson[i]['extendedIngredients'][j]['name'];
+        var amount = foodRecipeJson[i]['extendedIngredients'][j]['amount'];
+        String unit = foodRecipeJson[i]['extendedIngredients'][j]['unit'];
+        Ingredients.add(ingredient);
+        Amount.add(amount.toStringAsFixed(2));
+        Unit.add(unit);
+      }
       Product product = Product(
         vegetarian: vegetarian,
         glutenFree: glutenFree,
@@ -57,6 +69,9 @@ class _HomePageState extends State<HomePage> {
         barCode: '1',
         qrCode: '1',
         description: 'sth',
+        ingredients: Ingredients,
+        amount: Amount,
+        unit: Unit,
         illness: Illness(
           obesity: true,
           highBloodPressure: true,
@@ -147,7 +162,10 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Nutrition & Diet',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(
+                    fontSize: 30,
+                    letterSpacing: 2.0,
+                  ),
                 ),
               ),
             ),

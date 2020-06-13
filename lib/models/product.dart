@@ -16,6 +16,9 @@ class Product {
   final bool cheap;
   final bool popular;
   final bool lowFodmap;
+  final List<String> ingredients;
+  final List<String> amount;
+  final List<String> unit;
   bool isHealthy = true;
   Product(
       {this.barCode,
@@ -31,7 +34,10 @@ class Product {
       this.dairyFree,
       this.popular,
       this.veryHealthy,
-      this.lowFodmap});
+      this.lowFodmap,
+      this.ingredients,
+      this.amount,
+      this.unit});
 }
 
 class Illness {
