@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class FoodListView extends StatelessWidget {
   @override
@@ -34,31 +35,18 @@ class FoodListView extends StatelessWidget {
                 ),
                 Row(
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                          child: Text(
-                            _currentList.elementAt(index).name,
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
+                    Expanded(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+                        child: AutoSizeText(
+                          _currentList.elementAt(index).name,
+                          style: TextStyle(fontSize: 15.0),
+                          minFontSize: 10.0,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                          child: Text(
-                            _currentList.elementAt(index).type,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                     IconButton(
                       constraints: BoxConstraints(

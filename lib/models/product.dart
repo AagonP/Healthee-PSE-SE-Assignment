@@ -8,17 +8,31 @@ class Product {
   final String barCode;
   final String qrCode;
   final List<String> tags;
-  final Illness illnesss;
+  final Illness illness;
+  final bool vegetarian;
+  final bool glutenFree;
+  final bool dairyFree;
+  final bool veryHealthy;
+  final bool cheap;
+  final bool popular;
+  final bool lowFodmap;
   bool isHealthy = true;
   Product(
-      {@required this.barCode,
-      @required this.description,
-      @required this.name,
-      @required this.photoURL,
-      @required this.qrCode,
-      @required this.type,
-      @required this.tags,
-      @required this.illnesss});
+      {this.barCode,
+      this.description,
+      this.name,
+      this.photoURL,
+      this.qrCode,
+      this.type,
+      this.tags,
+      this.illness,
+      this.vegetarian,
+      this.glutenFree,
+      this.cheap,
+      this.dairyFree,
+      this.popular,
+      this.veryHealthy,
+      this.lowFodmap});
 }
 
 class Illness {

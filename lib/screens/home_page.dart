@@ -6,9 +6,65 @@ import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
 import '../providers/data_helper.dart';
+import '../providers/food_data.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   var _controller = TextEditingController();
+  List<int> id = List(20);
+  //List<dynamic> foodRecipeJson = List(20);
+  DataHelper dataHelper = DataHelper();
+  var input;
+
+  FoodData foodData = FoodData();
+
+  void updateUI(String name) async {
+    var data = await foodData.getFoodData(name);
+    int id = data['results'][0]['id'];
+    String foodId = id.toString();
+    String recipeUrl =
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$foodId/information';
+    var foodRecipeJson = await dataHelper.fetchData(recipeUrl);
+    bool vegetarian = foodRecipeJson['vegetarian'];
+    bool glutenFree = foodRecipeJson['glutenFree'];
+    bool dairyFree = foodRecipeJson['dairyFree'];
+    bool veryHealthy = foodRecipeJson['veryHealthy'];
+    bool popular = foodRecipeJson['veryPopular'];
+    bool cheap = foodRecipeJson['cheap'];
+    bool lowFodmap = foodRecipeJson['lowFodmap'];
+    String title = foodRecipeJson['title'];
+    String photoURL = foodRecipeJson['image'];
+    Product product = Product(
+      vegetarian: vegetarian,
+      glutenFree: glutenFree,
+      dairyFree: dairyFree,
+      veryHealthy: veryHealthy,
+      popular: popular,
+      cheap: cheap,
+      lowFodmap: lowFodmap,
+      name: title,
+      photoURL: photoURL,
+      type: 'food',
+      barCode: '1',
+      qrCode: '1',
+      description: 'sth',
+      tags: ['Obesity', 'High Blood Pressure'],
+      illness: Illness(
+        obesity: true,
+        highBloodPressure: true,
+        headache: false,
+        stomache: false,
+        covid19: false,
+      ),
+    );
+    Provider.of<Products>(context).addProduct(product);
+    print(product.name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +157,8 @@ class HomePage extends StatelessWidget {
                       child: TextField(
                         onSubmitted: (context) {
                           print(context);
+                          input = context;
+                          updateUI(input);
                         },
                         controller: _controller,
                         decoration: InputDecoration(
@@ -167,7 +225,7 @@ class HomePage extends StatelessWidget {
                       qrCode: '1',
                       type: 'Food',
                       tags: ['Obesity', 'High Blood Pressure'],
-                      illnesss: Illness(
+                      illness: Illness(
                         obesity: true,
                         highBloodPressure: true,
                         headache: false,
@@ -231,3 +289,33 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+//for (int i = 0; i < 20; i++) {
+//var foodId = data['results'][i]['id'];
+//id[i] = foodId.toInt();
+//}
+//for (int i = 0; i < 20; i) {
+//String _id = id[i].toString();
+//String recipeUrl =
+//'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$_id/information';
+//foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
+//bool vegetarian = foodRecipeJson[i]['vegetarian'];
+//bool glutenFree = foodRecipeJson[i]['glutenFree'];
+//bool dairyFree = foodRecipeJson[i]['dairyFree'];
+//bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
+//bool popular = foodRecipeJson[i]['veryPopular'];
+//bool cheap = foodRecipeJson[i]['cheap'];
+//bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
+//String title = foodRecipeJson[i]['title'];
+//String photoURL = foodRecipeJson[i]['image'];
+//Product product = Product(
+//vegetarian: vegetarian,
+//glutenFree: glutenFree,
+//dairyFree: dairyFree,
+//veryHealthy: veryHealthy,
+//popular: popular,
+//cheap: cheap,
+//lowFodmap: lowFodmap,
+//name: title,
+//photoURL: photoURL,
+//);
