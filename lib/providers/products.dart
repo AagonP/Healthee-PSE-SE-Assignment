@@ -5,49 +5,16 @@ import '../models/product.dart';
 // Mock products
 class Products with ChangeNotifier {
   List<Product> _selectedProducts = [];
-  List<Product> get selectedProducts{
+  List<Product> get selectedProducts {
     return [..._selectedProducts];
   }
-  void addSelectedProducts(Product product){
+
+  void addSelectedProducts(Product product) {
     _selectedProducts.add(product);
     notifyListeners();
   }
-  List<Product> _products = [
-    Product(
-      barCode: '1',
-      name: 'Hamburger',
-      description: 'Hamburger',
-      photoURL:
-          'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
-      qrCode: '1',
-      type: 'Food',
-      tags: ['Obesity', 'High Blood Pressure'],
-      illnesss: Illness(
-        obesity: true,
-        highBloodPressure: true,
-        headache: false,
-        stomache: false,
-        covid19: false,
-      ),
-    ),
-    Product(
-      barCode: '1',
-      name: 'Hamburger',
-      description: 'Hamburger',
-      photoURL:
-          'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
-      qrCode: '1',
-      type: 'Food',
-      tags: ['Obesity', 'High Blood Pressure'],
-      illnesss: Illness(
-        obesity: true,
-        highBloodPressure: true,
-        headache: false,
-        stomache: false,
-        covid19: false,
-      ),
-    ),
-  ];
+
+  List<Product> _products = [];
   List<Product> get products {
     return [..._products];
   }
@@ -57,21 +24,27 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearProduct() {
+    _products.clear();
+    notifyListeners();
+  }
+
   void removeProduct() {
     if (_products.length == 0) return;
     _products.removeLast();
     notifyListeners();
   }
 
-  void doFilter(UserInput userInput,Product product) {
+  void doFilter(UserInput userInput, Product product) {
     //Check the health's setting of user
-    if ( UserInput._healthInput[0].obesity == product.illnesss.obesity){
+    if (UserInput._healthInput[0].obesity == product.illness.obesity) {
       product.isHealthy = false;
     }
     print(product.isHealthy);
     notifyListeners();
   }
-   void updateProductHealthValid(Product product,bool value){
+
+  void updateProductHealthValid(Product product, bool value) {
     product.isHealthy = value;
     notifyListeners();
   }
@@ -140,3 +113,38 @@ class UserInput with ChangeNotifier {
     notifyListeners();
   }
 }
+
+//Product(
+//barCode: '1',
+//name: 'Hamburger',
+//description: 'Hamburger',
+//photoURL:
+//'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
+//qrCode: '1',
+//type: 'Food',
+//tags: ['Obesity', 'High Blood Pressure'],
+//illnesss: Illness(
+//obesity: true,
+//highBloodPressure: true,
+//headache: false,
+//stomache: false,
+//covid19: false,
+//),
+//),
+//Product(
+//barCode: '1',
+//name: 'Hamburger',
+//description: 'Hamburger',
+//photoURL:
+//'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
+//qrCode: '1',
+//type: 'Food',
+//tags: ['Obesity', 'High Blood Pressure'],
+//illnesss: Illness(
+//obesity: true,
+//highBloodPressure: true,
+//headache: false,
+//stomache: false,
+//covid19: false,
+//),
+//),
