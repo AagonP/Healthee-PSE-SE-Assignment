@@ -15,54 +15,59 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _controller = TextEditingController();
-  List<int> id = List(20);
-  //List<dynamic> foodRecipeJson = List(20);
+  List<String> id = List(20);
+  List<dynamic> foodRecipeJson = List(20);
   DataHelper dataHelper = DataHelper();
   var input;
 
   FoodData foodData = FoodData();
 
   void updateUI(String name) async {
+    Provider.of<Products>(context).clearProduct();
     var data = await foodData.getFoodData(name);
-    int id = data['results'][0]['id'];
-    String foodId = id.toString();
-    String recipeUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$foodId/information';
-    var foodRecipeJson = await dataHelper.fetchData(recipeUrl);
-    bool vegetarian = foodRecipeJson['vegetarian'];
-    bool glutenFree = foodRecipeJson['glutenFree'];
-    bool dairyFree = foodRecipeJson['dairyFree'];
-    bool veryHealthy = foodRecipeJson['veryHealthy'];
-    bool popular = foodRecipeJson['veryPopular'];
-    bool cheap = foodRecipeJson['cheap'];
-    bool lowFodmap = foodRecipeJson['lowFodmap'];
-    String title = foodRecipeJson['title'];
-    String photoURL = foodRecipeJson['image'];
-    Product product = Product(
-      vegetarian: vegetarian,
-      glutenFree: glutenFree,
-      dairyFree: dairyFree,
-      veryHealthy: veryHealthy,
-      popular: popular,
-      cheap: cheap,
-      lowFodmap: lowFodmap,
-      name: title,
-      photoURL: photoURL,
-      type: 'food',
-      barCode: '1',
-      qrCode: '1',
-      description: 'sth',
-      tags: ['Obesity', 'High Blood Pressure'],
-      illness: Illness(
-        obesity: true,
-        highBloodPressure: true,
-        headache: false,
-        stomache: false,
-        covid19: false,
-      ),
-    );
-    Provider.of<Products>(context).addProduct(product);
-    print(product.name);
+    for (int i = 0; i < 20; i++) {
+      var foodId = data['results'][i]['id'];
+      id[i] = foodId.toString();
+    }
+    //int id = data['results'][0]['id'];
+    for (int i = 0; i < 20; i++) {
+      String recipeUrl =
+          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information';
+      foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
+      bool vegetarian = foodRecipeJson[i]['vegetarian'];
+      bool glutenFree = foodRecipeJson[i]['glutenFree'];
+      bool dairyFree = foodRecipeJson[i]['dairyFree'];
+      bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
+      bool popular = foodRecipeJson[i]['veryPopular'];
+      bool cheap = foodRecipeJson[i]['cheap'];
+      bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
+      String title = foodRecipeJson[i]['title'];
+      String photoURL = foodRecipeJson[i]['image'];
+      Product product = Product(
+        vegetarian: vegetarian,
+        glutenFree: glutenFree,
+        dairyFree: dairyFree,
+        veryHealthy: veryHealthy,
+        popular: popular,
+        cheap: cheap,
+        lowFodmap: lowFodmap,
+        name: title,
+        photoURL: photoURL,
+        type: 'food',
+        barCode: '1',
+        qrCode: '1',
+        description: 'sth',
+        illness: Illness(
+          obesity: true,
+          highBloodPressure: true,
+          headache: false,
+          stomache: false,
+          covid19: false,
+        ),
+      );
+      if (product.name != null)
+        Provider.of<Products>(context).addProduct(product);
+    }
   }
 
   @override
@@ -224,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                           'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
                       qrCode: '1',
                       type: 'Food',
-                      tags: ['Obesity', 'High Blood Pressure'],
+                      //tags: ['Obesity', 'High Blood Pressure'],
                       illness: Illness(
                         obesity: true,
                         highBloodPressure: true,

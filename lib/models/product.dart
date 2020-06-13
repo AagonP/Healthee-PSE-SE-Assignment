@@ -7,7 +7,7 @@ class Product {
   final String photoURL;
   final String barCode;
   final String qrCode;
-  final List<String> tags;
+  //final List<String> tags;
   final Illness illness;
   final bool vegetarian;
   final bool glutenFree;
@@ -24,7 +24,6 @@ class Product {
       this.photoURL,
       this.qrCode,
       this.type,
-      this.tags,
       this.illness,
       this.vegetarian,
       this.glutenFree,

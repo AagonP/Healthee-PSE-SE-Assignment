@@ -24,6 +24,11 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearProduct() {
+    _products.clear();
+    notifyListeners();
+  }
+
   void removeProduct() {
     if (_products.length == 0) return;
     _products.removeLast();

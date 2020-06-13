@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  flutter_statusbarcolor: ^0.2.3
   auto_size_text: ^2.1.0
   cloud_firestore: 
   flutter:

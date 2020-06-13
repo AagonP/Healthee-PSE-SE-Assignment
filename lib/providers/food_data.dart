@@ -2,19 +2,22 @@ import 'package:pse_assignment/models/product.dart';
 
 import 'data_helper.dart';
 import '../models/product.dart';
+import 'dart:math';
+
+const int numberOfRecipe = 20;
 
 class FoodData {
-  List<int> id = List(20);
-  List<dynamic> foodRecipeJson = List(20);
-  List<Product> foodData = List(20);
+  List<int> id = List(numberOfRecipe);
+  List<dynamic> foodRecipeJson = List(numberOfRecipe);
+  List<Product> foodData = List(numberOfRecipe);
+  Random random = Random();
   Future<dynamic> getFoodData(String name) async {
     DataHelper dataHelper = DataHelper();
-    int numberOfRecipe = 20;
+    int offset = random.nextInt(50);
     String idUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=20&offset=0&query=$name';
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=${numberOfRecipe.toString()}&offset=${offset.toString()}&query=$name';
     var foodIdJson = await dataHelper.fetchData(idUrl);
     return foodIdJson;
-
   }
 }
 

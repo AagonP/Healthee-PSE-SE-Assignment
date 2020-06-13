@@ -23,13 +23,25 @@ class FoodListView extends StatelessWidget {
             ),
             margin: EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.all(5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Image.network(
-                      _currentList.elementAt(index).photoURL,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'FoodInfoScreen',
+                          arguments: _currentList.elementAt(index));
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: (_currentList.elementAt(index).photoURL != null)
+                          ? Image.network(
+                              _currentList.elementAt(index).photoURL,
+                            )
+                          : Container(
+                              height: 90.0,
+                              color: Colors.white,
+                            ),
                     ),
                   ),
                 ),
