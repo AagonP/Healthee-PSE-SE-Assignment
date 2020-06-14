@@ -7,3 +7,5 @@ If shoppers want to know the nutrition value of a particular food about to be bo
 Moreover, if the users are not sure about how their diet should be, they can ask the app to guide them to a balanced daily diet according to their health status. Or they can create their diet calendars themselves, then the app presents their diet’s nutritional value as well as reminds them to stick to their diet every day.
 We also intend to develop this app for QR-Barcode Scan as an additional feature. Then the users can choose between two options to search for information on a product – typing into SearchBar and QR-Barcode Scan.
 #HCMUT FACULTY OF COMPUTER SCIENCE AND ENGINEERING K18
+#Testing
+#Testing2
