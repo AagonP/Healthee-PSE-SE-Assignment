@@ -8,6 +8,7 @@ import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
 import '../providers/data_helper.dart';
 import '../providers/food_data.dart';
+import '../providers/user_input.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -73,13 +74,8 @@ class _HomePageState extends State<HomePage> {
         ingredients: Ingredients,
         amount: Amount,
         unit: Unit,
-        illness: Illness(
-          obesity: true,
-          highBloodPressure: true,
-          headache: false,
-          stomache: false,
-          covid19: false,
-        ),
+        illness:
+            setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
       );
       if (product.name != null)
         Provider.of<Products>(context).addProduct(product);
@@ -237,34 +233,13 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    print(
-                        Provider.of<UserInput>(context).healthInput[0].obesity);
-                    //Testing add method with listeners
-                    Product product1 = Product(
-                      barCode: '1',
-                      name: 'Hamburger',
-                      description: 'Hamburger',
-                      photoURL:
-                          'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
-                      qrCode: '1',
-                      type: 'Food',
-                      //tags: ['Obesity', 'High Blood Pressure'],
-                      illness: Illness(
-                        obesity: true,
-                        highBloodPressure: true,
-                        headache: false,
-                        stomache: false,
-                        covid19: false,
-                      ),
-                    );
-                    Provider.of<Products>(context).addProduct(product1);
+                    //First button
                   },
                   icon: Icon(Icons.add),
                 ),
                 IconButton(
                   onPressed: () {
-                    //Testing remove method with listeners
-                    Provider.of<Products>(context).removeProduct();
+                    //Second button
                   },
                   icon: Icon(Icons.add),
                 ),

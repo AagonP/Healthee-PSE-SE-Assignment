@@ -9,6 +9,7 @@ import './screens/food_info.dart';
 import './providers/products.dart';
 
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import './providers/user_input.dart';
 //testing
 import './providers/data_helper.dart';
 
