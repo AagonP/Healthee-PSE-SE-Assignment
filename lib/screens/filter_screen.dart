@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/filter_food_list_view.dart';
 import '../providers/products.dart';
+import '../providers/user_input.dart';
 // import '../models/product.dart';
 
 class FilterScreen extends StatelessWidget {

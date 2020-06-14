@@ -45,12 +45,22 @@ class Illness {
   bool highBloodPressure;
   bool stomache;
   bool headache;
-  bool covid19;
+  bool celiac;
+  bool glutenSensitivity;
+  bool heartDisease;
+  bool digestion;
+  bool peripheralVascular;
+  bool stroke;
   Illness({
     @required this.headache,
     @required this.obesity,
     @required this.stomache,
     @required this.highBloodPressure,
-    @required this.covid19,
+    @required this.celiac,
+    @required this.digestion,
+    @required this.glutenSensitivity,
+    @required this.heartDisease,
+    @required this.peripheralVascular,
+    @required this.stroke,
   });
 }
