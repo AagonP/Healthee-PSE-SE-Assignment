@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import './screens/health_input_form.dart';
+import './screens/filter_screen.dart';
 import './screens/home_page.dart';
+import './screens/food_info.dart';
+import './providers/products.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+//testing
+import './providers/data_helper.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -12,16 +22,30 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.grey,
-        fontFamily: 'Montserrat',
-        textTheme: TextTheme(
-          bodyText1: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
+        ChangeNotifierProvider<Products>(builder: (context) => Products()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          fontFamily: 'Montserrat',
         ),
-        iconTheme: IconThemeData(size: 20),
+        home: HomePage(),
+        //Setting route for pages here
+        routes: {
+          'HomePage': (context) => HomePage(),
+          'FilterScreen': (context) => FilterScreen(),
+          'HealthInputScreen': (context) => Wrapper(),
+          'FoodInfoScreen': (context) => FoodInfo(),
+          // 'ScanScreen': (context) => ScanScreen(),
+          // 'HealthInput': (context) => InputText().
+        },
       ),
-      home: HomePage(),
     );
   }
 }
