@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 
+import '../widgets/drawer_view.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
@@ -138,7 +139,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       //Drawer here
-      drawer: Drawer(),
+      drawer: DrawerView(),
       body: Container(
         child: ListView(
           children: <Widget>[
