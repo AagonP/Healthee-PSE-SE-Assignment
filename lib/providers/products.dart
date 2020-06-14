@@ -1,45 +1,21 @@
 import 'package:flutter/cupertino.dart';
 
 import '../models/product.dart';
+import './user_input.dart';
 
 // Mock products
 class Products with ChangeNotifier {
-  List<Product> _products = [
-    Product(
-      barCode: '1',
-      name: 'Hamburger',
-      description: 'Hamburger',
-      photoURL:
-          'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
-      qrCode: '1',
-      type: 'Food',
-      tags: ['Obesity', 'High Blood Pressure'],
-      illnesss: Illness(
-        obesity: true,
-        highBloodPressure: true,
-        headache: false,
-        stomache: false,
-        covid19: false,
-      ),
-    ),
-    Product(
-      barCode: '1',
-      name: 'Hamburger',
-      description: 'Hamburger',
-      photoURL:
-          'https://www.foodiesfeed.com/wp-content/uploads/2016/08/tiny-pickles-on-top-of-burger-1-413x275.jpg',
-      qrCode: '1',
-      type: 'Food',
-      tags: ['Obesity', 'High Blood Pressure'],
-      illnesss: Illness(
-        obesity: true,
-        highBloodPressure: true,
-        headache: false,
-        stomache: false,
-        covid19: false,
-      ),
-    ),
-  ];
+  List<Product> _selectedProducts = [];
+  List<Product> get selectedProducts {
+    return [..._selectedProducts];
+  }
+
+  void addSelectedProducts(Product product) {
+    _selectedProducts.add(product);
+    notifyListeners();
+  }
+
+  List<Product> _products = [];
   List<Product> get products {
     return [..._products];
   }
@@ -49,86 +25,92 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearProduct() {
+    _products.clear();
+    notifyListeners();
+  }
+
   void removeProduct() {
     if (_products.length == 0) return;
     _products.removeLast();
     notifyListeners();
   }
 
-  void doFilter(UserInput userInput,Product product) {
+  void doFilter(UserInput userInput, Product product) {
     //Check the health's setting of user
-    if ( UserInput._healthInput[0].obesity == product.illnesss.obesity){
-      product.isHealthy = false;
+    if (userInput.healthInput[0].obesity) {
+      if (!product.illness.obesity) {
+        product.isHealthy = false;
+        return;
+      }
     }
-    print(product.isHealthy);
-    notifyListeners();
+    if (userInput.healthInput[0].highBloodPressure) {
+      if (!product.illness.highBloodPressure) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].headache) {
+      if (!product.illness.headache) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].stomache) {
+      if (!product.illness.stomache) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].celiac) {
+      if (!product.illness.celiac) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].digestion) {
+      if (!product.illness.digestion) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].glutenSensitivity) {
+      if (!product.illness.glutenSensitivity) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].heartDisease) {
+      if (!product.illness.heartDisease) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].peripheralVascular) {
+      if (!product.illness.peripheralVascular) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
+    if (userInput.healthInput[0].stroke) {
+      if (!product.illness.stroke) {
+        product.isHealthy = false;
+        notifyListeners();
+        return;
+      }
+    }
   }
-   void updateProductHealthValid(Product product,bool value){
+
+  void updateProductHealthValid(Product product, bool value) {
     product.isHealthy = value;
-    notifyListeners();
-  }
-}
-
-// Mock user input for health's setting
-class UserInput with ChangeNotifier {
-  static List<Illness> _healthInput = [
-    Illness(
-      obesity: false,
-      highBloodPressure: false,
-      headache: false,
-      stomache: false,
-      covid19: false,
-    )
-  ];
-  List<Illness> get healthInput {
-    return [..._healthInput];
-  }
-
-  List<String> _illness = [
-    'Obesity',
-    'High Blood Pressure',
-    'Headache',
-    'Stomache',
-    'Covid19'
-  ];
-  List<String> get illness {
-    return [..._illness];
-  }
-
-  void updateInput(String illness, bool value, int page) {
-    page = 0;
-    switch (illness) {
-      case 'Obesity':
-        {
-          _healthInput[page].obesity = value;
-        }
-        break;
-      case 'High Blood Pressure':
-        {
-          _healthInput[page].highBloodPressure = value;
-        }
-        break;
-      case 'Headache':
-        {
-          _healthInput[page].headache = value;
-        }
-        break;
-      case 'Stomache':
-        {
-          _healthInput[page].stomache = value;
-        }
-        break;
-      case 'Covid19':
-        {
-          _healthInput[page].covid19 = value;
-        }
-        break;
-      default:
-        {
-          print('Error');
-          break;
-        }
-    }
     notifyListeners();
   }
 }

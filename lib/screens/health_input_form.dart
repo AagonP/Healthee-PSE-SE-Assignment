@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products.dart';
+import '../providers/user_input.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class ShowHealthInputForm extends StatefulWidget {
 }
 
 class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
-  static List<bool> _isSelected = List<bool>.generate(5, (index) => false);
+  static List<bool> _isSelected = List<bool>.generate(10, (index) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
           RaisedButton(
             child: Text('Compelete'),
             onPressed: () {
-              Navigator.pushNamed(context, 'HomePage');
+              Navigator.pop(context);
               print(Provider.of<UserInput>(context).healthInput[0].obesity);
             },
           ),
