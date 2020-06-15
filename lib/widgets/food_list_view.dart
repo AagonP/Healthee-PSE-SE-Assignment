@@ -70,8 +70,17 @@ class FoodListView extends StatelessWidget {
                         size: 20.0,
                       ),
                       onPressed: () {
+                        bool isDuplicated = false;
                         Provider.of<Products>(context)
-                            .addSelectedProducts(_currentList.elementAt(index));
+                            .selectedProducts
+                            .forEach((element) {
+                          if (element.name ==
+                              _currentList.elementAt(index).name)
+                            isDuplicated = true;
+                        });
+                        if (!isDuplicated)
+                          Provider.of<Products>(context).addSelectedProducts(
+                              _currentList.elementAt(index));
                       },
                     ),
                   ],

@@ -11,6 +11,7 @@ import './providers/products.dart';
 
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
+import './providers/filtered_saved_list.dart';
 //testing
 import './providers/data_helper.dart';
 
@@ -32,6 +33,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
+        ChangeNotifierProvider<FilterSavedList>(builder: (context)=> FilterSavedList()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
