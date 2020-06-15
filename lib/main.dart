@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './screens/plan_for_a_diet_screens/daily_detail_screen.dart';
+import './screens/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './screens/plan_for_a_diet_screens/planning_option_screen.dart';
 
 import './screens/health_input_form.dart';
@@ -49,7 +51,9 @@ class _MyAppState extends State<MyApp> {
           'HealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
           '/planning-option-screen': (context) => PlanningOptionScreen(),
-          'ScanScreen': (context) => Scanner(),
+          '/diet-timetable-screen': (context) => DietTimetableScreen(),
+          '/daily-detail-screen': (context) => DailyDetailScreen(),
+          // 'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
       ),

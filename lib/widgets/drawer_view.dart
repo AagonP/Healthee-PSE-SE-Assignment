@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../screens/plan_for_a_diet_screens/planning_option_screen.dart';
 
 class DrawerView extends StatelessWidget {
 
-  void clickPlanForADiet(BuildContext context) {
+  void _clickPlanForADiet(BuildContext context) {
     Navigator.of(context).pushNamed('/planning-option-screen');
   }
 
@@ -38,7 +37,7 @@ class DrawerView extends StatelessWidget {
                   letterSpacing: 2.0,
                 ),
               ),
-              onTap: () => clickPlanForADiet(context),
+              onTap: () => _clickPlanForADiet(context),
             ),
           ),
         ],
