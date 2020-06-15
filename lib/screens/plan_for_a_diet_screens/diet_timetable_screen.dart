@@ -39,24 +39,59 @@ class DietTimetableScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
+
     // TODO: implement build of DietTimetableScreen
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(screenHeight / 3.1),
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: screenHeight / 2.8,
+              child: Image.network(
+                'https://resources.healthydirections.com/resources/web/articles/hd/hd-what-is-the-best-heart-healthy-diet-plan-hd-cover.jpg',
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: Text(''),
+            ),
+          ],
+        ),
+      ),
       body: Container(
         child: Column(
           children: <Widget>[
-            Container(
+            /*Container(
               child: Image.network(
                 'https://media.istockphoto.com/photos/healthy-food-for-balanced-flexitarian-mediterranean-diet-concept-picture-id1159204281?b=1&k=6&m=1159204281&s=170667a&w=0&h=LISnM5xaG7Lok26Qp542LGFtrbGynJB8PRnvHCb3sQ0=',
                 fit: BoxFit.cover,
               ),
-              height: 325,
-            ),
-            Text(
-              '30 Days Diet Plan',
-              style: TextStyle(
-                decoration: TextDecoration.underline,
+              height: screenHeight / 2.5,
+            ),*/
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.black,
+                  ),
+                ),
               ),
-              textAlign: TextAlign.left,
+              child: Text(
+                '30 Days Diet Plan',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 33.0,
+                  //decoration: TextDecoration.underline,
+                ),
+                textAlign: TextAlign.left,
+              ),
             ),
             Row(
               children: <Widget>[
@@ -65,7 +100,7 @@ class DietTimetableScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 Text(
-                  'Reminder icon here!',
+                  'Reminder icon!',
                   textAlign: TextAlign.right,
                 ),
               ],

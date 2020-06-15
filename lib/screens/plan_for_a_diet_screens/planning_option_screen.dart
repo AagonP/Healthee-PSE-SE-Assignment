@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
+  void _clickFollowAvailablePlan(BuildContext context) {
+    Navigator.of(context).pushNamed('/diet-timetable-screen');
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -30,7 +34,7 @@ class PlanningOptionScreen extends StatelessWidget {
             height: screenHeight / 8,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () => _clickFollowAvailablePlan(context),
             child: Container(
               height: screenHeight / 10,
               width: screenWidth / (3 / 2.5),
