@@ -11,6 +11,7 @@ import './providers/products.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import './providers/filtered_saved_list.dart';
+import './screens/scan_screen.dart';
 //testing
 import './providers/data_helper.dart';
 
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           'HealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
           '/planning-option-screen': (context) => PlanningOptionScreen(),
-          // 'ScanScreen': (context) => ScanScreen(),
+          'ScanScreen': (context) => Scanner(),
           // 'HealthInput': (context) => InputText().
         },
       ),
