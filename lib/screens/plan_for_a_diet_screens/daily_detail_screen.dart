@@ -1,17 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../plan_for_a_diet/breakfast_food_list.dart';
-/*import '../../plan_for_a_diet/lunch_food_list.dart';
-import '../../plan_for_a_diet/dinner_food_list.dart';
+import 'meal_food_list.dart';
+/*import '../../plan_for_a_diet/dinner_food_list.dart';
 import '../../plan_for_a_diet/daily_total_list.dart';
 import '../../plan_for_a_diet/shop_list.dart';*/
 
 class DailyDetailScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    final routeArgs = ModalRoute.of(context).settings.arguments as Map<String, int>;
+    final routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, int>;
     final _index = routeArgs['index'];
 
     // TODO: implement DailyDetailScreen build
@@ -27,12 +25,14 @@ class DailyDetailScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
-          BreakfastFoodList(),
-          /*LunchFoodList(),
-          DinnerFoodList(),
-          DailyTotalList(),
-          ShopList(),*/
+          SizedBox(
+            height: 5.0,
+          ),
+          MealFoodList('Breakfast'),
+          MealFoodList('Lunch'),
+          MealFoodList('Dinner'),
         ],
       ),
     );

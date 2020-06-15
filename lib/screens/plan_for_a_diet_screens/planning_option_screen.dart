@@ -13,6 +13,7 @@ class PlanningOptionScreen extends StatelessWidget {
     // TODO: implement screen to ask user for planing option
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Plan For A Diet',
           style: TextStyle(
