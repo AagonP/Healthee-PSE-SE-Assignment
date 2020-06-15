@@ -66,13 +66,6 @@ class DietTimetableScreen extends StatelessWidget {
       body: Container(
         child: Column(
           children: <Widget>[
-            /*Container(
-              child: Image.network(
-                'https://media.istockphoto.com/photos/healthy-food-for-balanced-flexitarian-mediterranean-diet-concept-picture-id1159204281?b=1&k=6&m=1159204281&s=170667a&w=0&h=LISnM5xaG7Lok26Qp542LGFtrbGynJB8PRnvHCb3sQ0=',
-                fit: BoxFit.cover,
-              ),
-              height: screenHeight / 2.5,
-            ),*/
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(5.0),
@@ -93,17 +86,20 @@ class DietTimetableScreen extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            Row(
-              children: <Widget>[
-                Text(
-                  'You chose to follow available plan',
-                  textAlign: TextAlign.left,
-                ),
-                Text(
-                  'Reminder icon!',
-                  textAlign: TextAlign.right,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'You chose to follow available plan',
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    'Reminder icon!',
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: GridView(
