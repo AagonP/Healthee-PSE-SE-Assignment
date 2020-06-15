@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
+import '../providers/filtered_saved_list.dart';
 
 class FilterFoodListView extends StatelessWidget {
   @override
@@ -78,7 +79,10 @@ class FilterFoodListView extends StatelessWidget {
                           Icons.save,
                           size: 20.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<FilterSavedList>(context)
+                              .saveItem(_currentList.elementAt(index));
+                        },
                       ),
                     ],
                   ),

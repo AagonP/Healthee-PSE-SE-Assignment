@@ -109,14 +109,14 @@ class UserInput with ChangeNotifier {
 Illness setIllnessBasedOnAPI(
     bool vegetarian, bool glutenFree, bool dairyFree, bool lowFodmap) {
   Illness illness = Illness(
-    obesity: (lowFodmap) ? true : false,
+    obesity: (!lowFodmap) ? true : false,
     celiac: (dairyFree) ? true : false,
     digestion: (vegetarian) ? true : false,
     glutenSensitivity: (glutenFree) ? true : false,
     headache: (vegetarian) ? true : false,
     heartDisease: (lowFodmap && dairyFree) ? true : false,
-    highBloodPressure: (lowFodmap) ? true : false,
-    peripheralVascular: (lowFodmap) ? true : false,
+    highBloodPressure: (!lowFodmap) ? true : false,
+    peripheralVascular: (!lowFodmap) ? true : false,
     stomache: (vegetarian) ? true : false,
     stroke: (lowFodmap) ? true : false,
   );

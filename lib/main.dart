@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './screens/plan_for_a_diet_screens/daily_detail_screen.dart';
+import './screens/plan_for_a_diet_screens/diet_timetable_screen.dart';
+import './screens/plan_for_a_diet_screens/planning_option_screen.dart';
 
 import './screens/health_input_form.dart';
 import './screens/filter_screen.dart';
 import './screens/home_page.dart';
 import './screens/food_info.dart';
 import './providers/products.dart';
+
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
+import './providers/filtered_saved_list.dart';
+import './screens/scan_screen.dart';
 //testing
 import './providers/data_helper.dart';
 
@@ -28,6 +34,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
+        ChangeNotifierProvider<FilterSavedList>(builder: (context)=> FilterSavedList()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -42,6 +49,9 @@ class _MyAppState extends State<MyApp> {
           'FilterScreen': (context) => FilterScreen(),
           'HealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
+          '/planning-option-screen': (context) => PlanningOptionScreen(),
+          '/diet-timetable-screen': (context) => DietTimetableScreen(),
+          '/daily-detail-screen': (context) => DailyDetailScreen(),
           // 'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
