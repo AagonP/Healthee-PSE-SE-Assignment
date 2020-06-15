@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
 // import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 import '../widgets/filter_food_list_view.dart';
 import '../providers/products.dart';
 import '../providers/user_input.dart';
+import '../providers/filtered_saved_list.dart';
 // import '../models/product.dart';
 
 class FilterScreen extends StatelessWidget {
-  bool isFilterOn  = false;
+  bool isFilterOn = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,9 @@ class FilterScreen extends StatelessWidget {
               child: Card(
                 margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: TextField(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   decoration: InputDecoration(
                     hintText: 'Search product..',
                     prefixIcon: Icon(Icons.search),
@@ -40,14 +45,18 @@ class FilterScreen extends StatelessWidget {
               onPressed: () {
                 if (!isFilterOn) {
                   isFilterOn = true;
-                  Provider.of<Products>(context).selectedProducts.forEach((element) {
+                  Provider.of<Products>(context)
+                      .selectedProducts
+                      .forEach((element) {
                     Provider.of<Products>(context)
                         .doFilter(Provider.of<UserInput>(context), element);
                     print('Filter activated');
                   });
                 } else {
                   isFilterOn = false;
-                  Provider.of<Products>(context).selectedProducts.forEach((element) {
+                  Provider.of<Products>(context)
+                      .selectedProducts
+                      .forEach((element) {
                     Provider.of<Products>(context)
                         .updateProductHealthValid(element, true);
                     print('Filter deactivated');
@@ -70,6 +79,20 @@ class FilterScreen extends StatelessWidget {
                         : 'Setting has not applied',
                     style: TextStyle(fontSize: 14)),
               ),
+            ),
+          ),
+          Card(
+            child: IconButton(
+              onPressed: () {
+                //new page here
+              },
+              icon: Badge(
+                  badgeColor: Colors.white,
+                  animationType: BadgeAnimationType.scale,
+                  badgeContent: Text(
+                      (Provider.of<FilterSavedList>(context).currentList.length)
+                          .toString()),
+                  child: Icon(Icons.edit)), //filter
             ),
           ),
           //Input user setting

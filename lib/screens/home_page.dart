@@ -205,9 +205,6 @@ class _HomePageState extends State<HomePage> {
                   child: IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, 'FilterScreen');
-                      print(Provider.of<UserInput>(context)
-                          .healthInput[0]
-                          .obesity);
                     },
                     icon: Badge(
                         badgeColor: Colors.white,
