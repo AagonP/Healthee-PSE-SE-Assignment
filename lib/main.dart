@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './screens/plan_for_a_diet_screens/planning_option_screen.dart';
 
 import './screens/health_input_form.dart';
 import './screens/filter_screen.dart';
 import './screens/home_page.dart';
 import './screens/food_info.dart';
 import './providers/products.dart';
+
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import './providers/filtered_saved_list.dart';
@@ -45,6 +47,7 @@ class _MyAppState extends State<MyApp> {
           'FilterScreen': (context) => FilterScreen(),
           'HealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
+          '/planning-option-screen': (context) => PlanningOptionScreen(),
           // 'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
