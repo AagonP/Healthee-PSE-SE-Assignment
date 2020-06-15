@@ -10,8 +10,7 @@ class DailyDietItem extends StatelessWidget {
     // TODO: implement DailyDietItem build
     return Card(
       child: GridTile(
-        child: GestureDetector(
-          onTap: () {},
+        child: Container(
           child: Text('Day ${_index}'),
         ),
         footer: GridTileBar(
