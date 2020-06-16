@@ -13,6 +13,7 @@ import './providers/products.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import './providers/filtered_saved_list.dart';
+import './screens/scan_screen.dart';
 //testing
 import './providers/data_helper.dart';
 
@@ -24,7 +25,6 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
