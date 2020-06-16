@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
@@ -11,6 +12,55 @@ class FilterFoodListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Product> _currentList =
         Provider.of<Products>(context).selectedProducts;
+    void _saveProduct(int index) {
+      bool _isDuplicated = false;
+      Provider.of<FilterSavedList>(context).currentList.forEach((element) {
+        if (element.name == _currentList.elementAt(index).name) {
+          _isDuplicated = true;
+        }
+      });
+      if (!_isDuplicated) {
+        Provider.of<FilterSavedList>(context)
+            .saveProduct(_currentList.elementAt(index));
+      }
+    }
+
+    Future<void> _showMyDialog(int index) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Be alert!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(
+                      'This product has been filtered out as unhealthy for you.'),
+                  Text('Are you sure still wanting to save this product?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Proceed'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _saveProduct(index);
+                },
+              ),
+              FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Expanded(
       child: GridView.count(
         physics: ScrollPhysics(),
@@ -35,23 +85,53 @@ class FilterFoodListView extends StatelessWidget {
                         Navigator.pushNamed(context, 'FoodInfoScreen',
                             arguments: _currentList.elementAt(index));
                       },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: (_currentList.elementAt(index).photoURL != null)
-                            ? Opacity(
-                                opacity:
-                                    (_currentList.elementAt(index).isHealthy ==
-                                            true)
-                                        ? 1.0
-                                        : 0.5,
-                                child: Image.network(
-                                  _currentList.elementAt(index).photoURL,
-                                ),
-                              )
-                            : Container(
-                                height: 90.0,
-                                color: Colors.white,
-                              ),
+                      child: Slidable(
+                        actionPane: SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                            caption: 'Save',
+                            color: Colors.green,
+                            icon: Icons.save,
+                            onTap: () {
+                              if (!_currentList.elementAt(index).isHealthy) {
+                                //Alert dialog here
+                                _showMyDialog(index);
+                                return;
+                              }
+                              _saveProduct(index);
+                            },
+                          ),
+                          IconSlideAction(
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.undo,
+                            onTap: () {
+                              Provider.of<FilterSavedList>(context)
+                                  .removeProduct(_currentList.elementAt(index));
+                            },
+                          ),
+                        ],
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child:
+                              (_currentList.elementAt(index).photoURL != null)
+                                  ? Opacity(
+                                      opacity: (_currentList
+                                                  .elementAt(index)
+                                                  .isHealthy ==
+                                              true)
+                                          ? 1.0
+                                          : 0.5,
+                                      child: Image.network(
+                                        _currentList.elementAt(index).photoURL,
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 90.0,
+                                      color: Colors.white,
+                                    ),
+                        ),
                       ),
                     ),
                   ),
@@ -69,20 +149,6 @@ class FilterFoodListView extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ),
-                      IconButton(
-                        constraints: BoxConstraints(
-                          maxHeight: 40.0,
-                          maxWidth: 40.0,
-                        ),
-                        icon: Icon(
-                          Icons.save,
-                          size: 20.0,
-                        ),
-                        onPressed: () {
-                          Provider.of<FilterSavedList>(context)
-                              .saveItem(_currentList.elementAt(index));
-                        },
                       ),
                     ],
                   ),

@@ -9,12 +9,12 @@ class FilterSavedList with ChangeNotifier {
     return [..._currentList];
   }
 
-  void saveItem(Product product) {
+  void saveProduct(Product product) {
     _currentList.add(product);
     notifyListeners();
   }
 
-  void removeItem(Product product) {
+  void removeProduct(Product product) {
     _currentList.remove(product);
     notifyListeners();
   }
