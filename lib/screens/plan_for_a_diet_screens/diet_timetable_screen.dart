@@ -94,9 +94,21 @@ class DietTimetableScreen extends StatelessWidget {
                     'You chose to follow available plan',
                     textAlign: TextAlign.left,
                   ),
-                  Text(
-                    'Reminder icon!',
-                    textAlign: TextAlign.right,
+                  SizedBox(
+                    width: 15.0,
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      child: Card(
+                        child: Text('Reminder off'),
+                        color: Colors.grey,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    onTap: () {},
                   ),
                 ],
               ),

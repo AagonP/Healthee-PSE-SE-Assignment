@@ -22,17 +22,16 @@ class PlanningOptionScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.all(0.0),
             width: screenWidth,
             child: Image.network(
               'https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/07/05/Pictures/_a021f0b0-8046-11e8-8bd0-affd130bd192.jpg',
             ),
           ),
           SizedBox(
-            height: screenHeight / 8,
+            height: screenHeight / 12,
           ),
           GestureDetector(
             onTap: () => _clickFollowAvailablePlan(context),
