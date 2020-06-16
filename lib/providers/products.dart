@@ -30,9 +30,9 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeProduct() {
+  void removeProduct(Product product) {
     if (_products.length == 0) return;
-    _products.removeLast();
+    _selectedProducts.remove(product);
     notifyListeners();
   }
 
