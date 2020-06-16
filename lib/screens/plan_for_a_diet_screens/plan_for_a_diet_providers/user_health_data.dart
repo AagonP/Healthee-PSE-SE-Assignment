@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserHealthData with ChangeNotifier {
-  // Data:
+  // User's Data include:
   double _userHeight = 0;
   double _userWeight = 0;
   int _userAge = 0;

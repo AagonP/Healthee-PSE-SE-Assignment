@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../screens/plan_for_a_diet_screens/health_data_input_screen.dart';
 import '';
 
 class DrawerView extends StatelessWidget {

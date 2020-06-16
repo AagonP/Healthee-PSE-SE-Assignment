@@ -29,7 +29,7 @@ class DailyDietItem extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               height: screenHeight / 15,
-              child: Text('Day ${_index}'),
+              child: Text('Day $_index'),
             ),
             Padding(
               padding: const EdgeInsets.all(3.0),

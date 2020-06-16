@@ -17,7 +17,7 @@ class DailyDetailScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Day ${_index}',
+          'Day $_index',
           style: TextStyle(
             fontSize: 30,
             letterSpacing: 2.0,
