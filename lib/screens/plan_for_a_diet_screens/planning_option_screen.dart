@@ -1,15 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
+
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
+import './plan_for_a_diet_providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
+
   void _clickFollowAvailablePlan(BuildContext context) {
-    Navigator.of(context).pushNamed('/diet-timetable-screen');
+    Navigator.of(context).pushNamed('/health-data-input-screen');
   }
 
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+    final userHealthData = Provider.of<UserHealthData>(context);
+
     // TODO: implement screen to ask user for planing option
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +42,9 @@ class PlanningOptionScreen extends StatelessWidget {
             height: screenHeight / 12,
           ),
           GestureDetector(
-            onTap: () => _clickFollowAvailablePlan(context),
+            onTap: () {
+              _clickFollowAvailablePlan(context);
+            },
             child: Container(
               height: screenHeight / 10,
               width: screenWidth / (3 / 2.5),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 import 'daily_diet_item.dart';
 
 class DietTimetableScreen extends StatelessWidget {
@@ -40,7 +41,9 @@ class DietTimetableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
+    final routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, DietPlanData>;
+    final _dietPlanData = routeArgs['dietPlanData'];
 
     // TODO: implement build of DietTimetableScreen
     return Scaffold(
@@ -86,45 +89,34 @@ class DietTimetableScreen extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'You chose to follow available plan',
-                    textAlign: TextAlign.left,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Card(
+                  child: IconButton(
+                    icon: Icon(Icons.timer),
+                    onPressed: () {},
                   ),
-                  SizedBox(
-                    width: 15.0,
+                  color: Colors.white60,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  GestureDetector(
-                    child: Container(
-                      child: Card(
-                        child: Text('Reminder off'),
-                        color: Colors.grey,
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             Expanded(
               child: GridView(
                 shrinkWrap: true,
                 children: _oneMonthList
                     .map(
-                      (index) => DailyDietItem(index),
+                      (index) => DailyDietItem(index, _dietPlanData),
                     )
                     .toList(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                 ),
               ),
             ),
