@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       id[i] = foodId.toString();
     }
     //int id = data['results'][0]['id'];
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20; i++)   {
       String recipeUrl =
           'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information';
       foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);

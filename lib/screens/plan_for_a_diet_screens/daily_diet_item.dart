@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 
 class DailyDietItem extends StatelessWidget {
   final int _index;
+  final DietPlanData _dietPlanData;
 
-  DailyDietItem(this._index);
+  DailyDietItem(this._index, this._dietPlanData);
 
   void _clickDailyItem(BuildContext context) {
     Navigator.of(context).pushNamed(
       '/daily-detail-screen',
-      arguments: {'index': _index},
+      arguments: {
+        'index': _index,
+        'dietPlanData': _dietPlanData,
+      },
     );
   }
 
@@ -29,13 +34,13 @@ class DailyDietItem extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.fromLTRB(2.0, 7.0, 2.0, 0.0),
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey,
-                    ),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.grey,
                   ),
                 ),
+              ),
               child: Row(
                 children: <Widget>[
                   IconButton(

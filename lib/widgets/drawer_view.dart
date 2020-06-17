@@ -3,7 +3,7 @@ import '';
 
 class DrawerView extends StatelessWidget {
   void _clickPlanForADiet(BuildContext context) {
-    Navigator.of(context).pushNamed('/health-data-input-screen');
+    Navigator.of(context).pushNamed('/planning-option-screen');
   }
 
   @override

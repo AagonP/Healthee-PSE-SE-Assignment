@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 class MealFoodList extends StatelessWidget {
-  final String mealName;
+  final String _mealType;
+  final int _index;
+  DietPlanData _dietPlanData;
 
-  MealFoodList(this.mealName);
+  MealFoodList(this._index, this._mealType, this._dietPlanData);
 
   Widget identifyMealIcon() {
-    if (mealName == 'Breakfast') {
+    if (_mealType == 'Breakfast') {
       return Icon(
       Icons.brightness_6,
       color: Colors.yellowAccent,
       );
       }
 
-    else if (mealName == 'Lunch') {
+    else if (_mealType == 'Lunch') {
           return Icon(
             Icons.brightness_5,
             color: Colors.redAccent,
@@ -43,7 +46,7 @@ class MealFoodList extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 mealIcon,
-                Text(mealName),
+                Text(_dietPlanData.dailyList[_index].calory.toString()),
               ],
             ),
           ),

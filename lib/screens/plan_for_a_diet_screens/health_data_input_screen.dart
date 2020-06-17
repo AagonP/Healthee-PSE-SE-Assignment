@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './plan_for_a_diet_providers/user_health_data.dart';
 
+import './plan_for_a_diet_providers/user_health_data.dart';
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 import './plan_for_a_diet_widgets/checkbox_list_widget.dart';
 
 class HealthDataInputScreen extends StatelessWidget {
   double _userHeight;
   double _userWeight;
   int _userAge;
+  DietPlanData _dietPlanData;
 
   void _clickSubmit(BuildContext context) {
-    Navigator.of(context).pushNamed('/planning-option-screen');
+    Navigator.of(context).pushNamed(
+      '/diet-timetable-screen',
+      arguments: {'dietPlanData': _dietPlanData},
+    );
   }
 
   @override
@@ -87,6 +92,8 @@ class HealthDataInputScreen extends StatelessWidget {
                   _userAge,
                 );
 
+                _dietPlanData = DietPlanData(userHealthData.userDailyCalory);
+                _dietPlanData.setWholePlan();
                 _clickSubmit(context);
               },
             ),
