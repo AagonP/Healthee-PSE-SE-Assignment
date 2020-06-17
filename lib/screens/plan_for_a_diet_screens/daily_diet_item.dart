@@ -27,20 +27,30 @@ class DailyDietItem extends StatelessWidget {
               height: screenHeight / 15,
               child: Text('Day $_index'),
             ),
-            Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.search),
-                  iconSize: screenWidth / 17,
-                  onPressed: () => _clickDailyItem(context),
+            Container(
+              margin: EdgeInsets.fromLTRB(2.0, 7.0, 2.0, 0.0),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.check_circle),
-                  iconSize: screenWidth / 17,
-                  onPressed: () {},
-                ),
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    iconSize: screenWidth / 17,
+                    onPressed: () => _clickDailyItem(context),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.check_circle),
+                    iconSize: screenWidth / 17,
+                    onPressed: () {},
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
             ),
           ],
         ),

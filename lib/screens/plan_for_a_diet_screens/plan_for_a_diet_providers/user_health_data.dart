@@ -8,7 +8,36 @@ class UserHealthData with ChangeNotifier {
   int _userAge = 0;
   bool _userIsMale = true;
   String _userExerciseFre = 'Sedentary';
+  double _userDailyCalory = 0;
 
+  // This is the function used to estimate Calories needed for a day,
+  // using Harris Benedict equation.
+  void estimateCalory() {
+    double temp;
+    if (_userIsMale == true) {
+      temp = 88.362 +
+          (13.397 * _userWeight) +
+          (4.799 * _userHeight) -
+          (5.677 * _userAge);
+    } else {
+      temp = 447.593 +
+          (9.247 * _userWeight) +
+          (3.098 * _userHeight) -
+          (4.330 * _userAge);
+    }
+
+    if (_userExerciseFre == 'Sedentary') {
+      _userDailyCalory = temp * 1.2;
+    } else if (_userExerciseFre == 'Mild activity') {
+      _userDailyCalory = temp * 1.375;
+    } else if (_userExerciseFre == 'Moderate activity') {
+      _userDailyCalory = temp * 1.55;
+    } else if (_userExerciseFre == 'Heavy activity') {
+      _userDailyCalory = temp * 1.7;
+    } else {
+      _userDailyCalory = temp * 1.9;
+    }
+  }
 
   double get userHeight {
     return _userHeight;
@@ -30,6 +59,10 @@ class UserHealthData with ChangeNotifier {
     return _userExerciseFre;
   }
 
+  double get userDailyCalory {
+    return _userDailyCalory;
+  }
+
   void updateHealthData(
     double userHeight,
     double userWeight,
@@ -39,22 +72,26 @@ class UserHealthData with ChangeNotifier {
     _userWeight = userWeight;
     _userAge = userAge;
 
+    estimateCalory();
+    _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(4));
     notifyListeners();
   }
 
   void updateGenderData(
-      bool userIsMale,
-      ) {
+    bool userIsMale,
+  ) {
     _userIsMale = userIsMale;
 
+    estimateCalory();
     notifyListeners();
   }
 
   void updateExerciseData(
-      String userExerciseFre,
-      ) {
+    String userExerciseFre,
+  ) {
     _userExerciseFre = userExerciseFre;
 
+    estimateCalory();
     notifyListeners();
   }
 }

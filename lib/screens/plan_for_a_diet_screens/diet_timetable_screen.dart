@@ -40,7 +40,6 @@ class DietTimetableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
 
     // TODO: implement build of DietTimetableScreen
     return Scaffold(
@@ -112,8 +111,8 @@ class DietTimetableScreen extends StatelessWidget {
                     .toList(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                 ),
               ),
             ),
