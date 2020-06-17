@@ -86,32 +86,21 @@ class DietTimetableScreen extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'You chose to follow available plan',
-                    textAlign: TextAlign.left,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Card(
+                  child: IconButton(
+                    icon: Icon(Icons.timer),
+                    onPressed: () {},
                   ),
-                  SizedBox(
-                    width: 15.0,
+                  color: Colors.white60,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  GestureDetector(
-                    child: Container(
-                      child: Card(
-                        child: Text('Reminder off'),
-                        color: Colors.grey,
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             Expanded(
               child: GridView(

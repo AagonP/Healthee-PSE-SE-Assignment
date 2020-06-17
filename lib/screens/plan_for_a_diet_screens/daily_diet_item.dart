@@ -7,19 +7,15 @@ class DailyDietItem extends StatelessWidget {
 
   void _clickDailyItem(BuildContext context) {
     Navigator.of(context).pushNamed(
-      '/daily-detail-screen', arguments: {'index': _index},);
+      '/daily-detail-screen',
+      arguments: {'index': _index},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    var screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
 
     // TODO: implement DailyDietItem build
     return Card(
@@ -31,23 +27,20 @@ class DailyDietItem extends StatelessWidget {
               height: screenHeight / 15,
               child: Text('Day $_index'),
             ),
-            Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    iconSize: 30.0,
-                    onPressed: () => _clickDailyItem(context),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.check_circle),
-                    iconSize: 30.0,
-                    onPressed: () {},
-                  ),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
+            Row(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.search),
+                  iconSize: screenWidth / 17,
+                  onPressed: () => _clickDailyItem(context),
+                ),
+                IconButton(
+                  icon: Icon(Icons.check_circle),
+                  iconSize: screenWidth / 17,
+                  onPressed: () {},
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
         ),

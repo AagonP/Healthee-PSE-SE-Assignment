@@ -12,6 +12,8 @@ class UserExerciseCheckbox extends StatefulWidget {
 class _UserExerciseCheckboxState extends State<UserExerciseCheckbox> {
 
   String _userExercise = 'Sedentary';
+  String _userGender = 'Male';
+  bool _userIsMale = true;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +30,53 @@ class _UserExerciseCheckboxState extends State<UserExerciseCheckbox> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
+                  'Please choose your gender:',
+                  style: TextStyle(color: Colors.black54),
+                ),
+                DropdownButton<String>(
+                  value: _userGender,
+                  icon: Icon(Icons.arrow_drop_down),
+                  iconSize: 15,
+                  elevation: 10,
+                  underline: Container(
+                    height: 2,
+                    color: Colors.black,
+                  ),
+                  onChanged: (String chosenOption) {
+                    setState(() {
+                      _userGender = chosenOption;
+                      _userIsMale = _userGender == 'Male' ? true : false;
+                      userHealthData.updateGenderData(_userIsMale);
+                    });
+                  },
+                  items: <String>[
+                    'Male',
+                    'Female'
+                  ].map<DropdownMenuItem<String>>((String option) {
+                    return DropdownMenuItem<String>(
+                        value: option, child: Text(option));
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // The above asks for User's gender, the below asks for Exercise Frequency.
+        Container(
+          width: screenWidth,
+          child: Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
                   'Please choose your exercise frequency:',
                   style: TextStyle(color: Colors.black54),
                 ),
                 DropdownButton<String>(
                   value: _userExercise,
                   icon: Icon(Icons.arrow_drop_down),
-                  iconSize: 10,
+                  iconSize: 15,
                   elevation: 10,
                   underline: Container(
                     height: 2,

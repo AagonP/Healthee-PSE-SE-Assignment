@@ -15,6 +15,7 @@ class HealthDataInputScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     final userHealthData = Provider.of<UserHealthData>(context);
 
     // TODO: implement build
@@ -28,75 +29,66 @@ class HealthDataInputScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
-          Container(
-            child: Column(
-              children: <Widget>[
-                Card(
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: TextField(
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (heightValue) =>
-                        this._userHeight = double.parse(heightValue),
-                    decoration: InputDecoration(
-                        hintText: 'Your height here!',
-                        labelText: 'Please input your height:'),
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: TextField(
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChanged: (heightValue) =>
+                  this._userHeight = double.parse(heightValue),
+              decoration: InputDecoration(
+                  hintText: 'Your height here!',
+                  labelText: 'Please input your height:'),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: TextField(
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChanged: (weightValue) =>
+                  this._userWeight = double.parse(weightValue),
+              decoration: InputDecoration(
+                  hintText: 'Your weight here!',
+                  labelText: 'Please input your weight:'),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: TextField(
+              keyboardType: TextInputType.numberWithOptions(),
+              onChanged: (ageValue) {
+                this._userAge = int.parse(ageValue);
+              },
+              decoration: InputDecoration(
+                  hintText: 'Your age here!',
+                  labelText: 'Please input your age:'),
+            ),
+          ),
+          UserExerciseCheckbox(),
+          Center(
+            child: GestureDetector(
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Card(
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: TextField(
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    onChanged: (weightValue) =>
-                        this._userWeight = double.parse(weightValue),
-                    decoration: InputDecoration(
-                        hintText: 'Your weight here!',
-                        labelText: 'Please input your weight:'),
-                  ),
-                ),
-                Card(
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: TextField(
-                    keyboardType: TextInputType.numberWithOptions(),
-                    onChanged: (ageValue) {
-                      this._userAge = int.parse(ageValue);
-                    },
-                    decoration: InputDecoration(
-                        hintText: 'Your age here!',
-                        labelText: 'Please input your age:'),
-                  ),
-                ),
-                UserExerciseCheckbox(),
-                GestureDetector(
-                  child: Padding(
-                    padding: EdgeInsets.all(25),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    userHealthData.updateHealthData(
-                      _userHeight,
-                      _userWeight,
-                      _userAge,
-                    );
+              ),
+              onTap: () {
+                userHealthData.updateHealthData(
+                  _userHeight,
+                  _userWeight,
+                  _userAge,
+                );
 
-                    _clickSubmit(context);
-                  },
-                ),
-              ],
+                _clickSubmit(context);
+              },
             ),
           ),
         ],
