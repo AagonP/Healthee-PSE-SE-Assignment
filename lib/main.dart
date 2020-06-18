@@ -47,6 +47,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<UserHealthData>(
           builder: (context) => UserHealthData(),
         ),
+        ChangeNotifierProvider<DietPlanData>(
+          builder: (context) => DietPlanData(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

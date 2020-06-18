@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'meal_food_list.dart';
+import './plan_for_a_diet_widgets/meal_food_list.dart';
 import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 
 /*import '../../plan_for_a_diet/dinner_food_list.dart';
@@ -12,6 +12,7 @@ class DailyDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    var screenWidth = MediaQuery.of(context).size.width;
     final _index = routeArgs['index'];
     final _dietPlanData = routeArgs['dietPlanData'];
 
@@ -36,6 +37,84 @@ class DailyDetailScreen extends StatelessWidget {
           MealFoodList(_index, 'Breakfast', _dietPlanData),
           MealFoodList(_index, 'Lunch', _dietPlanData),
           MealFoodList(_index, 'Dinner', _dietPlanData),
+          Card(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(5.0),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.format_list_bulleted,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      Text('Daily Nutrients:'),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellowAccent,
+                      ),
+                      Text('Calories: ${_dietPlanData.dailyList[_index - 1].calory}'),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellowAccent,
+                      ),
+                      Text('Protein: ${_dietPlanData.dailyList[_index - 1].protein}'),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellowAccent,
+                      ),
+                      Text('Fat: ${_dietPlanData.dailyList[_index - 1].fat}'),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellowAccent,
+                      ),
+                      Text('Carbohydrates: ${_dietPlanData.dailyList[_index - 1].carbohydrate}'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          )
         ],
       ),
     );

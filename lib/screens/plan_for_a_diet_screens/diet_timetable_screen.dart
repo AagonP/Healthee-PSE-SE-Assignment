@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
-import 'daily_diet_item.dart';
+import './plan_for_a_diet_widgets/daily_diet_item.dart';
 
 class DietTimetableScreen extends StatelessWidget {
   final _oneMonthList = [
@@ -41,9 +42,7 @@ class DietTimetableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, DietPlanData>;
-    final _dietPlanData = routeArgs['dietPlanData'];
+    final _dietPlanData = Provider.of<DietPlanData>(context);
 
     // TODO: implement build of DietTimetableScreen
     return Scaffold(

@@ -6,15 +6,39 @@ import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart
 import './plan_for_a_diet_widgets/checkbox_list_widget.dart';
 
 class HealthDataInputScreen extends StatelessWidget {
-  double _userHeight;
-  double _userWeight;
-  int _userAge;
-  DietPlanData _dietPlanData;
+  double _userHeight = 0;
+  double _userWeight = 0;
+  int _userAge = 0;
 
   void _clickSubmit(BuildContext context) {
+    Navigator.of(context).pop();
     Navigator.of(context).pushNamed(
       '/diet-timetable-screen',
-      arguments: {'dietPlanData': _dietPlanData},
+    );
+  }
+
+  void _handleMissingInput(BuildContext context) {
+    showDialog(
+      context: context,
+      child: Center(
+        child: Container(
+          margin: EdgeInsets.all(30),
+          child: Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                'Please enter your health data!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -22,6 +46,7 @@ class HealthDataInputScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     final userHealthData = Provider.of<UserHealthData>(context);
+    final _dietPlanData = Provider.of<DietPlanData>(context);
 
     // TODO: implement build
     return Scaffold(
@@ -86,15 +111,18 @@ class HealthDataInputScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                userHealthData.updateHealthData(
-                  _userHeight,
-                  _userWeight,
-                  _userAge,
-                );
+                if (_userHeight == 0 || _userWeight == 0 || _userAge == 0) {
+                  _handleMissingInput(context);
+                } else {
+                  userHealthData.updateHealthData(
+                    _userHeight,
+                    _userWeight,
+                    _userAge,
+                  );
 
-                _dietPlanData = DietPlanData(userHealthData.userDailyCalory);
-                _dietPlanData.setWholePlan();
-                _clickSubmit(context);
+                  _dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+                  _clickSubmit(context);
+                }
               },
             ),
           ),
