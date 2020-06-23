@@ -32,7 +32,7 @@ class Products with ChangeNotifier {
 
   void removeProduct(Product product) {
     if (_products.length == 0) return;
-    _selectedProducts.remove(product);
+    _products.remove(product);
     notifyListeners();
   }
 

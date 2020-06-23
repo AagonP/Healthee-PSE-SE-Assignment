@@ -178,25 +178,25 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    //First button
-                  },
-                  icon: Icon(Icons.add),
+                RoundTypeButton(
+                  color: Color(0xFFF7F6C5),
+                  image: 'image/food.png',
+                  title: 'Vegan',
                 ),
-                IconButton(
-                  onPressed: () {
-                    //Second button
-                  },
-                  icon: Icon(Icons.add),
+                RoundTypeButton(
+                  color: Color(0xFFCEFFC0),
+                  image: 'image/dairy.png',
+                  title: 'DairyFree',
                 ),
                 RoundTypeButton(
                   color: Color(0xFFFEE1C7),
-                  image: 'image/food.png',
+                  image: 'image/fruit.png',
+                  title: 'LowFodMap',
                 ),
                 RoundTypeButton(
                   color: Color(0xFFFDDFFA),
-                  image: 'image/flour.png',
+                  image: 'image/coin.png',
+                  title: 'Cheap',
                 ),
               ],
             ),
@@ -208,29 +208,68 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class RoundTypeButton extends StatelessWidget {
+class RoundTypeButton extends StatefulWidget {
   final Color color;
   final String image;
-  RoundTypeButton({@required this.color, @required this.image});
+  final String title;
+  RoundTypeButton(
+      {@required this.color, @required this.image, @required this.title});
+
+  @override
+  _RoundTypeButtonState createState() => _RoundTypeButtonState();
+}
+
+class _RoundTypeButtonState extends State<RoundTypeButton> {
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      constraints: BoxConstraints.tightFor(
-        width: 50.0,
-        height: 50.0,
-      ),
-      onPressed: () {},
-      elevation: 2.0,
-      fillColor: color,
-      child: Image.asset(
-        image,
-        fit: BoxFit.cover,
-        width: 30.0,
-        height: 30.0,
-      ),
-      shape: CircleBorder(
-        side: BorderSide(color: Colors.white),
-      ),
+    return Column(
+      children: <Widget>[
+        RawMaterialButton(
+          constraints: BoxConstraints.tightFor(
+            width: 50.0,
+            height: 50.0,
+          ),
+          onPressed: () {
+            setState(() {
+              List<Product> currentList =
+                  Provider.of<Products>(context).products;
+              for (int i = 0; i < currentList.length; i++) {
+                switch (widget.title) {
+                  case 'Vegan':
+                    if (!currentList.elementAt(i).vegetarian)
+                      Provider.of<Products>(context).clearProduct();
+                    break;
+                  case 'DairyFree':
+                    if (!currentList.elementAt(i).dairyFree)
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
+                    break;
+                  case 'LowFodMap':
+                    if (!currentList.elementAt(i).dairyFree)
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
+                    break;
+                }
+              }
+            });
+          },
+          elevation: 2.0,
+          fillColor: widget.color,
+          child: Image.asset(
+            widget.image,
+            fit: BoxFit.cover,
+            width: 30.0,
+            height: 30.0,
+          ),
+          shape: CircleBorder(
+            side: BorderSide(color: Colors.white),
+          ),
+        ),
+        Text(
+          widget.title,
+          style: TextStyle(fontSize: 11.0),
+        ),
+      ],
     );
   }
 }
