@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'user_health_data.dart';
-import '../../../providers/data_helper.dart';
 import 'daily_data.dart';
 
 class DietPlanData {
@@ -11,10 +7,9 @@ class DietPlanData {
   // Constructor that gets userHealthData from the Input Screen
   DietPlanData(double userDailyCalory) {
     _userCalory = userDailyCalory;
-
   }
 
-  Future <void> setWholePlan() async {
+  Future<void> setWholePlan() async {
     for (int i = 0; i < 30; i++) {
       _dailyList[i] = DailyData(i);
       _dailyList[i].setDailyPlan(_userCalory);

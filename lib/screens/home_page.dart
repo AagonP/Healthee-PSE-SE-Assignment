@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-
 import '../widgets/drawer_view.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
-import '../providers/data_helper.dart';
 import '../providers/food_data.dart';
-import '../providers/user_input.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,10 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _controller = TextEditingController();
   List<String> id = List(20);
-  //List<dynamic> foodRecipeJson = List(20);
-  //DataHelper dataHelper = DataHelper();
   var input;
-
   FoodData foodData = FoodData();
 
   void updateUI(String name) async {
@@ -53,14 +47,12 @@ class _HomePageState extends State<HomePage> {
                   return Card(
                     child: Column(
                       children: <Widget>[
-                        Center(
-                          child: Card(
-                            margin: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: TextField(
-                              decoration:
-                                  InputDecoration(hintText: 'Type of illness'),
-                            ),
+                        Card(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(hintText: 'Type of illness'),
                           ),
                         ),
                         Card(
@@ -198,47 +190,46 @@ class _HomePageState extends State<HomePage> {
                   },
                   icon: Icon(Icons.add),
                 ),
-                RawMaterialButton(
-                  constraints: BoxConstraints.tightFor(
-                    width: 50.0,
-                    height: 50.0,
-                  ),
-                  onPressed: () {},
-                  elevation: 2.0,
-                  fillColor: Color(0xFFFEE1C7),
-                  child: Image.asset(
-                    'image/food.png',
-                    fit: BoxFit.cover,
-                    width: 30.0,
-                    height: 30.0,
-                  ),
-                  shape: CircleBorder(
-                    side: BorderSide(color: Colors.white),
-                  ),
+                RoundTypeButton(
+                  color: Color(0xFFFEE1C7),
+                  image: 'image/food.png',
                 ),
-                RawMaterialButton(
-                  constraints: BoxConstraints.tightFor(
-                    width: 50.0,
-                    height: 50.0,
-                  ),
-                  onPressed: () {},
-                  elevation: 2.0,
-                  fillColor: Color(0xFFFDDFFA),
-                  child: Image.asset(
-                    'image/flour.png',
-                    fit: BoxFit.cover,
-                    width: 30.0,
-                    height: 30.0,
-                  ),
-                  shape: CircleBorder(
-                    side: BorderSide(color: Colors.white),
-                  ),
+                RoundTypeButton(
+                  color: Color(0xFFFDDFFA),
+                  image: 'image/flour.png',
                 ),
               ],
             ),
             FoodListView(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class RoundTypeButton extends StatelessWidget {
+  final Color color;
+  final String image;
+  RoundTypeButton({@required this.color, @required this.image});
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      constraints: BoxConstraints.tightFor(
+        width: 50.0,
+        height: 50.0,
+      ),
+      onPressed: () {},
+      elevation: 2.0,
+      fillColor: color,
+      child: Image.asset(
+        image,
+        fit: BoxFit.cover,
+        width: 30.0,
+        height: 30.0,
+      ),
+      shape: CircleBorder(
+        side: BorderSide(color: Colors.white),
       ),
     );
   }

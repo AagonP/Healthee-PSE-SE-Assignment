@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/products.dart';
 import '../providers/user_input.dart';
 
 class Wrapper extends StatelessWidget {

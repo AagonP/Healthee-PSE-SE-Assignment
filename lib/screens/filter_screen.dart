@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 import 'package:pse_assignment/screens/saved_list_screen.dart';
-// import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 import '../widgets/filter_food_list_view.dart';
 import '../providers/products.dart';
 import '../providers/user_input.dart';
 import '../providers/filtered_saved_list.dart';
 import '../screens/saved_list_screen.dart';
-// import '../models/product.dart';
 
 class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
@@ -87,7 +85,8 @@ class FilterScreen extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 //saved list page
-                Navigator.push(context,MaterialPageRoute(builder: (context) => SavedListScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SavedListScreen()));
               },
               icon: Badge(
                   badgeColor: Colors.white,
