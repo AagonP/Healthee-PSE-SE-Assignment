@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 
-
 import '../widgets/drawer_view.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
@@ -19,8 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _controller = TextEditingController();
   List<String> id = List(20);
-  List<dynamic> foodRecipeJson = List(20);
-  DataHelper dataHelper = DataHelper();
+  //List<dynamic> foodRecipeJson = List(20);
+  //DataHelper dataHelper = DataHelper();
   var input;
 
   FoodData foodData = FoodData();
@@ -32,52 +31,8 @@ class _HomePageState extends State<HomePage> {
       var foodId = data['results'][i]['id'];
       id[i] = foodId.toString();
     }
-    //int id = data['results'][0]['id'];
-    for (int i = 0; i < 20; i++)   {
-      String recipeUrl =
-          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information';
-      foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
-      bool vegetarian = foodRecipeJson[i]['vegetarian'];
-      bool glutenFree = foodRecipeJson[i]['glutenFree'];
-      bool dairyFree = foodRecipeJson[i]['dairyFree'];
-      bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
-      bool popular = foodRecipeJson[i]['veryPopular'];
-      bool cheap = foodRecipeJson[i]['cheap'];
-      bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
-      String title = foodRecipeJson[i]['title'];
-      String photoURL = foodRecipeJson[i]['image'];
-      List<String> Ingredients = [];
-      List<String> Amount = [];
-      List<String> Unit = [];
-      int numberofIngredients = foodRecipeJson[i]['extendedIngredients'].length;
-      for (int j = 0; j < numberofIngredients; j++) {
-        String ingredient = foodRecipeJson[i]['extendedIngredients'][j]['name'];
-        var amount = foodRecipeJson[i]['extendedIngredients'][j]['amount'];
-        String unit = foodRecipeJson[i]['extendedIngredients'][j]['unit'];
-        Ingredients.add(ingredient);
-        Amount.add(amount.toStringAsFixed(2));
-        Unit.add(unit);
-      }
-      Product product = Product(
-        vegetarian: vegetarian,
-        glutenFree: glutenFree,
-        dairyFree: dairyFree,
-        veryHealthy: veryHealthy,
-        popular: popular,
-        cheap: cheap,
-        lowFodmap: lowFodmap,
-        name: title,
-        photoURL: photoURL,
-        type: 'food',
-        barCode: '1',
-        qrCode: '1',
-        description: 'sth',
-        ingredients: Ingredients,
-        amount: Amount,
-        unit: Unit,
-        illness:
-            setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
-      );
+    for (int i = 0; i < 20; i++) {
+      Product product = await foodData.decodeProduct(id[i]);
       if (product.name != null)
         Provider.of<Products>(context).addProduct(product);
     }
@@ -288,33 +243,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-//for (int i = 0; i < 20; i++) {
-//var foodId = data['results'][i]['id'];
-//id[i] = foodId.toInt();
-//}
-//for (int i = 0; i < 20; i) {
-//String _id = id[i].toString();
-//String recipeUrl =
-//'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$_id/information';
-//foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
-//bool vegetarian = foodRecipeJson[i]['vegetarian'];
-//bool glutenFree = foodRecipeJson[i]['glutenFree'];
-//bool dairyFree = foodRecipeJson[i]['dairyFree'];
-//bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
-//bool popular = foodRecipeJson[i]['veryPopular'];
-//bool cheap = foodRecipeJson[i]['cheap'];
-//bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
-//String title = foodRecipeJson[i]['title'];
-//String photoURL = foodRecipeJson[i]['image'];
-//Product product = Product(
-//vegetarian: vegetarian,
-//glutenFree: glutenFree,
-//dairyFree: dairyFree,
-//veryHealthy: veryHealthy,
-//popular: popular,
-//cheap: cheap,
-//lowFodmap: lowFodmap,
-//name: title,
-//photoURL: photoURL,
-//);
