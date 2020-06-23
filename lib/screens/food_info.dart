@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pse_assignment/models/product.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -142,161 +140,33 @@ class FoodInfo extends StatelessWidget {
             ),
             Column(
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xFFEFED99),
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        'vegetarian:',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        product.vegetarian ? 'true' : 'false',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
+                ContainerRefactor(
+                  title: 'vegetarian: ',
+                  value: product.vegetarian ? 'true' : 'false',
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xFFEFED99),
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        'glutenFree:',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        product.glutenFree ? 'true' : 'false',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
+                ContainerRefactor(
+                  title: 'glutenFree: ',
+                  value: product.glutenFree ? 'true' : 'false',
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xFFEFED99),
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        'dairyFree:',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        product.dairyFree ? 'true' : 'false',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
+                ContainerRefactor(
+                  title: 'dairyFree: ',
+                  value: product.dairyFree ? 'true' : 'false',
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xFFEFED99),
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        'cheap:',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        product.cheap ? 'true' : 'false',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
+                ContainerRefactor(
+                  title: 'cheap: ',
+                  value: product.cheap ? 'true' : 'false',
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xFFEFED99),
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        'popular:',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        product.popular ? 'true' : 'false',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
+                ContainerRefactor(
+                  title: 'popular: ',
+                  value: product.popular ? 'true' : 'false',
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        color: Color(0xFFEFED99),
-                        size: 20.0,
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        'lowFodMap:',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Text(
-                        product.lowFodmap ? 'true' : 'false',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ],
-                  ),
+                ContainerRefactor(
+                  title: 'lowFodMap: ',
+                  value: product.lowFodmap ? 'true' : 'false',
+                ),
+                ContainerRefactor(
+                  title: 'veryHealthy: ',
+                  value: product.veryHealthy ? 'true' : 'false',
                 ),
               ],
             ),
@@ -304,5 +174,42 @@ class FoodInfo extends StatelessWidget {
         ),
       ),
     ));
+  }
+}
+
+class ContainerRefactor extends StatelessWidget {
+  final String title;
+  final String value;
+
+  ContainerRefactor({@required this.title, @required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.star,
+            color: Color(0xFFEFED99),
+            size: 20.0,
+          ),
+          SizedBox(
+            width: 5.0,
+          ),
+          Text(
+            title,
+            style: TextStyle(fontSize: 18.0),
+          ),
+          SizedBox(
+            width: 5.0,
+          ),
+          Text(
+            value,
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ],
+      ),
+    );
   }
 }

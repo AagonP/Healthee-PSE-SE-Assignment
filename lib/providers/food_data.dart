@@ -24,7 +24,7 @@ class FoodData {
 
   Future<Product> decodeProduct(String id) async {
     String recipeUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information';
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information';
     dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
@@ -35,17 +35,17 @@ class FoodData {
     bool lowFodmap = jsonRecipe['lowFodmap'];
     String title = jsonRecipe['title'];
     String photoURL = jsonRecipe['image'];
-    List<String> Ingredients = [];
-    List<String> Amount = [];
-    List<String> Unit = [];
+    List<String> ingredients = [];
+    List<String> amount = [];
+    List<String> unit = [];
     int numberofIngredients = jsonRecipe['extendedIngredients'].length;
     for (int j = 0; j < numberofIngredients; j++) {
       String ingredient = jsonRecipe['extendedIngredients'][j]['name'];
       var amount = jsonRecipe['extendedIngredients'][j]['amount'];
-      String unit = jsonRecipe['extendedIngredients'][j]['unit'];
-      Ingredients.add(ingredient);
-      Amount.add(amount.toStringAsFixed(2));
-      Unit.add(unit);
+      String unitvalue = jsonRecipe['extendedIngredients'][j]['unit'];
+      ingredients.add(ingredient);
+      amount.add(amount.toStringAsFixed(2));
+      unit.add(unitvalue);
     }
     Product product = Product(
       vegetarian: vegetarian,
@@ -61,9 +61,9 @@ class FoodData {
       barCode: '1',
       qrCode: '1',
       description: 'sth',
-      ingredients: Ingredients,
-      amount: Amount,
-      unit: Unit,
+      ingredients: ingredients,
+      amount: amount,
+      unit: unit,
       illness:
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
