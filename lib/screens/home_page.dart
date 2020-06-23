@@ -6,6 +6,7 @@ import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
 import '../providers/food_data.dart';
+import '../widgets/category.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,6 +14,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   var _controller = TextEditingController();
   List<String> id = List(20);
   var input;
@@ -178,58 +185,31 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    //First button
-                  },
-                  icon: Icon(Icons.add),
+                RoundTypeButton(
+                  color: Color(0xFFF7F6C5),
+                  image: 'image/food.png',
+                  title: 'Vegan',
                 ),
-                IconButton(
-                  onPressed: () {
-                    //Second button
-                  },
-                  icon: Icon(Icons.add),
+                RoundTypeButton(
+                  color: Color(0xFFCEFFC0),
+                  image: 'image/dairy.png',
+                  title: 'DairyFree',
                 ),
                 RoundTypeButton(
                   color: Color(0xFFFEE1C7),
-                  image: 'image/food.png',
+                  image: 'image/fruit.png',
+                  title: 'LowFodMap',
                 ),
                 RoundTypeButton(
                   color: Color(0xFFFDDFFA),
-                  image: 'image/flour.png',
+                  image: 'image/coin.png',
+                  title: 'Cheap',
                 ),
               ],
             ),
             FoodListView(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class RoundTypeButton extends StatelessWidget {
-  final Color color;
-  final String image;
-  RoundTypeButton({@required this.color, @required this.image});
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      constraints: BoxConstraints.tightFor(
-        width: 50.0,
-        height: 50.0,
-      ),
-      onPressed: () {},
-      elevation: 2.0,
-      fillColor: color,
-      child: Image.asset(
-        image,
-        fit: BoxFit.cover,
-        width: 30.0,
-        height: 30.0,
-      ),
-      shape: CircleBorder(
-        side: BorderSide(color: Colors.white),
       ),
     );
   }

@@ -35,17 +35,17 @@ class FoodData {
     bool lowFodmap = jsonRecipe['lowFodmap'];
     String title = jsonRecipe['title'];
     String photoURL = jsonRecipe['image'];
-    List<String> ingredients = [];
-    List<String> amount = [];
-    List<String> unit = [];
+    List<String> ingredientList = [];
+    List<String> amountList = [];
+    List<String> unitList = [];
     int numberofIngredients = jsonRecipe['extendedIngredients'].length;
     for (int j = 0; j < numberofIngredients; j++) {
       String ingredient = jsonRecipe['extendedIngredients'][j]['name'];
       var amount = jsonRecipe['extendedIngredients'][j]['amount'];
-      String unitvalue = jsonRecipe['extendedIngredients'][j]['unit'];
-      ingredients.add(ingredient);
-      amount.add(amount.toStringAsFixed(2));
-      unit.add(unitvalue);
+      String unit = jsonRecipe['extendedIngredients'][j]['unit'];
+      ingredientList.add(ingredient);
+      amountList.add(amount.toStringAsFixed(2));
+      unitList.add(unit);
     }
     Product product = Product(
       vegetarian: vegetarian,
@@ -61,9 +61,9 @@ class FoodData {
       barCode: '1',
       qrCode: '1',
       description: 'sth',
-      ingredients: ingredients,
-      amount: amount,
-      unit: unit,
+      ingredients: ingredientList,
+      amount: amountList,
+      unit: unitList,
       illness:
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
