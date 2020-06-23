@@ -3,10 +3,12 @@ import 'package:pse_assignment/models/product.dart';
 import 'data_helper.dart';
 import '../models/product.dart';
 import 'dart:math';
+import '../providers/user_input.dart';
 
 const int numberOfRecipe = 20;
 
 class FoodData {
+  DataHelper dataHelper = DataHelper();
   List<int> id = List(numberOfRecipe);
   List<dynamic> foodRecipeJson = List(numberOfRecipe);
   List<Product> foodData = List(numberOfRecipe);
@@ -19,37 +21,52 @@ class FoodData {
     var foodIdJson = await dataHelper.fetchData(idUrl);
     return foodIdJson;
   }
-}
 
-//for (int i = 0; i < 20; i++) {
-//var foodId = foodIdJson['results'][i]['id'];
-//id[i] = foodId.toInt();
-//}
-//for (int i = 0; i < 20; i) {
-//String _id = id[i].toString();
-//String recipeUrl =
-//'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$_id/information';
-//foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
-//bool vegetarian = foodRecipeJson[i]['vegetarian'];
-//bool glutenFree = foodRecipeJson[i]['glutenFree'];
-//bool dairyFree = foodRecipeJson[i]['dairyFree'];
-//bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
-//bool popular = foodRecipeJson[i]['veryPopular'];
-//bool cheap = foodRecipeJson[i]['cheap'];
-//bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
-//String title = foodRecipeJson[i]['title'];
-//String photoURL = foodRecipeJson[i]['image'];
-//Product product = Product(
-//vegetarian: vegetarian,
-//glutenFree: glutenFree,
-//dairyFree: dairyFree,
-//veryHealthy: veryHealthy,
-//popular: popular,
-//cheap: cheap,
-//lowFodmap: lowFodmap,
-//name: title,
-//photoURL: photoURL,
-//);
-//foodData[i] = product;
-//}
-//return foodData;
+  Future<Product> decodeProduct(String id) async {
+    String recipeUrl =
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id}/information';
+    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
+    bool vegetarian = jsonRecipe['vegetarian'];
+    bool glutenFree = jsonRecipe['glutenFree'];
+    bool dairyFree = jsonRecipe['dairyFree'];
+    bool veryHealthy = jsonRecipe['veryHealthy'];
+    bool popular = jsonRecipe['veryPopular'];
+    bool cheap = jsonRecipe['cheap'];
+    bool lowFodmap = jsonRecipe['lowFodmap'];
+    String title = jsonRecipe['title'];
+    String photoURL = jsonRecipe['image'];
+    List<String> Ingredients = [];
+    List<String> Amount = [];
+    List<String> Unit = [];
+    int numberofIngredients = jsonRecipe['extendedIngredients'].length;
+    for (int j = 0; j < numberofIngredients; j++) {
+      String ingredient = jsonRecipe['extendedIngredients'][j]['name'];
+      var amount = jsonRecipe['extendedIngredients'][j]['amount'];
+      String unit = jsonRecipe['extendedIngredients'][j]['unit'];
+      Ingredients.add(ingredient);
+      Amount.add(amount.toStringAsFixed(2));
+      Unit.add(unit);
+    }
+    Product product = Product(
+      vegetarian: vegetarian,
+      glutenFree: glutenFree,
+      dairyFree: dairyFree,
+      veryHealthy: veryHealthy,
+      popular: popular,
+      cheap: cheap,
+      lowFodmap: lowFodmap,
+      name: title,
+      photoURL: photoURL,
+      type: 'food',
+      barCode: '1',
+      qrCode: '1',
+      description: 'sth',
+      ingredients: Ingredients,
+      amount: Amount,
+      unit: Unit,
+      illness:
+          setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
+    );
+    return product;
+  }
+}
