@@ -8,6 +8,7 @@ import '../widgets/food_list_view.dart';
 import '../providers/food_data.dart';
 import '../widgets/category.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -19,23 +20,18 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
   }
-  String res ="";
-  String scan="";
 
-  Future scanner() async{
-    scan = await FlutterBarcodeScanner.scanBarcode("#009922", "Cancel", true,  ScanMode.DEFAULT);
+  String res = "Sample code";
+  String scan = "";
+
+  Future scanner() async {
+    scan = await FlutterBarcodeScanner.scanBarcode(
+        "#009922", "Cancel", true, ScanMode.DEFAULT);
     setState(() {
       res = scan;
     });
   }
 
-  createAlertDialog(BuildContext context){
-    return showDialog(context: context,builder: (context){
-      return AlertDialog(
-        title: Text(res),
-      );
-    });
-  }
   var _controller = TextEditingController();
   List<String> id = List(20);
   var input;
@@ -191,9 +187,15 @@ class _HomePageState extends State<HomePage> {
                 Card(
                   child: IconButton(
                     onPressed: () {
-                     // Navigator.pushNamed(context, "ScanScreen");
+                      // Navigator.pushNamed(context, "ScanScreen");
                       scanner();
-                      createAlertDialog(context);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(res),
+                            );
+                          });
                     },
                     icon: Icon(Icons.camera_alt),
                   ),
