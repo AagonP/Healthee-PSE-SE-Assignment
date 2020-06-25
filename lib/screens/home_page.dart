@@ -29,6 +29,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  createAlertDialog(BuildContext context){
+    return showDialog(context: context,builder: (context){
+      return AlertDialog(
+        title: Text(res),
+      );
+    });
+  }
   var _controller = TextEditingController();
   List<String> id = List(20);
   var input;
@@ -186,6 +193,7 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                      // Navigator.pushNamed(context, "ScanScreen");
                       scanner();
+                      createAlertDialog(context);
                     },
                     icon: Icon(Icons.camera_alt),
                   ),
