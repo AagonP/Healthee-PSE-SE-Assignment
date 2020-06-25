@@ -17,7 +17,7 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import './providers/filtered_saved_list.dart';
 import './screens/plan_for_a_diet_screens/plan_for_a_diet_providers/user_health_data.dart';
-
+import './screens/scan_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
           '/planning-option-screen': (context) => PlanningOptionScreen(),
           '/diet-timetable-screen': (context) => DietTimetableScreen(),
           '/daily-detail-screen': (context) => DailyDetailScreen(),
-          // 'ScanScreen': (context) => ScanScreen(),
+           'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
       ),
