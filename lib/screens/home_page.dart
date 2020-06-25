@@ -7,7 +7,7 @@ import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
 import '../providers/food_data.dart';
 import '../widgets/category.dart';
-
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -18,6 +18,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+  String res ="";
+  String scan="";
+
+  Future scanner() async{
+    scan = await FlutterBarcodeScanner.scanBarcode("#009922", "Cancel", true,  ScanMode.DEFAULT);
+    setState(() {
+      res = scan;
+    });
   }
 
   var _controller = TextEditingController();
@@ -175,7 +184,8 @@ class _HomePageState extends State<HomePage> {
                 Card(
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'ScanScreen');
+                     // Navigator.pushNamed(context, "ScanScreen");
+                      scanner();
                     },
                     icon: Icon(Icons.camera_alt),
                   ),
