@@ -219,7 +219,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Card(
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "ScanScreen");
+                    },
                     icon: Icon(Icons.camera_alt),
                   ),
                 ),
