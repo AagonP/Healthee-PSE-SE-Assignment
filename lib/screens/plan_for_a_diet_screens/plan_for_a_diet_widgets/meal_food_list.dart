@@ -5,9 +5,11 @@ import '../../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.d
 class MealFoodList extends StatelessWidget {
   final String _mealType;
   final int _index;
+  final int _mealTypeIndex;
   DietPlanData _dietPlanData;
 
-  MealFoodList(this._index, this._mealType, this._dietPlanData);
+  MealFoodList(
+      this._index, this._mealTypeIndex, this._mealType, this._dietPlanData);
 
   Widget identifyMealIcon() {
     if (_mealType == 'Breakfast') {
@@ -55,6 +57,9 @@ class MealFoodList extends StatelessWidget {
                 Icon(
                   Icons.star,
                   color: Colors.yellowAccent,
+                ),
+                Text(
+                  '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
                 ),
               ],
             ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
+
 
 class DailyDietItem extends StatefulWidget {
   final int _index;
-  final DietPlanData _dietPlanData;
   Color _itemColor = Colors.black;
   Color _backgroundColor = Colors.white;
 
-  DailyDietItem(this._index, this._dietPlanData);
+  DailyDietItem(this._index);
 
   @override
   _DailyDietItemState createState() => _DailyDietItemState();
@@ -19,7 +18,6 @@ class _DailyDietItemState extends State<DailyDietItem> {
       '/daily-detail-screen',
       arguments: {
         'index': widget._index,
-        'dietPlanData': widget._dietPlanData,
       },
     );
   }

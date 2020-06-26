@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './plan_for_a_diet_widgets/meal_food_list.dart';
 import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
-
-/*import '../../plan_for_a_diet/dinner_food_list.dart';
-import '../../plan_for_a_diet/daily_total_list.dart';
-import '../../plan_for_a_diet/shop_list.dart';*/
 
 class DailyDetailScreen extends StatelessWidget {
   @override
@@ -14,7 +11,7 @@ class DailyDetailScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     var screenWidth = MediaQuery.of(context).size.width;
     final _index = routeArgs['index'];
-    final _dietPlanData = routeArgs['dietPlanData'];
+    final _dietPlanData = Provider.of<DietPlanData>(context);
 
     // TODO: implement DailyDetailScreen build
     return Scaffold(
@@ -34,9 +31,9 @@ class DailyDetailScreen extends StatelessWidget {
           SizedBox(
             height: 5.0,
           ),
-          MealFoodList(_index, 'Breakfast', _dietPlanData),
-          MealFoodList(_index, 'Lunch', _dietPlanData),
-          MealFoodList(_index, 'Dinner', _dietPlanData),
+          MealFoodList(_index, 0, 'Breakfast', _dietPlanData),
+          MealFoodList(_index, 1, 'Lunch', _dietPlanData),
+          MealFoodList(_index, 2, 'Dinner', _dietPlanData),
           Card(
             child: Column(
               children: <Widget>[

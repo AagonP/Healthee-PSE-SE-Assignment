@@ -12,7 +12,7 @@ class DietPlanData with ChangeNotifier{
 
   Future <void> setWholePlan(double userDailyCalory) async {
     _userCalory = userDailyCalory;
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 1; i++) {
       _dailyList[i] = DailyData(i);
       _dailyList[i].setDailyPlan(_userCalory);
     }
