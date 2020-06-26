@@ -32,7 +32,8 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
                 switch (widget.title) {
                   case 'Vegan':
                     if (!currentList.elementAt(i).vegetarian)
-                      Provider.of<Products>(context).clearProduct();
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
                     break;
                   case 'DairyFree':
                     if (!currentList.elementAt(i).dairyFree)
@@ -73,3 +74,5 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
     );
   }
 }
+
+//stink
