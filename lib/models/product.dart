@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/illness.dart';
 
 class Product {
   final String type;
@@ -40,27 +41,4 @@ class Product {
       this.unit});
 }
 
-class Illness {
-  bool obesity;
-  bool highBloodPressure;
-  bool stomache;
-  bool headache;
-  bool celiac;
-  bool glutenSensitivity;
-  bool heartDisease;
-  bool digestion;
-  bool peripheralVascular;
-  bool stroke;
-  Illness({
-    @required this.headache,
-    @required this.obesity,
-    @required this.stomache,
-    @required this.highBloodPressure,
-    @required this.celiac,
-    @required this.digestion,
-    @required this.glutenSensitivity,
-    @required this.heartDisease,
-    @required this.peripheralVascular,
-    @required this.stroke,
-  });
-}
+

@@ -32,11 +32,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+//Text input controller
   var _controller = TextEditingController();
   List<String> id = List(20);
   var input;
   FoodData foodData = FoodData();
 
+//Update UI when loading product list
   void updateUI(String name) async {
     Provider.of<Products>(context).clearProduct();
     var data = await foodData.getFoodData(name);
@@ -60,41 +62,9 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return Card(
-                    child: Column(
-                      children: <Widget>[
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Type of illness'),
-                          ),
-                        ),
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Type of illness'),
-                          ),
-                        ),
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Type of illness'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
+              //TODO: Add user information here
+              //TODO: Generate string ID for user
+              //TODO: Save user info
             },
             icon: Icon(Icons.account_circle),
             iconSize: 30,
@@ -106,6 +76,7 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         child: ListView(
           children: <Widget>[
+            //Title "Healthee"
             Container(
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Align(
@@ -120,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            //Second Title "Nutrion & Diet"
             Container(
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Align(
@@ -139,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: Card(
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    //Search input field
                     child: Container(
                       height: 45.0,
                       child: TextField(
@@ -169,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                // Filter search
                 Card(
                   child: IconButton(
                     onPressed: () {
@@ -184,6 +158,7 @@ class _HomePageState extends State<HomePage> {
                         child: Icon(Icons.shopping_cart)), //filter
                   ),
                 ),
+                //Scan screen
                 Card(
                   child: IconButton(
                     onPressed: () {
@@ -202,6 +177,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
+            //Food filter
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

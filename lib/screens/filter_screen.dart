@@ -13,6 +13,29 @@ class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
   @override
   Widget build(BuildContext context) {
+    void checkFilterStatus() {
+      if (!isFilterOn) {
+        isFilterOn = true;
+        Provider.of<Products>(context).selectedProducts.forEach((element) {
+          Provider.of<Products>(context)
+              .doFilter(Provider.of<UserInput>(context), element);
+          print('Filter activated');
+        });
+      } else {
+        isFilterOn = false;
+        Provider.of<Products>(context).selectedProducts.forEach((element) {
+          Provider.of<Products>(context)
+              .updateProductHealthValid(element, true);
+          print('Filter deactivated');
+        });
+      }
+    }
+
+    String filterStatusString() {
+      if (isFilterOn == true) return 'Setting has applied!';
+      return 'Setting has not applied';
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -43,25 +66,7 @@ class FilterScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.filter_list),
               onPressed: () {
-                if (!isFilterOn) {
-                  isFilterOn = true;
-                  Provider.of<Products>(context)
-                      .selectedProducts
-                      .forEach((element) {
-                    Provider.of<Products>(context)
-                        .doFilter(Provider.of<UserInput>(context), element);
-                    print('Filter activated');
-                  });
-                } else {
-                  isFilterOn = false;
-                  Provider.of<Products>(context)
-                      .selectedProducts
-                      .forEach((element) {
-                    Provider.of<Products>(context)
-                        .updateProductHealthValid(element, true);
-                    print('Filter deactivated');
-                  });
-                }
+                checkFilterStatus();
               },
             ),
           ],
@@ -74,10 +79,9 @@ class FilterScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                    (isFilterOn == true)
-                        ? 'Setting has applied!'
-                        : 'Setting has not applied',
-                    style: TextStyle(fontSize: 14)),
+                  filterStatusString(),
+                  style: TextStyle(fontSize: 14),
+                ),
               ),
             ),
           ),
