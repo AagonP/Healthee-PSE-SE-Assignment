@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
 import '../../../providers/data_helper.dart';
+import 'package:provider/provider.dart';
+import 'user_health_data.dart';
+import 'dart:math';
 
 class Meal {
   String _id;
@@ -45,8 +49,7 @@ class DailyData {
   double _protein;
   double _fat;
   double _carbohydrate;
-  List<Meal> _threeMeals = List(3);
-  List<dynamic> dailyRecipeJson = List(3);
+  List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
 
   DailyData(this._index);
 
@@ -67,7 +70,7 @@ class DailyData {
     var dailyProtein = dailyDataJson['nutrients']['protein'];
     var dailyFat = dailyDataJson['nutrients']['fat'];
     var dailyCarbohydrate = dailyDataJson['nutrients']['carbohydrates'];
-
+    print(dailyDataJson);
     setAllForDay(
         calory: dailyCalory,
         protein: dailyProtein,
@@ -77,7 +80,7 @@ class DailyData {
     for (int i = 0; i < 3; i++) {
       var mealId = dailyDataJson['meals'][i]['id'];
       var mealTitle = dailyDataJson['meals'][i]['title'];
-      print(mealTitle);
+
       _threeMeals[i]
           .setAllForMeal(id: mealId.toString(), title: mealTitle, mealType: i);
     }

@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 
-class DailyDietItem extends StatelessWidget {
+
+class DailyDietItem extends StatefulWidget {
   final int _index;
-  final DietPlanData _dietPlanData;
+  Color _itemColor = Colors.black;
+  Color _backgroundColor = Colors.white;
 
-  DailyDietItem(this._index, this._dietPlanData);
+  DailyDietItem(this._index);
 
+  @override
+  _DailyDietItemState createState() => _DailyDietItemState();
+}
+
+class _DailyDietItemState extends State<DailyDietItem> {
   void _clickDailyItem(BuildContext context) {
     Navigator.of(context).pushNamed(
       '/daily-detail-screen',
       arguments: {
-        'index': _index,
-        'dietPlanData': _dietPlanData,
+        'index': widget._index,
       },
     );
   }
@@ -24,20 +29,26 @@ class DailyDietItem extends StatelessWidget {
 
     // TODO: implement DailyDietItem build
     return Card(
+      color: widget._backgroundColor,
       child: GridTile(
         child: Column(
           children: <Widget>[
             Container(
               alignment: Alignment.center,
               height: screenHeight / 15,
-              child: Text('Day $_index'),
+              child: Text(
+                'Day ${widget._index}',
+                style: TextStyle(
+                  color: widget._itemColor,
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(2.0, 7.0, 2.0, 0.0),
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: Colors.grey,
+                    color: widget._itemColor,
                   ),
                 ),
               ),
@@ -45,13 +56,25 @@ class DailyDietItem extends StatelessWidget {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.search),
+                    color: widget._itemColor,
                     iconSize: screenWidth / 17,
                     onPressed: () => _clickDailyItem(context),
                   ),
                   IconButton(
                     icon: Icon(Icons.check_circle),
+                    color: widget._itemColor,
                     iconSize: screenWidth / 17,
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        if (widget._backgroundColor == Colors.white) {
+                          widget._backgroundColor = Colors.green[100];
+                          widget._itemColor = Colors.green[600];
+                        } else {
+                          widget._backgroundColor = Colors.white;
+                          widget._itemColor = Colors.black;
+                        }
+                      });
+                    },
                   ),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,

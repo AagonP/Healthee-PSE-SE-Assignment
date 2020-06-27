@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class UserHealthData with ChangeNotifier {
   // User's Data include:
 
-  double _userHeight = 1;
-  double _userWeight = 1;
-  int _userAge = 1;
+  double _userHeight = 0;
+  double _userWeight = 0;
+  int _userAge = 0;
   bool _userIsMale = true;
   String _userExerciseFre = 'Sedentary';
-  double _userDailyCalory = 1;
+  double _userDailyCalory = 0;
 
   // This is the function used to estimate Calories needed for a day,
   // using Harris Benedict equation.

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
+import '../../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 
 class MealFoodList extends StatelessWidget {
   final String _mealType;
   final int _index;
-  final DietPlanData _dietPlanData;
+  final int _mealTypeIndex;
+  DietPlanData _dietPlanData;
 
-  MealFoodList(this._index, this._mealType, this._dietPlanData);
+  MealFoodList(
+      this._index, this._mealTypeIndex, this._mealType, this._dietPlanData);
 
   Widget identifyMealIcon() {
     if (_mealType == 'Breakfast') {
@@ -31,6 +33,7 @@ class MealFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget mealIcon = identifyMealIcon();
+    var screenWidth = MediaQuery.of(context).size.width;
 
     // TODO: implement build
     return Card(
@@ -41,7 +44,23 @@ class MealFoodList extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 mealIcon,
-                Text(_dietPlanData.dailyList[_index].calory.toString()),
+                Text(_mealType),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: 30,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.yellowAccent,
+                ),
+                Text(
+                  '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+                ),
               ],
             ),
           ),

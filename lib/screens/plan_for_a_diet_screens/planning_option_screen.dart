@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 
+import '../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 import './plan_for_a_diet_providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
+
   void _clickFollowAvailablePlan(BuildContext context) {
     Navigator.of(context).pushNamed('/health-data-input-screen');
   }
