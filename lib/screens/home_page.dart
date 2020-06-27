@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-
-
 import '../widgets/drawer_view.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
-import '../providers/data_helper.dart';
 import '../providers/food_data.dart';
-import '../providers/user_input.dart';
+import '../widgets/category.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,14 +15,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  String res = "Sample code";
+  String scan = "";
+
+  Future scanner() async {
+    scan = await FlutterBarcodeScanner.scanBarcode(
+        "#009922", "Cancel", true, ScanMode.DEFAULT);
+    setState(() {
+      res = scan;
+    });
+  }
+
+//Text input controller
   var _controller = TextEditingController();
   List<String> id = List(20);
-  List<dynamic> foodRecipeJson = List(20);
-  DataHelper dataHelper = DataHelper();
   var input;
-
   FoodData foodData = FoodData();
 
+//Update UI when loading product list
   void updateUI(String name) async {
     Provider.of<Products>(context).clearProduct();
     var data = await foodData.getFoodData(name);
@@ -32,52 +46,8 @@ class _HomePageState extends State<HomePage> {
       var foodId = data['results'][i]['id'];
       id[i] = foodId.toString();
     }
-    //int id = data['results'][0]['id'];
-    for (int i = 0; i < 20; i++)   {
-      String recipeUrl =
-          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information';
-      foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
-      bool vegetarian = foodRecipeJson[i]['vegetarian'];
-      bool glutenFree = foodRecipeJson[i]['glutenFree'];
-      bool dairyFree = foodRecipeJson[i]['dairyFree'];
-      bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
-      bool popular = foodRecipeJson[i]['veryPopular'];
-      bool cheap = foodRecipeJson[i]['cheap'];
-      bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
-      String title = foodRecipeJson[i]['title'];
-      String photoURL = foodRecipeJson[i]['image'];
-      List<String> Ingredients = [];
-      List<String> Amount = [];
-      List<String> Unit = [];
-      int numberofIngredients = foodRecipeJson[i]['extendedIngredients'].length;
-      for (int j = 0; j < numberofIngredients; j++) {
-        String ingredient = foodRecipeJson[i]['extendedIngredients'][j]['name'];
-        var amount = foodRecipeJson[i]['extendedIngredients'][j]['amount'];
-        String unit = foodRecipeJson[i]['extendedIngredients'][j]['unit'];
-        Ingredients.add(ingredient);
-        Amount.add(amount.toStringAsFixed(2));
-        Unit.add(unit);
-      }
-      Product product = Product(
-        vegetarian: vegetarian,
-        glutenFree: glutenFree,
-        dairyFree: dairyFree,
-        veryHealthy: veryHealthy,
-        popular: popular,
-        cheap: cheap,
-        lowFodmap: lowFodmap,
-        name: title,
-        photoURL: photoURL,
-        type: 'food',
-        barCode: '1',
-        qrCode: '1',
-        description: 'sth',
-        ingredients: Ingredients,
-        amount: Amount,
-        unit: Unit,
-        illness:
-            setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
-      );
+    for (int i = 0; i < 20; i++) {
+      Product product = await foodData.decodeProduct(id[i]);
       if (product.name != null)
         Provider.of<Products>(context).addProduct(product);
     }
@@ -92,43 +62,9 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return Card(
-                    child: Column(
-                      children: <Widget>[
-                        Center(
-                          child: Card(
-                            margin: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: TextField(
-                              decoration:
-                                  InputDecoration(hintText: 'Type of illness'),
-                            ),
-                          ),
-                        ),
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Type of illness'),
-                          ),
-                        ),
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Type of illness'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
+              //TODO: Add user information here
+              //TODO: Generate string ID for user
+              //TODO: Save user info
             },
             icon: Icon(Icons.account_circle),
             iconSize: 30,
@@ -140,6 +76,7 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         child: ListView(
           children: <Widget>[
+            //Title "Healthee"
             Container(
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Align(
@@ -154,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            //Second Title "Nutrion & Diet"
             Container(
               margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: Align(
@@ -173,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: Card(
                     margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    //Search input field
                     child: Container(
                       height: 45.0,
                       child: TextField(
@@ -203,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                // Filter search
                 Card(
                   child: IconButton(
                     onPressed: () {
@@ -218,66 +158,48 @@ class _HomePageState extends State<HomePage> {
                         child: Icon(Icons.shopping_cart)), //filter
                   ),
                 ),
+                //Scan screen
                 Card(
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'ScanScreen');
+                      // Navigator.pushNamed(context, "ScanScreen");
+                      scanner();
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(res),
+                            );
+                          });
                     },
                     icon: Icon(Icons.camera_alt),
                   ),
                 ),
               ],
             ),
+            //Food filter
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    //First button
-                  },
-                  icon: Icon(Icons.add),
+                RoundTypeButton(
+                  color: Color(0xFFF7F6C5),
+                  image: 'image/food.png',
+                  title: 'Vegan',
                 ),
-                IconButton(
-                  onPressed: () {
-                    //Second button
-                  },
-                  icon: Icon(Icons.add),
+                RoundTypeButton(
+                  color: Color(0xFFCEFFC0),
+                  image: 'image/dairy.png',
+                  title: 'DairyFree',
                 ),
-                RawMaterialButton(
-                  constraints: BoxConstraints.tightFor(
-                    width: 50.0,
-                    height: 50.0,
-                  ),
-                  onPressed: () {},
-                  elevation: 2.0,
-                  fillColor: Color(0xFFFEE1C7),
-                  child: Image.asset(
-                    'image/food.png',
-                    fit: BoxFit.cover,
-                    width: 30.0,
-                    height: 30.0,
-                  ),
-                  shape: CircleBorder(
-                    side: BorderSide(color: Colors.white),
-                  ),
+                RoundTypeButton(
+                  color: Color(0xFFFEE1C7),
+                  image: 'image/fruit.png',
+                  title: 'LowFodMap',
                 ),
-                RawMaterialButton(
-                  constraints: BoxConstraints.tightFor(
-                    width: 50.0,
-                    height: 50.0,
-                  ),
-                  onPressed: () {},
-                  elevation: 2.0,
-                  fillColor: Color(0xFFFDDFFA),
-                  child: Image.asset(
-                    'image/flour.png',
-                    fit: BoxFit.cover,
-                    width: 30.0,
-                    height: 30.0,
-                  ),
-                  shape: CircleBorder(
-                    side: BorderSide(color: Colors.white),
-                  ),
+                RoundTypeButton(
+                  color: Color(0xFFFDDFFA),
+                  image: 'image/coin.png',
+                  title: 'Cheap',
                 ),
               ],
             ),
@@ -288,35 +210,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-//fuck
-//fhjkgkjhklhkl
-//for (int i = 0; i < 20; i++) {
-//var foodId = data['results'][i]['id'];
-//id[i] = foodId.toInt();
-//}
-//for (int i = 0; i < 20; i) {
-//String _id = id[i].toString();
-//String recipeUrl =
-//'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$_id/information';
-//foodRecipeJson[i] = await dataHelper.fetchData(recipeUrl);
-//bool vegetarian = foodRecipeJson[i]['vegetarian'];
-//bool glutenFree = foodRecipeJson[i]['glutenFree'];
-//bool dairyFree = foodRecipeJson[i]['dairyFree'];
-//bool veryHealthy = foodRecipeJson[i]['veryHealthy'];
-//bool popular = foodRecipeJson[i]['veryPopular'];
-//bool cheap = foodRecipeJson[i]['cheap'];
-//bool lowFodmap = foodRecipeJson[i]['lowFodmap'];
-//String title = foodRecipeJson[i]['title'];
-//String photoURL = foodRecipeJson[i]['image'];
-//Product product = Product(
-//vegetarian: vegetarian,
-//glutenFree: glutenFree,
-//dairyFree: dairyFree,
-//veryHealthy: veryHealthy,
-//popular: popular,
-//cheap: cheap,
-//lowFodmap: lowFodmap,
-//name: title,
-//photoURL: photoURL,
-//);

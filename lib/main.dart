@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:pse_assignment/screens/plan_for_a_diet_screens/health_data_input_screen.dart';
-import 'package:pse_assignment/screens/plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 import './screens/plan_for_a_diet_screens/health_data_input_screen.dart';
+import 'package:pse_assignment/screens/plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
 import './screens/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './screens/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './screens/plan_for_a_diet_screens/planning_option_screen.dart';
@@ -18,10 +18,7 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import './providers/filtered_saved_list.dart';
 import './screens/plan_for_a_diet_screens/plan_for_a_diet_providers/user_health_data.dart';
-
 import './screens/scan_screen.dart';
-//testing
-import './providers/data_helper.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,6 +28,7 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -70,7 +68,7 @@ class _MyAppState extends State<MyApp> {
           '/planning-option-screen': (context) => PlanningOptionScreen(),
           '/diet-timetable-screen': (context) => DietTimetableScreen(),
           '/daily-detail-screen': (context) => DailyDetailScreen(),
-          // 'ScanScreen': (context) => ScanScreen(),
+          'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
       ),
