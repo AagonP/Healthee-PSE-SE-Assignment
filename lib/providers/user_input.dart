@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
+import '../models/illness.dart';
 
 class UserInput with ChangeNotifier {
   int _numberOfIllness = 10;
