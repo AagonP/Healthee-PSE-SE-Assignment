@@ -7,7 +7,7 @@ import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
 import '../providers/food_data.dart';
 import '../widgets/category.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+//import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
   String scan = "";
 
   Future scanner() async {
-    scan = await FlutterBarcodeScanner.scanBarcode(
+    /*scan = await FlutterBarcodeScanner.scanBarcode(
         "#009922", "Cancel", true, ScanMode.DEFAULT);
     setState(() {
       res = scan;
-    });
+    });*/
   }
 
 //Text input controller
