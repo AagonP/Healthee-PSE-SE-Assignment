@@ -10,6 +10,18 @@ class FoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Product> _currentList = Provider.of<Products>(context).products;
+    Widget displayProductImage(int index) {
+      if (_currentList.elementAt(index).photoURL != null)
+        return Image.network(
+          _currentList.elementAt(index).photoURL,
+        );
+      else
+        return Container(
+          height: 90.0,
+          color: Colors.white,
+        );
+    }
+
     return GridView.count(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -30,6 +42,7 @@ class FoodListView extends StatelessWidget {
                   margin: EdgeInsets.all(5),
                   child: GestureDetector(
                     onTap: () {
+                      //NavigateToFoodInfoScreen()
                       Navigator.pushNamed(context, 'FoodInfoScreen',
                           arguments: _currentList.elementAt(index));
                     },
@@ -62,21 +75,14 @@ class FoodListView extends StatelessWidget {
                           color: Colors.red,
                           icon: Icons.delete,
                           onTap: () {
-                           Provider.of<Products>(context).removeProduct(_currentList.elementAt(index));
+                            Provider.of<Products>(context)
+                                .removeProduct(_currentList.elementAt(index));
                           },
                         ),
                       ],
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
-                        child:
-                            (_currentList.elementAt(index).photoURL != null)
-                                ? Image.network(
-                                    _currentList.elementAt(index).photoURL,
-                                  )
-                                : Container(
-                                    height: 90.0,
-                                    color: Colors.white,
-                                  ),
+                        child: displayProductImage(index),
                       ),
                     ),
                   ),

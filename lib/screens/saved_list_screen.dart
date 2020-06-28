@@ -10,6 +10,23 @@ class SavedListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Product> _currentList =
         Provider.of<FilterSavedList>(context).currentList;
+    navigateToFoodInfoScreen(int idx) {
+      Navigator.pushNamed(context, 'FoodInfoScreen',
+          arguments: _currentList.elementAt(idx));
+    }
+
+    Widget displayProductImage(int index) {
+      if (_currentList.elementAt(index).photoURL != null)
+        return Image.network(
+          _currentList.elementAt(index).photoURL,
+        );
+      else
+        return Container(
+          height: 90.0,
+          color: Colors.white,
+        );
+    }
+
     return Scaffold(
         appBar: AppBar(),
         body: GridView.count(
@@ -30,22 +47,11 @@ class SavedListScreen extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.all(5),
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, 'FoodInfoScreen',
-                              arguments: _currentList.elementAt(index));
-                        },
+                        onTap: navigateToFoodInfoScreen(index),
                         // slide image function here
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
-                          child:
-                              (_currentList.elementAt(index).photoURL != null)
-                                  ? Image.network(
-                                      _currentList.elementAt(index).photoURL,
-                                    )
-                                  : Container(
-                                      height: 90.0,
-                                      color: Colors.white,
-                                    ),
+                          child: displayProductImage(index),
                         ),
                       ),
                     ),

@@ -52,7 +52,16 @@ class _HomePageState extends State<HomePage> {
         Provider.of<Products>(context).addProduct(product);
     }
   }
-
+  void navigateToFilterScreen(BuildContext context) {
+    //NavigateToFilterScreen()
+    Navigator.pushNamed(context, 'FilterScreen');
+  }
+  void searchOnSubmitted(String context) {
+    //onSubmittedChange(String key)
+    print(context);
+    input = context;
+    updateUI(input);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,9 +125,7 @@ class _HomePageState extends State<HomePage> {
                       height: 45.0,
                       child: TextField(
                         onSubmitted: (context) {
-                          print(context);
-                          input = context;
-                          updateUI(input);
+                          searchOnSubmitted(context);
                         },
                         controller: _controller,
                         decoration: InputDecoration(
@@ -146,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                 Card(
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'FilterScreen');
+                      navigateToFilterScreen(context);
                     },
                     icon: Badge(
                         badgeColor: Colors.white,

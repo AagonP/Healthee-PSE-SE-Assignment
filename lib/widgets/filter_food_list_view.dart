@@ -25,7 +25,7 @@ class FilterFoodListView extends StatelessWidget {
       }
     }
 
-    Future<void> _showMyDialog(int index) async {
+    Future<void> _showAlertOnSavingBlurred(int index) async {
       return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -96,7 +96,7 @@ class FilterFoodListView extends StatelessWidget {
                             onTap: () {
                               if (!_currentList.elementAt(index).isHealthy) {
                                 //Alert dialog here
-                                _showMyDialog(index);
+                                _showAlertOnSavingBlurred(index);
                                 return;
                               }
                               _saveProduct(index);

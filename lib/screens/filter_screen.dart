@@ -31,7 +31,7 @@ class FilterScreen extends StatelessWidget {
       }
     }
 
-    String filterStatusString() {
+    String displayFilterStatus() {
       if (isFilterOn == true) return 'Setting has applied!';
       return 'Setting has not applied';
     }
@@ -79,7 +79,7 @@ class FilterScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  filterStatusString(),
+                  displayFilterStatus(),
                   style: TextStyle(fontSize: 14),
                 ),
               ),
