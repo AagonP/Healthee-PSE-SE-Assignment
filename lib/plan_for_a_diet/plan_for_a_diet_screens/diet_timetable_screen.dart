@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import './plan_for_a_diet_widgets/daily_diet_item.dart';
+import '../plan_for_a_diet_widgets/daily_diet_item.dart';
 
 class DietTimetableScreen extends StatelessWidget {
   final _oneMonthList = [
