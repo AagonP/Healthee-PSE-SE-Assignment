@@ -46,30 +46,29 @@ class WelcomePage extends StatelessWidget {
               SizedBox(
                 height: 50.0,
               ),
-              Card(
-                margin: EdgeInsets.all(15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        'Get Started',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                        ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'NavigatePage');
+                },
+                child: Container(
+                  margin: EdgeInsets.all(20.0),
+                  height: 60.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF1CB57),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Get Started',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    width: double.infinity,
-                    height: 80.0,
-                    margin: EdgeInsets.only(top: 10.0),
-                    color: Color(0xFFF1CB57),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
