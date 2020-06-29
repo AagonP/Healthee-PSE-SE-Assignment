@@ -214,7 +214,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Expanded(child: FoodListView()),
+          Padding(padding: EdgeInsets.all(10),),
+          Container(
+            child: Expanded(
+              child: FoodListView(),
+            ),
+          ),
         ],
       ),
     );

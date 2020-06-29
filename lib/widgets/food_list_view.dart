@@ -100,6 +100,7 @@ class FoodListView extends StatelessWidget {
                             icon: Icon(Icons.add),
                           ),
                         ),
+                        Card(child: Text('')),
                         Card(
                           child: IconButton(
                             onPressed: () {
