@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/meal_food_list.dart';
-import '../../providers/diet_plan_data.dart';
+import '../plan_for_a_diet_widgets/meal_food_list.dart';
+import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
 class DailyDetailScreen extends StatelessWidget {
   @override

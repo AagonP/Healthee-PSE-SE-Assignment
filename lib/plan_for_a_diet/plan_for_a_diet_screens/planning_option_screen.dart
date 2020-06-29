@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
-import '../../providers/user_health_data.dart';
+import '../plan_for_a_diet_providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
 
