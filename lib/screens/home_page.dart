@@ -95,129 +95,127 @@ class _HomePageState extends State<HomePage> {
       ),
       //Drawer here
       drawer: DrawerView(),
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            //Title "Healthee"
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Healthee',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontFamily: 'Pacifico',
-                  ),
-                ),
-              ),
-            ),
-            //Second Title "Nutrion & Diet"
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Nutrition & Diet',
-                  style: TextStyle(
-                    fontSize: 30,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Card(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    //Search input field
-                    child: Container(
-                      height: 45.0,
-                      child: TextField(
-                        onSubmitted: (context) {
-                          searchOnSubmitted(context);
-                        },
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () => _controller.clear(),
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          hintText: 'Search product..',
-                          hintStyle: TextStyle(
+      body: Column(
+        children: <Widget>[
+          // //Title "Healthee"
+          // Container(
+          //   margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          //   child: Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: Text(
+          //       'Healthee',
+          //       textAlign: TextAlign.left,
+          //       style: TextStyle(
+          //         fontSize: 50,
+          //         fontFamily: 'Pacifico',
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // //Second Title "Nutrion & Diet"
+          // Container(
+          //   margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          //   child: Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: Text(
+          //       'Nutrition & Diet',
+          //       style: TextStyle(
+          //         fontSize: 30,
+          //         letterSpacing: 2.0,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Card(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  //Search input field
+                  child: Container(
+                    height: 45.0,
+                    child: TextField(
+                      onSubmitted: (context) {
+                        searchOnSubmitted(context);
+                      },
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () => _controller.clear(),
+                          icon: Icon(
+                            Icons.clear,
                             color: Colors.grey,
                           ),
-                          prefixIcon: Icon(Icons.search),
                         ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: 'Search product..',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                        ),
+                        prefixIcon: Icon(Icons.search),
                       ),
                     ),
                   ),
                 ),
-                // Filter search
-                Card(
-                  child: IconButton(
-                    onPressed: () {
-                      navigateToFilterScreen(context);
-                    },
-                    icon: Badge(
-                        badgeColor: Colors.white,
-                        animationType: BadgeAnimationType.scale,
-                        badgeContent: Text((Provider.of<Products>(context)
-                                .selectedProducts
-                                .length)
-                            .toString()),
-                        child: Icon(Icons.shopping_cart)), //filter
-                  ),
+              ),
+              // Filter search
+              Card(
+                child: IconButton(
+                  onPressed: () {
+                    navigateToFilterScreen(context);
+                  },
+                  icon: Badge(
+                      badgeColor: Colors.white,
+                      animationType: BadgeAnimationType.scale,
+                      badgeContent: Text((Provider.of<Products>(context)
+                              .selectedProducts
+                              .length)
+                          .toString()),
+                      child: Icon(Icons.shopping_cart)), //filter
                 ),
-                //Scan screen
-                Card(
-                  child: IconButton(
-                    onPressed: () {
-                      doScanning();
-                    },
-                    icon: Icon(Icons.camera_alt),
-                  ),
+              ),
+              //Scan screen
+              Card(
+                child: IconButton(
+                  onPressed: () {
+                    doScanning();
+                  },
+                  icon: Icon(Icons.camera_alt),
                 ),
-              ],
-            ),
-            //Food filter
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RoundTypeButton(
-                  color: Color(0xFFF7F6C5),
-                  image: 'image/food.png',
-                  title: 'Vegan',
-                ),
-                RoundTypeButton(
-                  color: Color(0xFFCEFFC0),
-                  image: 'image/dairy.png',
-                  title: 'DairyFree',
-                ),
-                RoundTypeButton(
-                  color: Color(0xFFFEE1C7),
-                  image: 'image/fruit.png',
-                  title: 'LowFodMap',
-                ),
-                RoundTypeButton(
-                  color: Color(0xFFFDDFFA),
-                  image: 'image/coin.png',
-                  title: 'Cheap',
-                ),
-              ],
-            ),
-            FoodListView(),
-          ],
-        ),
+              ),
+            ],
+          ),
+          //Food filter
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              RoundTypeButton(
+                color: Color(0xFFF7F6C5),
+                image: 'image/food.png',
+                title: 'Vegan',
+              ),
+              RoundTypeButton(
+                color: Color(0xFFCEFFC0),
+                image: 'image/dairy.png',
+                title: 'DairyFree',
+              ),
+              RoundTypeButton(
+                color: Color(0xFFFEE1C7),
+                image: 'image/fruit.png',
+                title: 'LowFodMap',
+              ),
+              RoundTypeButton(
+                color: Color(0xFFFDDFFA),
+                image: 'image/coin.png',
+                title: 'Cheap',
+              ),
+            ],
+          ),
+          Expanded(child: FoodListView()),
+        ],
       ),
     );
   }

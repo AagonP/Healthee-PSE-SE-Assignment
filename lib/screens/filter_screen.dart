@@ -13,7 +13,7 @@ class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
   @override
   Widget build(BuildContext context) {
-    void checkFilterStatus() {
+    void doFilterList() {
       if (!isFilterOn) {
         isFilterOn = true;
         Provider.of<Products>(context).selectedProducts.forEach((element) {
@@ -38,11 +38,9 @@ class FilterScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        centerTitle: true,
+        title: Text(
+          'My cart',
         ),
       ),
       body: Column(children: <Widget>[
@@ -66,7 +64,7 @@ class FilterScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.filter_list),
               onPressed: () {
-                checkFilterStatus();
+                doFilterList();
               },
             ),
           ],

@@ -10,7 +10,7 @@ class SavedListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Product> _currentList =
         Provider.of<FilterSavedList>(context).currentList;
-    navigateToFoodInfoScreen(int idx) {
+    void navigateToFoodInfoScreen(int idx) {
       Navigator.pushNamed(context, 'FoodInfoScreen',
           arguments: _currentList.elementAt(idx));
     }
@@ -28,7 +28,10 @@ class SavedListScreen extends StatelessWidget {
     }
 
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('My saved products'),
+        ),
         body: GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2,
@@ -47,7 +50,9 @@ class SavedListScreen extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.all(5),
                       child: GestureDetector(
-                        onTap: navigateToFoodInfoScreen(index),
+                        onTap: () {
+                          navigateToFoodInfoScreen(index);
+                        },
                         // slide image function here
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
