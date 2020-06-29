@@ -11,6 +11,7 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import './providers/filtered_saved_list.dart';
 import './screens/scan_screen.dart';
+import './screens/welcomeScreen.dart';
 
 // The following are all the files supporting for Plan For A Diet.
 import './plan_for_a_diet/plan_for_a_diet_screens/health_data_input_screen.dart';
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
         home: HomePage(),
         //Setting route for pages here
         routes: {
+          'WelcomePage': (context) => WelcomePage(),
           'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
           'HealthInputScreen': (context) => Wrapper(),
