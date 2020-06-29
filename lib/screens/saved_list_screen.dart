@@ -10,28 +10,8 @@ class SavedListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Product> _currentList =
         Provider.of<FilterSavedList>(context).currentList;
-    void navigateToFoodInfoScreen(int idx) {
-      Navigator.pushNamed(context, 'FoodInfoScreen',
-          arguments: _currentList.elementAt(idx));
-    }
-
-    Widget displayProductImage(int index) {
-      if (_currentList.elementAt(index).photoURL != null)
-        return Image.network(
-          _currentList.elementAt(index).photoURL,
-        );
-      else
-        return Container(
-          height: 90.0,
-          color: Colors.white,
-        );
-    }
-
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('My saved products'),
-        ),
+        appBar: AppBar(),
         body: GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2,
@@ -51,12 +31,21 @@ class SavedListScreen extends StatelessWidget {
                       margin: EdgeInsets.all(5),
                       child: GestureDetector(
                         onTap: () {
-                          navigateToFoodInfoScreen(index);
+                          Navigator.pushNamed(context, 'FoodInfoScreen',
+                              arguments: _currentList.elementAt(index));
                         },
                         // slide image function here
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
-                          child: displayProductImage(index),
+                          child:
+                              (_currentList.elementAt(index).photoURL != null)
+                                  ? Image.network(
+                                      _currentList.elementAt(index).photoURL,
+                                    )
+                                  : Container(
+                                      height: 90.0,
+                                      color: Colors.white,
+                                    ),
                         ),
                       ),
                     ),

@@ -13,7 +13,7 @@ class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
   @override
   Widget build(BuildContext context) {
-    void doFilterList() {
+    void checkFilterStatus() {
       if (!isFilterOn) {
         isFilterOn = true;
         Provider.of<Products>(context).selectedProducts.forEach((element) {
@@ -31,16 +31,18 @@ class FilterScreen extends StatelessWidget {
       }
     }
 
-    String displayFilterStatus() {
+    String filterStatusString() {
       if (isFilterOn == true) return 'Setting has applied!';
       return 'Setting has not applied';
     }
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'My cart',
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: Column(children: <Widget>[
@@ -64,7 +66,7 @@ class FilterScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.filter_list),
               onPressed: () {
-                doFilterList();
+                checkFilterStatus();
               },
             ),
           ],
@@ -77,7 +79,7 @@ class FilterScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  displayFilterStatus(),
+                  filterStatusString(),
                   style: TextStyle(fontSize: 14),
                 ),
               ),

@@ -14,10 +14,6 @@ class Products with ChangeNotifier {
     _selectedProducts.add(product);
     notifyListeners();
   }
-  void removeSelectedProducts(Product product) {
-    _selectedProducts.remove(product);
-    notifyListeners();
-  }
 
   List<Product> _products = [];
   List<Product> get products {

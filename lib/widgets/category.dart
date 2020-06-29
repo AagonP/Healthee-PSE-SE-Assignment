@@ -15,36 +15,6 @@ class RoundTypeButton extends StatefulWidget {
 }
 
 class _RoundTypeButtonState extends State<RoundTypeButton> {
-  void sortByCategory() {
-    setState(() {
-      List<Product> currentList = Provider.of<Products>(context).products;
-      for (int i = 0; i < currentList.length; i++) {
-        switch (widget.title) {
-          case 'Vegan':
-            if (!currentList.elementAt(i).vegetarian)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-          case 'DairyFree':
-            if (!currentList.elementAt(i).dairyFree)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-          case 'LowFodMap':
-            if (!currentList.elementAt(i).dairyFree)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-          case 'Cheap':
-            if (!currentList.elementAt(i).cheap)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-        }
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,7 +25,34 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
             height: 50.0,
           ),
           onPressed: () {
-            sortByCategory();
+            setState(() {
+              List<Product> currentList =
+                  Provider.of<Products>(context).products;
+              for (int i = 0; i < currentList.length; i++) {
+                switch (widget.title) {
+                  case 'Vegan':
+                    if (!currentList.elementAt(i).vegetarian)
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
+                    break;
+                  case 'DairyFree':
+                    if (!currentList.elementAt(i).dairyFree)
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
+                    break;
+                  case 'LowFodMap':
+                    if (!currentList.elementAt(i).dairyFree)
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
+                    break;
+                  case 'Cheap':
+                    if (!currentList.elementAt(i).cheap)
+                      Provider.of<Products>(context)
+                          .removeProduct(currentList.elementAt(i));
+                    break;
+                }
+              }
+            });
           },
           elevation: 2.0,
           fillColor: widget.color,

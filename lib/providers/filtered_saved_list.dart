@@ -3,18 +3,18 @@ import 'package:flutter/cupertino.dart';
 import '../models/product.dart';
 
 class FilterSavedList with ChangeNotifier {
-  List<Product> _FilterSavedList = [];
+  List<Product> _currentList = [];
   List<Product> get currentList {
-    return [..._FilterSavedList];
+    return [..._currentList];
   }
 
   void saveProduct(Product product) {
-    _FilterSavedList.add(product);
+    _currentList.add(product);
     notifyListeners();
   }
 
   void removeProduct(Product product) {
-    _FilterSavedList.remove(product);
+    _currentList.remove(product);
     notifyListeners();
   }
 }

@@ -3,7 +3,6 @@ import '../../providers/data_helper.dart';
 import 'package:provider/provider.dart';
 import 'user_health_data.dart';
 import 'dart:math';
-import '../../providers/data_helper.dart';
 
 class Meal {
   String _id;

@@ -19,40 +19,32 @@ class ShowHealthInputForm extends StatefulWidget {
 }
 
 class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
-  static int numbOfIllness = 10;
-  static List<bool> _isSelectedProducts =
-      List<bool>.generate(numbOfIllness, (index) => false);
-  void updateIllnessSelection(bool newValue, int index) {
-    Provider.of<UserInput>(context).updateInput(
-        Provider.of<UserInput>(context).illness[index], newValue, 0);
-    setState(() {
-      _isSelectedProducts[index] = newValue;
-    });
-  }
-
-  void submitIllnessSelection() {
-    Navigator.pop(context);
-  }
+  static List<bool> _isSelected = List<bool>.generate(10, (index) => false);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Set filter by illnesses'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(),
       body: Column(
         children: <Widget>[
           Padding(padding: EdgeInsets.all(5)),
           Expanded(
             child: ListView.builder(
-                itemCount: _isSelectedProducts.length,
+                itemCount: _isSelected.length,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
                     title: Text(Provider.of<UserInput>(context).illness[index]),
-                    value: _isSelectedProducts[index],
+                    value: _isSelected[index],
                     onChanged: (bool newValue) {
-                      updateIllnessSelection(newValue, index);
+                      Provider.of<UserInput>(context).updateInput(
+                          Provider.of<UserInput>(context).illness[index],
+                          newValue,
+                          0);
+                      setState(() {
+                        _isSelected[index] = newValue;
+                      });
+
+                      // print(Provider.of<UserInput>(context).healthInput[0].obesity);
                     },
                   );
                 }),
@@ -60,7 +52,8 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
           RaisedButton(
             child: Text('Compelete'),
             onPressed: () {
-              submitIllnessSelection();
+              Navigator.pop(context);
+              print(Provider.of<UserInput>(context).healthInput[0].obesity);
             },
           ),
         ],
