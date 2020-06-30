@@ -48,7 +48,7 @@ class WelcomePage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, 'LoginRegisterPage');
+                  Navigator.pushNamed(context, 'NavigatePage');
                 },
                 child: Container(
                   margin: EdgeInsets.all(20.0),
