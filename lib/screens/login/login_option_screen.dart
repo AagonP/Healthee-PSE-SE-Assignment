@@ -76,7 +76,9 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       color: Color(0xFFFECC4C),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'LoginPage');
+                  },
                   minWidth: 200.0,
                   height: 50.0,
                   child: Text(

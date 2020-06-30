@@ -15,6 +15,7 @@ import './screens/welcome_screen.dart';
 import './screens/navigate_screen.dart';
 import './screens/login/login_option_screen.dart';
 import './screens/login/Register_screen.dart';
+import './screens/login/Login_screen.dart';
 
 // The following are all the files supporting for Plan For A Diet.
 import './plan_for_a_diet/plan_for_a_diet_screens/health_data_input_screen.dart';
@@ -62,6 +63,7 @@ class _MyAppState extends State<MyApp> {
         home: WelcomePage(),
         //Setting route for pages here
         routes: {
+          'LoginPage': (context) => LoginPage(),
           'RegisterPage': (context) => RegisterPage(),
           'LoginRegisterPage': (context) => LoginRegisterPage(),
           'NavigatePage': (context) => NavigatePage(),

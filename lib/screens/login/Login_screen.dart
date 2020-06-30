@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String email;
@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 Text(
-                  'Registration',
+                  'Log in',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 40.0,
@@ -49,19 +49,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(
                   height: 20.0,
-                ),
-                TextField(
-                  decoration: inputDecoration.copyWith(
-                    hintText: ''
-                        'Enter your name',
-                  ),
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    name = value;
-                  },
-                ),
-                SizedBox(
-                  height: 10.0,
                 ),
                 TextField(
                   decoration:
@@ -133,20 +120,85 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Colors.grey,
                   ),
                 ),
-                RoundRectangleButton(
-                  color: Color(0xFF3B5999),
-                  title: 'Sign up with Facebook',
-                  image: Image(
-                    image: AssetImage(
-                      'image/facebook.png',
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: MaterialButton(
+                    color: Color(0xFF3B5999),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    onPressed: () {},
+                    minWidth: 200.0,
+                    height: 50.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          'Sign up with Facebook',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Container(
+                          width: 35.0,
+                          height: 35.0,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Image.asset(
+                              'image/facebook.png',
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                RoundRectangleButton(
-                  color: Color(0xFF518DF8),
-                  title: 'Sign up with Google',
-                  image: Image.asset(
-                    'image/brands-and-logotypes.png',
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: MaterialButton(
+                    color: Color(0xFF518DF8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    onPressed: () {},
+                    minWidth: 200.0,
+                    height: 50.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Text(
+                          'Sign up with Google',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Container(
+                            width: 35.0,
+                            height: 35.0,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(7.0),
+                              child: Image.asset(
+                                'image/brands-and-logotypes.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -173,55 +225,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class RoundRectangleButton extends StatelessWidget {
-  final Color color;
-  final String title;
-  final Image image;
-
-  RoundRectangleButton(
-      {@required this.color, @required this.title, this.image});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: MaterialButton(
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        onPressed: () {},
-        minWidth: 200.0,
-        height: 50.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Container(
-              width: 35.0,
-              height: 35.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: image,
-              ),
-            ),
-          ],
         ),
       ),
     );
