@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "903850621440",
-    "firebase_url": "https://healthee-84b6b.firebaseio.com",
-    "project_id": "healthee-84b6b",
-    "storage_bucket": "healthee-84b6b.appspot.com"
+    "project_number": "306440338352",
+    "firebase_url": "https://healthee-de34a.firebaseio.com",
+    "project_id": "healthee-de34a",
+    "storage_bucket": "healthee-de34a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:903850621440:android:e942a1c69de2a996feb6e5",
+        "mobilesdk_app_id": "1:306440338352:android:6267e66eddd79dc1cc3475",
         "android_client_info": {
           "package_name": "com.example.pse_assignment"
         }
       },
       "oauth_client": [
         {
-          "client_id": "903850621440-evmlgcp9mj4me3kd911ctcbj0n2do26s.apps.googleusercontent.com",
+          "client_id": "306440338352-jpunujduiv3bhukm13300e8ei6soas43.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBEivd7mBg-hO8fmMgJCtmTTmo8YcjiPws"
+          "current_key": "AIzaSyDRdfncf90UX_dwOsGdpmC7aC8P5oV6uBg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "903850621440-evmlgcp9mj4me3kd911ctcbj0n2do26s.apps.googleusercontent.com",
+              "client_id": "306440338352-jpunujduiv3bhukm13300e8ei6soas43.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

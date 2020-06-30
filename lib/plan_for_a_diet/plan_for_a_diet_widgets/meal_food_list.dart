@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../plan_for_a_diet_screens/plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
 class MealFoodList extends StatelessWidget {
   final String _mealType;
