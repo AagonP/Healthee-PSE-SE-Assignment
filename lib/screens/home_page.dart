@@ -16,11 +16,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   String res = "Sample code";
   String scan = "";
 
@@ -116,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                       height: 45.0,
                       child: TextField(
                         onSubmitted: (context) {
+                          //On recieved input this function call
                           print(context);
                           input = context;
                           updateUI(input);
@@ -146,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                 Card(
                   child: IconButton(
                     onPressed: () {
+                      //On this function call push to another screen
                       Navigator.pushNamed(context, 'FilterScreen');
                     },
                     icon: Badge(

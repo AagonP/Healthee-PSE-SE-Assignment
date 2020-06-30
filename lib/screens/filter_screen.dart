@@ -37,14 +37,7 @@ class FilterScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: Column(children: <Widget>[
         Row(
           children: <Widget>[
