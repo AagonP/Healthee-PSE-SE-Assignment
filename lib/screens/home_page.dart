@@ -5,7 +5,7 @@ import '../widgets/drawer_view.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
-import '../providers/food_data.dart';
+import '../providers/data_helper.dart';
 import '../widgets/category.dart';
 //import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
