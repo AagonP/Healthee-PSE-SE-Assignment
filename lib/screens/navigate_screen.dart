@@ -37,7 +37,7 @@ class NavigatePage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 15.0,
+                height: 5.0,
               ),
               NavigateTab(
                 color: Color(0xFFFDF4DE),
@@ -51,10 +51,21 @@ class NavigatePage extends StatelessWidget {
                 ),
               ),
               NavigateTab(
+                color: Colors.red[50],
+                title: 'Filter by Illness',
+                description: 'Know what suits your health',
+                navigate_page: 'FilterScreen',
+                image: Image(
+                  width: 60.0,
+                  height: 60.0,
+                  image: AssetImage('image/filter.png'),
+                ),
+              ),
+              NavigateTab(
                 color: Color(0xFFE9F4FE),
                 title: 'Plan a diet',
                 description: 'Make your own diet',
-                navigate_page: 'HomePage',
+                navigate_page: '/planning-option-screen',
                 image: Image(
                   width: 60.0,
                   height: 60.0,

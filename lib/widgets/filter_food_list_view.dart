@@ -25,6 +25,11 @@ class FilterFoodListView extends StatelessWidget {
       }
     }
 
+    void removeFromSelectingList(int index) {
+      Provider.of<Products>(context)
+          .removeSelectedProducts(_currentList.elementAt(index));
+    }
+
     Future<void> _showAlertOnSavingBlurred(int index) async {
       return showDialog<void>(
         context: context,
@@ -67,33 +72,70 @@ class FilterFoodListView extends StatelessWidget {
         shrinkWrap: true,
         crossAxisCount: 2,
         children: List.generate(_currentList.length, (index) {
-          return Container(
-            width: 50.0,
-            child: Card(
-              shadowColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, 'FoodInfoScreen',
-                            arguments: _currentList.elementAt(index));
-                      },
-                      child: Slidable(
-                        actionPane: SlidableDrawerActionPane(),
-                        actionExtentRatio: 0.25,
-                        secondaryActions: <Widget>[
-                          IconSlideAction(
-                            caption: 'Save',
-                            color: Colors.green,
-                            icon: Icons.save,
-                            onTap: () {
+          return Card(
+            shadowColor: Colors.grey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            margin: EdgeInsets.all(15),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: GestureDetector(
+                    onTap: () {
+                      //NavigateToFoodInfoScreen()
+                      Navigator.pushNamed(context, 'FoodInfoScreen',
+                          arguments: _currentList.elementAt(index));
+                    },
+                    // slide image function here
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: (_currentList.elementAt(index).photoURL != null)
+                          ? Opacity(
+                              opacity:
+                                  (_currentList.elementAt(index).isHealthy ==
+                                          true)
+                                      ? 1.0
+                                      : 0.5,
+                              child: Image.network(
+                                _currentList.elementAt(index).photoURL,
+                                height: 80,
+                                width: 150,
+                                fit: BoxFit.fill,
+                                alignment: Alignment.centerLeft,
+                              ),
+                            )
+                          : Container(
+                              height: 90.0,
+                              color: Colors.white,
+                            ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 150,
+                  child: AutoSizeText(
+                    _currentList.elementAt(index).name,
+                    style: TextStyle(fontSize: 15.0),
+                    minFontSize: 10.0,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        width: 50,
+                        height: 50,
+                        margin: EdgeInsets.all(1),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          color: Colors.yellow[600],
+                          child: IconButton(
+                            onPressed: () {
                               if (!_currentList.elementAt(index).isHealthy) {
                                 //Alert dialog here
                                 _showAlertOnSavingBlurred(index);
@@ -101,59 +143,32 @@ class FilterFoodListView extends StatelessWidget {
                               }
                               _saveProduct(index);
                             },
+                            icon: Icon(Icons.save),
+                            iconSize: 25,
                           ),
-                          IconSlideAction(
-                            caption: 'Delete',
-                            color: Colors.red,
-                            icon: Icons.undo,
-                            onTap: () {
-                              Provider.of<FilterSavedList>(context)
-                                  .removeProduct(_currentList.elementAt(index));
-                            },
-                          ),
-                        ],
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child:
-                              (_currentList.elementAt(index).photoURL != null)
-                                  ? Opacity(
-                                      opacity: (_currentList
-                                                  .elementAt(index)
-                                                  .isHealthy ==
-                                              true)
-                                          ? 1.0
-                                          : 0.5,
-                                      child: Image.network(
-                                        _currentList.elementAt(index).photoURL,
-                                      ),
-                                    )
-                                  : Container(
-                                      height: 90.0,
-                                      color: Colors.white,
-                                    ),
                         ),
                       ),
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                          child: AutoSizeText(
-                            _currentList.elementAt(index).name,
-                            style: TextStyle(fontSize: 15.0),
-                            minFontSize: 10.0,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                      Container(
+                        width: 50,
+                        height: 50,
+                        margin: EdgeInsets.all(1),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          color: Colors.yellow[600],
+                          child: IconButton(
+                            onPressed: () {
+                              removeFromSelectingList(index);
+                            },
+                            icon: Icon(Icons.remove),
+                            iconSize: 25,
                           ),
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         }),
