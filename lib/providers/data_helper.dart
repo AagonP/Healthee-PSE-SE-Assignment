@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-import 'data_helper.dart';
 import '../models/product.dart';
 import 'dart:math';
 import 'user_input.dart';
