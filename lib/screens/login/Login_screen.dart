@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     minWidth: 200.0,
                     height: 50.0,
                     child: Text(
-                      'Sign Up',
+                      'Log In',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text(
-                          'Sign up with Facebook',
+                          'Log in with Facebook',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.0,
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         Text(
-                          'Sign up with Google',
+                          'Log in with Google',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.0,
@@ -207,13 +207,15 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Already have an account? ',
+                        'Don\'t have an account? ',
                         textAlign: TextAlign.center,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, 'RegisterPage');
+                        },
                         child: Text(
-                          'Log in',
+                          'Register',
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontWeight: FontWeight.w600),
