@@ -159,7 +159,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         textAlign: TextAlign.center,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, 'LoginPage');
+                        },
                         child: Text(
                           'Log in',
                           style: TextStyle(
