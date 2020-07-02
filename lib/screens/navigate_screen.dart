@@ -1,34 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class NavigatePage extends StatefulWidget {
-  @override
-  _NavigatePageState createState() => _NavigatePageState();
-}
-
-class _NavigatePageState extends State<NavigatePage> {
-  final _auth = FirebaseAuth.instance;
-
-  FirebaseUser loginUser;
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loginUser = user;
-        print(loginUser.email);
-        print(loginUser.displayName);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
+class NavigatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +38,7 @@ class _NavigatePageState extends State<NavigatePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 15.0,
+                  height: 5.0,
                 ),
                 NavigateTab(
                   color: Color(0xFFFDF4DE),
@@ -80,10 +52,21 @@ class _NavigatePageState extends State<NavigatePage> {
                   ),
                 ),
                 NavigateTab(
+                  color: Colors.red[50],
+                  title: 'Filter by Illness',
+                  description: 'Know what suits your health',
+                  navigate_page: 'FilterScreen',
+                  image: Image(
+                    width: 60.0,
+                    height: 60.0,
+                    image: AssetImage('image/filter.png'),
+                  ),
+                ),
+                NavigateTab(
                   color: Color(0xFFE9F4FE),
                   title: 'Plan a diet',
                   description: 'Make your own diet',
-                  navigate_page: 'HomePage',
+                  navigate_page: '/planning-option-screen',
                   image: Image(
                     width: 60.0,
                     height: 60.0,
