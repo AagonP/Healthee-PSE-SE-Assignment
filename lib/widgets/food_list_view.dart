@@ -66,6 +66,7 @@ class FoodListView extends StatelessWidget {
               ),
               Container(
                 width: 150,
+                height: 20,
                 child: AutoSizeText(
                   _currentList.elementAt(index).name,
                   style: TextStyle(fontSize: 15.0),
@@ -74,29 +75,28 @@ class FoodListView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 50,
-                      height: 50,
-                      margin: EdgeInsets.all(5),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        color: Colors.yellow[600],
-                        child: IconButton(
-                          onPressed: () {
-                            addToSelectingList(index);
-                          },
-                          icon: Icon(Icons.add),
-                          iconSize: 25,
-                        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    width: 50,
+                    height: 40,
+                    margin: EdgeInsets.all(1),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      color: Colors.yellow[600],
+                      child: IconButton(
+                        alignment: Alignment.center,
+                        onPressed: () {
+                          addToSelectingList(index);
+                        },
+                        icon: Icon(Icons.add),
+                        iconSize: 25,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

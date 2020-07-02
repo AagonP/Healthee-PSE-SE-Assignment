@@ -8,7 +8,7 @@ import '../widgets/food_list_view.dart';
 import '../providers/data_helper.dart';
 import '../widgets/category.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import '../screens/scan.dart';
+import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {

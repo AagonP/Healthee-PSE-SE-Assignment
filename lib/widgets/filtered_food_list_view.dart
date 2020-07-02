@@ -138,6 +138,7 @@ class FilterFoodListView extends StatelessWidget {
                 ),
                 Container(
                   width: 150,
+                  height: 20,
                   child: AutoSizeText(
                     _currentList.elementAt(index).name,
                     style: TextStyle(fontSize: 15.0),

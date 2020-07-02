@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './screens/health_input_screen.dart';
+import 'screens/filter_health_input_screen.dart';
 import './screens/filter_screen.dart';
-import './screens/home_page.dart';
+import 'screens/search_product_screen.dart';
 import './screens/food_info.dart';
 import './providers/products.dart';
 
@@ -12,7 +12,7 @@ import './providers/user_input.dart';
 import 'providers/saved_products.dart';
 import './screens/scan_screen.dart';
 import './screens/welcome_screen.dart';
-import './screens/navigate_screen.dart';
+import 'screens/home_screen.dart';
 import './screens/login/login_option_screen.dart';
 import './screens/login/Register_screen.dart';
 import './screens/login/Login_screen.dart';

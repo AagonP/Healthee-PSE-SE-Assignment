@@ -2,24 +2,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-import 'package:pse_assignment/screens/saved_list_screen.dart';
+import 'package:pse_assignment/screens/saved_products_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/product.dart';
 import '../providers/data_helper.dart';
-import '../widgets/filter_food_list_view.dart';
+import '../widgets/filtered_food_list_view.dart';
 import '../providers/products.dart';
 import '../providers/user_input.dart';
 import '../providers/saved_products.dart';
-import '../screens/saved_list_screen.dart';
+import 'saved_products_screen.dart';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
-  
+
   @override
   Widget build(BuildContext context) {
     Future<void> updateDataFromFirebase(String userID) async {
@@ -59,6 +58,8 @@ class FilterScreen extends StatelessWidget {
 
     String displayFilterStatus() {
       if (isFilterOn == true) return 'Setting has applied!';
+      if (Provider.of<Products>(context).selectedProducts.length == 0)
+        return 'Your cart is empty!';
       return 'Setting has not applied';
     }
 
@@ -135,6 +136,7 @@ class FilterScreen extends StatelessWidget {
                   Navigator.pushNamed(context, 'HomePage');
                 },
                 child: Card(
+                  elevation: 5,
                   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: TextField(
                     enabled: false,
@@ -147,23 +149,27 @@ class FilterScreen extends StatelessWidget {
               ),
             ),
             // Filter  function call here
-            IconButton(
-              icon: Icon(Icons.filter_list),
-              onPressed: () {
-                if (Provider.of<Products>(context).selectedProducts.length ==
-                    0) {
-                  _showAlertOnEmptySelectingList();
-                }
-                doFilterList();
-              },
+            Card(
+              elevation: 5,
+              child: IconButton(
+                icon: Icon(Icons.filter_list),
+                onPressed: () {
+                  if (Provider.of<Products>(context).selectedProducts.length ==
+                      0) {
+                    _showAlertOnEmptySelectingList();
+                  }
+                  doFilterList();
+                },
+              ),
             ),
           ],
         ),
         Row(children: <Widget>[
           Expanded(
             child: Card(
-              color: Colors.grey,
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              elevation: 5,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
@@ -174,9 +180,11 @@ class FilterScreen extends StatelessWidget {
             ),
           ),
           Card(
+            elevation: 5,
             child: IconButton(
               onPressed: () async {
-                updateDataFromFirebase(await UserSavedProducts.getCurrentUser());
+                updateDataFromFirebase(
+                    await UserSavedProducts.getCurrentUser());
                 //saved list page
                 if (Provider.of<SavedProducts>(context).savedProducts.length ==
                     0) {

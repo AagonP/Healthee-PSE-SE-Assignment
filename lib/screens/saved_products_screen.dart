@@ -6,7 +6,6 @@ import '../providers/saved_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../providers/data_helper.dart';
 
-
 class SavedListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -87,6 +86,7 @@ class SavedListScreen extends StatelessWidget {
                   ),
                   Container(
                     width: 150,
+                    height: 20,
                     child: AutoSizeText(
                       _currentList.elementAt(index).name,
                       style: TextStyle(fontSize: 15.0),
@@ -102,7 +102,7 @@ class SavedListScreen extends StatelessWidget {
                         Container(
                           width: 50,
                           height: 50,
-                          margin: EdgeInsets.all(5),
+                          margin: EdgeInsets.all(1),
                           child: Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
@@ -114,7 +114,8 @@ class SavedListScreen extends StatelessWidget {
                                         _currentList.elementAt(index));
                                 UserSavedProducts.removeUserSavedProduct(
                                     await UserSavedProducts.getCurrentUser());
-                                updateUserSavedProducts(await UserSavedProducts.getCurrentUser());
+                                updateUserSavedProducts(
+                                    await UserSavedProducts.getCurrentUser());
                               },
                               icon: Icon(Icons.delete),
                               iconSize: 25,
