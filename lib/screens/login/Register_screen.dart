@@ -13,7 +13,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String email;
   String password;
   String name;
-  bool obsucre = true;
+  bool obscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(
                   height: 10.0,
                 ),
-                TextField(
+                TextFormField(
                   decoration: inputDecoration.copyWith(
                     hintText: 'Enter your password',
                     suffixIcon: IconButton(
@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          obsucre = !obsucre;
+                          obscure = !obscure;
                         });
                       },
                     ),
@@ -96,10 +96,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  obscureText: obsucre,
+                  obscureText: obscure,
                   onChanged: (value) {
                     password = value;
                   },
+                  validator: (value) =>
+                  (value.length < 6) ? 'Password can\'t less then 6' : null,
                 ),
                 SizedBox(
                   height: 10.0,
@@ -111,7 +113,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      try {
+                        final user = await _auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
+                        FirebaseUser newUser = await _auth.currentUser();
+                        UserUpdateInfo updateInfo = UserUpdateInfo();
+                        updateInfo.displayName = name;
+                        print(name);
+                        await newUser.updateProfile(updateInfo);
+                        print('USERNAME IS: ${newUser.displayName}');
+                        if (user != null) {
+                          Navigator.pushNamed(context, 'NavigatePage');
+                        }
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     minWidth: 200.0,
                     height: 50.0,
                     child: Text(
