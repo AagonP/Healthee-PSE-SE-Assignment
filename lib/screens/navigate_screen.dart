@@ -35,73 +35,86 @@ class _NavigatePageState extends State<NavigatePage> {
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Healthee',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontFamily: 'Pacifico',
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Healthee',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontFamily: 'Pacifico',
+                        ),
                       ),
                     ),
                   ),
-                ),
-                //Second Title "Nutrion & Diet"
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Nutrition & Diet',
-                      style: TextStyle(
-                        fontSize: 30,
-                        letterSpacing: 2.0,
+                  //Second Title "Nutrion & Diet"
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Nutrition & Diet',
+                        style: TextStyle(
+                          fontSize: 30,
+                          letterSpacing: 2.0,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                NavigateTab(
-                  color: Color(0xFFFDF4DE),
-                  title: 'Search recipe \n and product',
-                  description: 'Get the best food just for you',
-                  navigate_page: 'HomePage',
-                  image: Image(
-                    width: 60.0,
-                    height: 60.0,
-                    image: AssetImage('image/recipe.png'),
+                  SizedBox(
+                    height: 15.0,
                   ),
-                ),
-                NavigateTab(
-                  color: Color(0xFFE9F4FE),
-                  title: 'Plan a diet',
-                  description: 'Make your own diet',
-                  navigate_page: 'HomePage',
-                  image: Image(
-                    width: 60.0,
-                    height: 60.0,
-                    image: AssetImage('image/calendar.png'),
+                  NavigateTab(
+                    color: Color(0xFFFDF4DE),
+                    title: 'Search recipe \n and product',
+                    description: 'Get the best food just for you',
+                    navigate_page: 'HomePage',
+                    image: Image(
+                      width: 60.0,
+                      height: 60.0,
+                      image: AssetImage('image/recipe.png'),
+                    ),
                   ),
-                ),
-                NavigateTab(
-                  color: Color(0xFFE8F3EB),
-                  title: 'Scan a product',
-                  description: 'Get product information \n with your camera',
-                  navigate_page: 'HomePage',
-                  image: Image(
-                    width: 60.0,
-                    height: 60.0,
-                    image: AssetImage('image/photograph.png'),
+                  NavigateTab(
+                    color: Colors.red[50],
+                    title: 'Filter by Illness',
+                    description: 'Know what suits your health',
+                    navigate_page: 'FilterScreen',
+                    image: Image(
+                      width: 60.0,
+                      height: 60.0,
+                      image: AssetImage('image/filter.png'),
+                    ),
                   ),
-                ),
-              ],
+                  NavigateTab(
+                    color: Color(0xFFE9F4FE),
+                    title: 'Plan a diet',
+                    description: 'Make your own diet',
+                    navigate_page: 'HomePage',
+                    image: Image(
+                      width: 60.0,
+                      height: 60.0,
+                      image: AssetImage('image/calendar.png'),
+                    ),
+                  ),
+                  NavigateTab(
+                    color: Color(0xFFE8F3EB),
+                    title: 'Scan a product',
+                    description: 'Get product information \n with your camera',
+                    navigate_page: 'HomePage',
+                    image: Image(
+                      width: 60.0,
+                      height: 60.0,
+                      image: AssetImage('image/photograph.png'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
