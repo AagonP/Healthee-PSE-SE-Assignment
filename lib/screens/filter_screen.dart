@@ -2,18 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 import 'package:pse_assignment/screens/saved_list_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/product.dart';
+import '../providers/data_helper.dart';
 import '../widgets/filter_food_list_view.dart';
 import '../providers/products.dart';
 import '../providers/user_input.dart';
-import '../providers/filtered_saved_list.dart';
+import '../providers/saved_products.dart';
 import '../screens/saved_list_screen.dart';
+import 'dart:convert';
 
 class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
 
   @override
   Widget build(BuildContext context) {
+    Future<void> updateDataFromFirebase(String userID) async {
+      List<Product> savedProducts =
+          await UserSavedProducts.fetchUserSavedProducts(userID);
+      int savedProductLength = savedProducts.length;
+      for (int i = 0; i < savedProductLength; i++) {
+        bool _isDuplicated = false;
+        Provider.of<SavedProducts>(context).savedProducts.forEach((element) {
+          if (element.name == savedProducts[i].name) {
+            _isDuplicated = true;
+          }
+        });
+        if (!_isDuplicated) {
+          Provider.of<SavedProducts>(context).saveProduct(savedProducts[i]);
+        }
+      }
+    }
+
     void doFilterList() {
       if (!isFilterOn) {
         isFilterOn = true;
@@ -105,15 +126,18 @@ class FilterScreen extends StatelessWidget {
         Row(
           children: <Widget>[
             Expanded(
-              child: Card(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: TextField(
-                  onTap: () {
-                    Navigator.pushNamed(context, 'HomePage');
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'Search product..',
-                    prefixIcon: Icon(Icons.search),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, 'HomePage');
+                },
+                child: Card(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: 'Search product..',
+                      prefixIcon: Icon(Icons.search),
+                    ),
                   ),
                 ),
               ),
@@ -148,8 +172,9 @@ class FilterScreen extends StatelessWidget {
           Card(
             child: IconButton(
               onPressed: () {
+                updateDataFromFirebase('userIDtest0');
                 //saved list page
-                if (Provider.of<FilterSavedList>(context).currentList.length ==
+                if (Provider.of<SavedProducts>(context).savedProducts.length ==
                     0) {
                   _showAlertOnSavedList();
                 } else {
@@ -163,7 +188,7 @@ class FilterScreen extends StatelessWidget {
                   badgeColor: Colors.white,
                   animationType: BadgeAnimationType.scale,
                   badgeContent: Text(
-                      (Provider.of<FilterSavedList>(context).currentList.length)
+                      (Provider.of<SavedProducts>(context).savedProducts.length)
                           .toString()),
                   child: Icon(Icons.account_box)), //filter
             ),

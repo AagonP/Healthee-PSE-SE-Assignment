@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
+import 'dart:convert';
+import 'dart:async';
+
 import '../models/product.dart';
 import './user_input.dart';
 
@@ -14,6 +17,7 @@ class Products with ChangeNotifier {
     _selectedProducts.add(product);
     notifyListeners();
   }
+
   void removeSelectedProducts(Product product) {
     _selectedProducts.remove(product);
     notifyListeners();

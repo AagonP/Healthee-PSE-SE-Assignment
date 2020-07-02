@@ -5,22 +5,44 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
-import '../providers/filtered_saved_list.dart';
+import '../providers/saved_products.dart';
+import '../providers/data_helper.dart';
 
 class FilterFoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future<Map<String, dynamic>> mapping() async {
+      int _savedProductsLength =
+          Provider.of<SavedProducts>(context).savedProducts.length;
+      if (_savedProductsLength == 0) return null;
+      List<Map<String, dynamic>> jsonProducts = new List(_savedProductsLength);
+      for (int i = 0; i < _savedProductsLength; i++) {
+        jsonProducts[i] = await Provider.of<SavedProducts>(context)
+            .savedProducts
+            .elementAt(i)
+            .toJson();
+      }
+      Map<String, dynamic> temp = {
+        'Products': jsonProducts,
+      };
+      return temp;
+    }
+
+    Future<void> updateUserSavedProducts(String userID) async {
+      UserSavedProducts.postUserSavedProducts(await mapping(), userID);
+    }
+
     final List<Product> _currentList =
         Provider.of<Products>(context).selectedProducts;
     void _saveProduct(int index) {
       bool _isDuplicated = false;
-      Provider.of<FilterSavedList>(context).currentList.forEach((element) {
+      Provider.of<SavedProducts>(context).savedProducts.forEach((element) {
         if (element.name == _currentList.elementAt(index).name) {
           _isDuplicated = true;
         }
       });
       if (!_isDuplicated) {
-        Provider.of<FilterSavedList>(context)
+        Provider.of<SavedProducts>(context)
             .saveProduct(_currentList.elementAt(index));
       }
     }
@@ -142,6 +164,7 @@ class FilterFoodListView extends StatelessWidget {
                                 return;
                               }
                               _saveProduct(index);
+                              updateUserSavedProducts('userIDtest0');
                             },
                             icon: Icon(Icons.save),
                             iconSize: 25,

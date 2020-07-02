@@ -9,7 +9,7 @@ import './providers/products.dart';
 
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
-import './providers/filtered_saved_list.dart';
+import 'providers/saved_products.dart';
 import './screens/scan_screen.dart';
 import './screens/welcome_screen.dart';
 import './screens/navigate_screen.dart';
@@ -24,6 +24,7 @@ import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/planning_option_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/user_health_data.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -43,8 +44,8 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
-        ChangeNotifierProvider<FilterSavedList>(
-            builder: (context) => FilterSavedList()),
+        ChangeNotifierProvider<SavedProducts>(
+            builder: (context) => SavedProducts()),
         // The following UserHealthData is of the User to set Diet Plan
         // including: Height, Weight, Age, and Exercise Frequency.
         ChangeNotifierProvider<UserHealthData>(
@@ -60,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.white,
           fontFamily: 'Montserrat',
         ),
-        home: WelcomePage(),
+        home: NavigatePage(),
         //Setting route for pages here
         routes: {
           'LoginPage': (context) => LoginPage(),

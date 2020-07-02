@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: 45.0,
                     child: TextField(
+                      autofocus: false,
                       onSubmitted: (context) {
                         searchOnSubmitted(context);
                       },

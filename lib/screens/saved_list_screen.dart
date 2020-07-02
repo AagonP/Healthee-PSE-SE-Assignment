@@ -2,14 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product.dart';
-import '../providers/filtered_saved_list.dart';
+import '../providers/saved_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../providers/data_helper.dart';
 
 class SavedListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future<Map<String, dynamic>> mapping() async {
+      int _savedProductsLength =
+          Provider.of<SavedProducts>(context).savedProducts.length;
+      if (_savedProductsLength == 0) return null;
+      List<Map<String, dynamic>> jsonProducts = new List(_savedProductsLength);
+      for (int i = 0; i < _savedProductsLength; i++) {
+        jsonProducts[i] = await Provider.of<SavedProducts>(context)
+            .savedProducts
+            .elementAt(i)
+            .toJson();
+      }
+      Map<String, dynamic> temp = {
+        'Products': jsonProducts,
+      };
+      return temp;
+    }
+
+    Future<void> updateUserSavedProducts(String userID) async {
+      UserSavedProducts.postUserSavedProducts(await mapping(), userID);
+    }
+
     final List<Product> _currentList =
-        Provider.of<FilterSavedList>(context).currentList;
+        Provider.of<SavedProducts>(context).savedProducts;
     void navigateToFoodInfoScreen(int idx) {
       Navigator.pushNamed(context, 'FoodInfoScreen',
           arguments: _currentList.elementAt(idx));
@@ -86,9 +108,12 @@ class SavedListScreen extends StatelessWidget {
                             color: Colors.yellow[600],
                             child: IconButton(
                               onPressed: () {
-                                Provider.of<FilterSavedList>(context)
+                                Provider.of<SavedProducts>(context)
                                     .removeProduct(
                                         _currentList.elementAt(index));
+                                UserSavedProducts.removeUserSavedProduct(
+                                    'userIDtest0');
+                                updateUserSavedProducts('userIDtest0');
                               },
                               icon: Icon(Icons.delete),
                               iconSize: 25,

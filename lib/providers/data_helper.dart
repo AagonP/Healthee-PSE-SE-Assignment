@@ -2,12 +2,16 @@ import 'package:pse_assignment/models/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 import 'dart:math';
 import 'user_input.dart';
+import '../providers/products.dart';
 
 const int numberOfRecipe = 20;
+
 class DataHelper {
   Future<dynamic> fetchData(String url) async {
     final response = await http.get(
@@ -24,6 +28,7 @@ class DataHelper {
       throw Exception('Connection failed');
   }
 }
+
 class FoodData {
   DataHelper dataHelper = DataHelper();
   List<int> id = List(numberOfRecipe);
@@ -85,5 +90,81 @@ class FoodData {
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
     return product;
+  }
+}
+
+class UserSavedProducts {
+  static Future<void> postUserSavedProducts(
+      Map<String, dynamic> jsonProducts, String userID) async {
+    await Firestore.instance
+        .collection('users')
+        .document(userID)
+        .setData(jsonProducts);
+  }
+
+  static Product decodeProduct(var jsonRecipe) {
+    bool vegetarian = (jsonRecipe['vegetarian'] == 'true') ? true : false;
+    bool glutenFree = (jsonRecipe['glutenFree'] == 'true') ? true : false;
+    bool dairyFree = (jsonRecipe['dairyFree'] == 'true') ? true : false;
+    bool veryHealthy = (jsonRecipe['veryHealthy'] == 'true') ? true : false;
+    bool popular = (jsonRecipe['veryPopular'] == 'true') ? true : false;
+    bool cheap = (jsonRecipe['cheap'] == 'true') ? true : false;
+    bool lowFodmap = (jsonRecipe['lowFodmap'] == 'true') ? true : false;
+    String name = jsonRecipe['name'];
+    String photoURL = jsonRecipe['photoURL'];
+    List<String> ingredientList = [];
+    List<String> amountList = [];
+    List<String> unitList = [];
+    int numberofIngredients = jsonRecipe['ingredients'].length;
+    for (int j = 0; j < numberofIngredients; j++) {
+      String ingredient = jsonRecipe['ingredients'][j];
+      var amount = jsonRecipe['amount'][j];
+      String unit = jsonRecipe['unit'][j];
+      ingredientList.add(ingredient);
+      amountList.add(amount);
+      unitList.add(unit);
+    }
+    Product product = Product(
+      vegetarian: vegetarian,
+      glutenFree: glutenFree,
+      dairyFree: dairyFree,
+      veryHealthy: veryHealthy,
+      popular: popular,
+      cheap: cheap,
+      lowFodmap: lowFodmap,
+      name: name,
+      photoURL: photoURL,
+      type: 'food',
+      barCode: '1',
+      qrCode: '1',
+      description: 'sth',
+      ingredients: ingredientList,
+      amount: amountList,
+      unit: unitList,
+      illness:
+          setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
+    );
+    return product;
+  }
+
+  static Future<List<Product>> fetchUserSavedProducts(String userID) async {
+    List<Product> savedProducts = List();
+    var hold;
+    var temp = await Firestore.instance
+        .collection('users')
+        .document(userID)
+        .get()
+        .then((DocumentSnapshot ds) {
+      Product holder;
+      for (int index = 0; index < ds.data['Products'].length; index++) {
+        holder = decodeProduct(ds.data['Products'][index]);
+        savedProducts.add(holder);
+      }
+    });
+    return savedProducts;
+  }
+
+  static Future<void> removeUserSavedProduct(String userID) async {
+    Firestore.instance.collection('users').document(userID).delete();
   }
 }
