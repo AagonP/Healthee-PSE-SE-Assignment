@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/product.dart';
 import 'dart:math';
@@ -94,6 +94,7 @@ class FoodData {
 }
 
 class UserSavedProducts {
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
   static Future<void> postUserSavedProducts(
       Map<String, dynamic> jsonProducts, String userID) async {
     await Firestore.instance
@@ -166,5 +167,10 @@ class UserSavedProducts {
 
   static Future<void> removeUserSavedProduct(String userID) async {
     Firestore.instance.collection('users').document(userID).delete();
+  }
+
+  static Future<String> getCurrentUser() async {
+    final FirebaseUser user = await _auth.currentUser();
+    return user.uid.toString();
   }
 }

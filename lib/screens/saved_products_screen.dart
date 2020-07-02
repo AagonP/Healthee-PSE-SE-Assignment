@@ -5,14 +5,9 @@ import '../models/product.dart';
 import '../providers/saved_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../providers/data_helper.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 
 class SavedListScreen extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<String> getCurrentUser() async{
-    final FirebaseUser user = await _auth.currentUser();
-    return user.uid.toString();
-  }
   @override
   Widget build(BuildContext context) {
     Future<Map<String, dynamic>> mapping() async {
@@ -118,8 +113,8 @@ class SavedListScreen extends StatelessWidget {
                                     .removeProduct(
                                         _currentList.elementAt(index));
                                 UserSavedProducts.removeUserSavedProduct(
-                                    await getCurrentUser());
-                                updateUserSavedProducts(await getCurrentUser());
+                                    await UserSavedProducts.getCurrentUser());
+                                updateUserSavedProducts(await UserSavedProducts.getCurrentUser());
                               },
                               icon: Icon(Icons.delete),
                               iconSize: 25,
