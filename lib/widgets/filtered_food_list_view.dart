@@ -10,14 +10,9 @@ import '../providers/saved_products.dart';
 import '../providers/data_helper.dart';
 
 class FilterFoodListView extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<String> getCurrentUser() async{
-    final FirebaseUser user = await _auth.currentUser();
-    return user.uid.toString();
-  }
   @override
   Widget build(BuildContext context) {
-    Future<Map<String, dynamic>> mapping() async {
+    Future<Map<String, dynamic>> mappingProductToJson() async {
       int _savedProductsLength =
           Provider.of<SavedProducts>(context).savedProducts.length;
       if (_savedProductsLength == 0) return null;
@@ -35,7 +30,8 @@ class FilterFoodListView extends StatelessWidget {
     }
 
     Future<void> updateUserSavedProducts(String userID) async {
-      UserSavedProducts.postUserSavedProducts(await mapping(), userID);
+      UserSavedProducts.postUserSavedProducts(
+          await mappingProductToJson(), userID);
     }
 
     final List<Product> _currentList =
@@ -170,7 +166,7 @@ class FilterFoodListView extends StatelessWidget {
                                 return;
                               }
                               _saveProduct(index);
-                              updateUserSavedProducts(await getCurrentUser());
+                              updateUserSavedProducts(await UserSavedProducts.getCurrentUser());
                             },
                             icon: Icon(Icons.save),
                             iconSize: 25,

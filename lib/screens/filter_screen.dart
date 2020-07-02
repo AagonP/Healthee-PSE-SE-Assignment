@@ -19,11 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<String> getCurrentUser() async{
-    final FirebaseUser user = await _auth.currentUser();
-    return user.uid.toString();
-  }
+  
   @override
   Widget build(BuildContext context) {
     Future<void> updateDataFromFirebase(String userID) async {
@@ -180,7 +176,7 @@ class FilterScreen extends StatelessWidget {
           Card(
             child: IconButton(
               onPressed: () async {
-                updateDataFromFirebase(await getCurrentUser());
+                updateDataFromFirebase(await UserSavedProducts.getCurrentUser());
                 //saved list page
                 if (Provider.of<SavedProducts>(context).savedProducts.length ==
                     0) {

@@ -95,7 +95,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE9F4FE),
                     title: 'Plan a diet',
                     description: 'Make your own diet',
-                    navigate_page: 'HomePage',
+                    navigate_page: '/planning-option-screen',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
