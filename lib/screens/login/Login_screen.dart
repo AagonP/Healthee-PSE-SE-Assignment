@@ -13,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   String email;
   String password;
   String name;
-  bool obscure = true;
+  bool obsucre = true;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          obscure = !obscure;
+                          obsucre = !obsucre;
                         });
                       },
                     ),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  obscureText: obscure,
+                  obscureText: obsucre,
                   onChanged: (value) {
                     password = value;
                   },
@@ -98,23 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    onPressed: () async {
-                      setState(() {
-                        showSpinner = true;
-                      });
-                      try {
-                        final user = await _auth.signInWithEmailAndPassword(
-                            email: email, password: password);
-                        if (user != null) {
-                          Navigator.pushNamed(context, 'NavigatePage');
-                        }
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
+                    onPressed: () {},
                     minWidth: 200.0,
                     height: 50.0,
                     child: Text(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-import '../widgets/drawer_view.dart';
+
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       //Drawer here
-      drawer: DrawerView(),
+
       body: Column(
         children: <Widget>[
           // //Title "Healthee"
@@ -214,7 +214,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Padding(padding: EdgeInsets.all(10),),
+          Padding(
+            padding: EdgeInsets.all(10),
+          ),
           Container(
             child: Expanded(
               child: FoodListView(),
