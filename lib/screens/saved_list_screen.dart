@@ -19,10 +19,6 @@ class SavedListScreen extends StatelessWidget {
       if (_currentList.elementAt(index).photoURL != null)
         return Image.network(
           _currentList.elementAt(index).photoURL,
-          fit: BoxFit.fill,
-          alignment: Alignment.centerLeft,
-          height: 80,
-          width: 150,
         );
       else
         return Container(
@@ -40,65 +36,49 @@ class SavedListScreen extends StatelessWidget {
           shrinkWrap: true,
           crossAxisCount: 2,
           children: List.generate(_currentList.length, (index) {
-            return Card(
-              shadowColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              margin: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    child: GestureDetector(
-                      onTap: () {
-                        navigateToFoodInfoScreen(index);
-                      },
-                      // slide image function here
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: displayProductImage(index),
+            return Container(
+              width: 50.0,
+              child: Card(
+                shadowColor: Colors.grey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      child: GestureDetector(
+                        onTap: () {
+                          navigateToFoodInfoScreen(index);
+                        },
+                        // slide image function here
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: displayProductImage(index),
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: 150,
-                    child: AutoSizeText(
-                      _currentList.elementAt(index).name,
-                      style: TextStyle(fontSize: 15.0),
-                      minFontSize: 10.0,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    Row(
                       children: <Widget>[
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: EdgeInsets.all(5),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            color: Colors.yellow[600],
-                            child: IconButton(
-                              onPressed: () {
-                                Provider.of<FilterSavedList>(context)
-                                    .removeProduct(
-                                        _currentList.elementAt(index));
-                              },
-                              icon: Icon(Icons.delete),
-                              iconSize: 25,
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 5),
+                            child: AutoSizeText(
+                              _currentList.elementAt(index).name,
+                              style: TextStyle(fontSize: 15.0),
+                              minFontSize: 10.0,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           }),

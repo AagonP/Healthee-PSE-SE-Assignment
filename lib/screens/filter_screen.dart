@@ -11,7 +11,6 @@ import '../screens/saved_list_screen.dart';
 
 class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
-
   @override
   Widget build(BuildContext context) {
     void doFilterList() {
@@ -37,65 +36,8 @@ class FilterScreen extends StatelessWidget {
       return 'Setting has not applied';
     }
 
-    Future<void> _showAlertOnEmptySelectingList() async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Be alert!'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Your holding list is currently empty.'),
-                  Text('Please press the search bar and the select a product'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Got it'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
-    Future<void> _showAlertOnSavedList() async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Oops!'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Look like your saved product list is empty.'),
-                  Text('Please save a product in you cart.'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Got it'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
         centerTitle: true,
         title: Text(
           'My cart',
@@ -109,7 +51,7 @@ class FilterScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: TextField(
                   onTap: () {
-                    Navigator.pushNamed(context, 'HomePage');
+                    Navigator.pop(context);
                   },
                   decoration: InputDecoration(
                     hintText: 'Search product..',
@@ -122,10 +64,6 @@ class FilterScreen extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.filter_list),
               onPressed: () {
-                if (Provider.of<Products>(context).selectedProducts.length ==
-                    0) {
-                  _showAlertOnEmptySelectingList();
-                }
                 doFilterList();
               },
             ),
@@ -149,15 +87,8 @@ class FilterScreen extends StatelessWidget {
             child: IconButton(
               onPressed: () {
                 //saved list page
-                if (Provider.of<FilterSavedList>(context).currentList.length ==
-                    0) {
-                  _showAlertOnSavedList();
-                } else {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SavedListScreen()));
-                }
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SavedListScreen()));
               },
               icon: Badge(
                   badgeColor: Colors.white,
@@ -165,7 +96,7 @@ class FilterScreen extends StatelessWidget {
                   badgeContent: Text(
                       (Provider.of<FilterSavedList>(context).currentList.length)
                           .toString()),
-                  child: Icon(Icons.account_box)), //filter
+                  child: Icon(Icons.edit)), //filter
             ),
           ),
           //Input user setting
@@ -173,11 +104,7 @@ class FilterScreen extends StatelessWidget {
             icon: Icon(Icons.add_box),
             iconSize: 40,
             onPressed: () {
-              if (Provider.of<Products>(context).selectedProducts.length == 0) {
-                _showAlertOnEmptySelectingList();
-              } else {
-                Navigator.pushNamed(context, 'HealthInputScreen');
-              }
+              Navigator.pushNamed(context, 'HealthInputScreen');
             },
           ),
         ]),

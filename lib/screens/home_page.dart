@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-
+import '../widgets/drawer_view.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
@@ -81,9 +81,51 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              //TODO: Add user information here
+              //TODO: Generate string ID for user
+              //TODO: Save user info
+            },
+            icon: Icon(Icons.account_circle),
+            iconSize: 30,
+          ),
+        ],
       ),
+      //Drawer here
+      drawer: DrawerView(),
       body: Column(
         children: <Widget>[
+          // //Title "Healthee"
+          // Container(
+          //   margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          //   child: Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: Text(
+          //       'Healthee',
+          //       textAlign: TextAlign.left,
+          //       style: TextStyle(
+          //         fontSize: 50,
+          //         fontFamily: 'Pacifico',
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // //Second Title "Nutrion & Diet"
+          // Container(
+          //   margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          //   child: Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: Text(
+          //       'Nutrition & Diet',
+          //       style: TextStyle(
+          //         fontSize: 30,
+          //         letterSpacing: 2.0,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -172,9 +214,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.all(10),
-          ),
+          Padding(padding: EdgeInsets.all(10),),
           Container(
             child: Expanded(
               child: FoodListView(),

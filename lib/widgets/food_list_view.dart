@@ -15,7 +15,7 @@ class FoodListView extends StatelessWidget {
         return Image.network(
           _currentList.elementAt(index).photoURL,
           height: 80,
-          width: 150,
+          width: 80,
           fit: BoxFit.fill,
           alignment: Alignment.centerLeft,
         );
@@ -37,10 +37,16 @@ class FoodListView extends StatelessWidget {
             .addSelectedProducts(_currentList.elementAt(index));
     }
 
+    void removeFromSelectingList(int index) {
+      Provider.of<Products>(context)
+          .removeSelectedProducts(_currentList.elementAt(index));
+    }
+
     return GridView.count(
       padding: EdgeInsets.all(5),
       shrinkWrap: true,
-      crossAxisCount: 2,
+      crossAxisCount: 1,
+      childAspectRatio: 2.8,
       children: List.generate(_currentList.length, (index) {
         return Card(
           shadowColor: Colors.grey,
@@ -48,55 +54,65 @@ class FoodListView extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0),
           ),
           margin: EdgeInsets.all(15),
-          child: Column(
+          child: Row(
             children: <Widget>[
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    //NavigateToFoodInfoScreen()
-                    Navigator.pushNamed(context, 'FoodInfoScreen',
-                        arguments: _currentList.elementAt(index));
-                  },
-                  // slide image function here
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: displayProductImage(index),
-                  ),
-                ),
-              ),
-              Container(
-                width: 150,
-                child: AutoSizeText(
-                  _currentList.elementAt(index).name,
-                  style: TextStyle(fontSize: 15.0),
-                  minFontSize: 10.0,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      width: 50,
-                      height: 50,
-                      margin: EdgeInsets.all(5),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        color: Colors.yellow[600],
-                        child: IconButton(
-                          onPressed: () {
-                            addToSelectingList(index);
-                          },
-                          icon: Icon(Icons.add),
-                          iconSize: 25,
-                        ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: GestureDetector(
+                      onTap: () {
+                        //NavigateToFoodInfoScreen()
+                        Navigator.pushNamed(context, 'FoodInfoScreen',
+                            arguments: _currentList.elementAt(index));
+                      },
+                      // slide image function here
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: displayProductImage(index),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    width: 250,
+                    child: AutoSizeText(
+                      _currentList.elementAt(index).name,
+                      style: TextStyle(fontSize: 15.0),
+                      minFontSize: 10.0,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Card(
+                          child: IconButton(
+                            onPressed: () {
+                              addToSelectingList(index);
+                            },
+                            icon: Icon(Icons.add),
+                          ),
+                        ),
+                        Card(child: Text('')),
+                        Card(
+                          child: IconButton(
+                            onPressed: () {
+                              removeFromSelectingList(index);
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
