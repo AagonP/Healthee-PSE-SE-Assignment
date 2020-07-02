@@ -9,6 +9,7 @@ import '../providers/data_helper.dart';
 import '../widgets/category.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../screens/scan.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,10 +17,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _auth = FirebaseAuth.instance;
+  FirebaseUser user;
+  String name = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
+    getUser();
+  }
+
+  void getUser() async {
+    user = await _auth.currentUser();
+    setState(() {
+      if (user != null) {
+        name = user.displayName;
+      } else
+        name = '';
+    });
   }
 
   void updateAfterScan(var key) {
@@ -81,9 +96,38 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              //TODO: Add user information here
+              //TODO: Generate string ID for user
+              //TODO: Save user info
+            },
+            icon: Icon(Icons.account_circle),
+            iconSize: 30,
+          ),
+        ],
       ),
+      //Drawer here
+
       body: Column(
         children: <Widget>[
+          //Title "Healthee"
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Welcome $name',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: 'Pacifico',
+                ),
+              ),
+            ),
+          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
