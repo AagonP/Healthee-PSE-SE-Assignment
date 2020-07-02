@@ -1,6 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class NavigatePage extends StatelessWidget {
+class NavigatePage extends StatefulWidget {
+  @override
+  _NavigatePageState createState() => _NavigatePageState();
+}
+
+class _NavigatePageState extends State<NavigatePage> {
+  final _auth = FirebaseAuth.instance;
+
+  FirebaseUser loginUser;
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser();
+      if (user != null) {
+        loginUser = user;
+        print(loginUser.email);
+        print(loginUser.displayName);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +66,7 @@ class NavigatePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 5.0,
+                  height: 15.0,
                 ),
                 NavigateTab(
                   color: Color(0xFFFDF4DE),
@@ -52,21 +80,10 @@ class NavigatePage extends StatelessWidget {
                   ),
                 ),
                 NavigateTab(
-                  color: Colors.red[50],
-                  title: 'Filter by Illness',
-                  description: 'Know what suits your health',
-                  navigate_page: 'FilterScreen',
-                  image: Image(
-                    width: 60.0,
-                    height: 60.0,
-                    image: AssetImage('image/filter.png'),
-                  ),
-                ),
-                NavigateTab(
                   color: Color(0xFFE9F4FE),
                   title: 'Plan a diet',
                   description: 'Make your own diet',
-                  navigate_page: '/planning-option-screen',
+                  navigate_page: 'HomePage',
                   image: Image(
                     width: 60.0,
                     height: 60.0,
