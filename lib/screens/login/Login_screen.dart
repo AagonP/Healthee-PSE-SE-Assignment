@@ -13,7 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   String email;
   String password;
   String name;
-  bool obsucre = true;
+  bool obscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          obsucre = !obsucre;
+                          obscure = !obscure;
                         });
                       },
                     ),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   textAlign: TextAlign.center,
-                  obscureText: obsucre,
+                  obscureText: obscure,
                   onChanged: (value) {
                     password = value;
                   },
