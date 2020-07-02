@@ -98,7 +98,23 @@ class _LoginPageState extends State<LoginPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      try {
+                        final user = await _auth.signInWithEmailAndPassword(
+                            email: email, password: password);
+                        if (user != null) {
+                          Navigator.pushNamed(context, 'NavigatePage');
+                        }
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     minWidth: 200.0,
                     height: 50.0,
                     child: Text(

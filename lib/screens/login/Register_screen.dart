@@ -101,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     password = value;
                   },
                   validator: (value) =>
-                      value.isEmpty ? 'Password can\'t be empty' : null,
+                      (value.length < 6) ? 'Password can\'t less then 6' : null,
                 ),
                 SizedBox(
                   height: 10.0,
