@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
@@ -13,9 +14,16 @@ import '../providers/saved_products.dart';
 import '../screens/saved_list_screen.dart';
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 class FilterScreen extends StatelessWidget {
   bool isFilterOn = false;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<String> getCurrentUser() async{
+    final FirebaseUser user = await _auth.currentUser();
+    return user.uid.toString();
+  }
   @override
   Widget build(BuildContext context) {
     Future<void> updateDataFromFirebase(String userID) async {
@@ -171,8 +179,8 @@ class FilterScreen extends StatelessWidget {
           ),
           Card(
             child: IconButton(
-              onPressed: () {
-                updateDataFromFirebase('userIDtest0');
+              onPressed: () async {
+                updateDataFromFirebase(await getCurrentUser());
                 //saved list page
                 if (Provider.of<SavedProducts>(context).savedProducts.length ==
                     0) {

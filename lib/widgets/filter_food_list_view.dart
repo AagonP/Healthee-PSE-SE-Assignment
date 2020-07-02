@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
@@ -9,6 +10,11 @@ import '../providers/saved_products.dart';
 import '../providers/data_helper.dart';
 
 class FilterFoodListView extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<String> getCurrentUser() async{
+    final FirebaseUser user = await _auth.currentUser();
+    return user.uid.toString();
+  }
   @override
   Widget build(BuildContext context) {
     Future<Map<String, dynamic>> mapping() async {
@@ -157,14 +163,14 @@ class FilterFoodListView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0)),
                           color: Colors.yellow[600],
                           child: IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (!_currentList.elementAt(index).isHealthy) {
                                 //Alert dialog here
                                 _showAlertOnSavingBlurred(index);
                                 return;
                               }
                               _saveProduct(index);
-                              updateUserSavedProducts('userIDtest0');
+                              updateUserSavedProducts(await getCurrentUser());
                             },
                             icon: Icon(Icons.save),
                             iconSize: 25,
