@@ -5,9 +5,9 @@ import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/s
 import '../../models/product.dart';
 import '../../providers/saved_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../providers/data_helper.dart';
 
-class SavedListScreen extends StatelessWidget
+
+class SavedProductsScreen extends StatelessWidget
     with SavedProductsScreenController {
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,7 @@ class SavedListScreen extends StatelessWidget
           crossAxisCount: 2,
           children: List.generate(_savedProducts.length, (index) {
             return Card(
+              
               shadowColor: Colors.grey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -42,7 +43,7 @@ class SavedListScreen extends StatelessWidget
                       // slide image function here
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
-                        child: displayProductImage(index, _savedProducts),
+                        child: getProductImage(index, _savedProducts),
                       ),
                     ),
                   ),

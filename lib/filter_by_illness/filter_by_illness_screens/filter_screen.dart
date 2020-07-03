@@ -5,14 +5,13 @@ import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/f
 import 'package:pse_assignment/filter_by_illness/filter_by_illness_screens/saved_products_screen.dart';
 
 import '../../providers/data_helper.dart';
-import '../../widgets/filtered_food_list_view.dart';
+import '../filter_by_illness_widgets/filtered_food_list_view.dart';
 import '../../providers/products.dart';
 import '../../providers/saved_products.dart';
 import 'saved_products_screen.dart';
 
 class FilterScreen extends StatelessWidget with FilterScreenController {
-  bool _isFilterOn = false;
-
+  static bool _isFilterOn = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +49,13 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
               child: IconButton(
                 icon: Icon(Icons.filter_list),
                 onPressed: () {
-                  if (Provider.of<Products>(context).selectedProducts.length ==
+                  //onPressedFilter
+                  if (Provider.of<Products>(context).filteringProducts.length ==
                       0) {
                     showAlertOnEmptySelectingList(context);
                   }
                   doFilterList(_isFilterOn, context);
+                  _isFilterOn = !_isFilterOn;
                 },
               ),
             ),
@@ -69,7 +70,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  displayFilterStatus(_isFilterOn, context),
+                  getFilterStatus(_isFilterOn, context),
                   style: TextStyle(fontSize: 14),
                 ),
               ),
@@ -90,7 +91,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SavedListScreen()));
+                          builder: (context) => SavedProductsScreen()));
                 }
               },
               icon: Badge(
@@ -107,7 +108,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
             icon: Icon(Icons.add_box),
             iconSize: 40,
             onPressed: () {
-              if (Provider.of<Products>(context).selectedProducts.length == 0) {
+              if (Provider.of<Products>(context).filteringProducts.length == 0) {
                 showAlertOnEmptySelectingList(context);
               } else {
                 Navigator.pushNamed(context, 'HealthInputScreen');

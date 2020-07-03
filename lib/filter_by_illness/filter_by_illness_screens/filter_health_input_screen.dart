@@ -20,13 +20,13 @@ class ShowHealthInputForm extends StatefulWidget {
 
 class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
   static int numbOfIllness = 10;
-  static List<bool> _isSelectedProducts =
+  static List<bool> _illnessSelections =
       List<bool>.generate(numbOfIllness, (index) => false);
   void updateIllnessSelection(bool newValue, int index) {
-    Provider.of<UserInput>(context).updateInput(
-        Provider.of<UserInput>(context).illness[index], newValue, 0);
+    Provider.of<UserInput>(context).updateUserInput(
+        Provider.of<UserInput>(context).illnessTags[index], newValue, 0);
     setState(() {
-      _isSelectedProducts[index] = newValue;
+      _illnessSelections[index] = newValue;
     });
   }
 
@@ -46,11 +46,11 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
           Padding(padding: EdgeInsets.all(5)),
           Expanded(
             child: ListView.builder(
-                itemCount: _isSelectedProducts.length,
+                itemCount: _illnessSelections.length,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
-                    title: Text(Provider.of<UserInput>(context).illness[index]),
-                    value: _isSelectedProducts[index],
+                    title: Text(Provider.of<UserInput>(context).illnessTags[index]),
+                    value: _illnessSelections[index],
                     onChanged: (bool newValue) {
                       updateIllnessSelection(newValue, index);
                     },

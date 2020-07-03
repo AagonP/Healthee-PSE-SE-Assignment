@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                       badgeColor: Colors.white,
                       animationType: BadgeAnimationType.scale,
                       badgeContent: Text((Provider.of<Products>(context)
-                              .selectedProducts
+                              .filteringProducts
                               .length)
                           .toString()),
                       child: Icon(Icons.shopping_cart)), //filter

@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/product.dart';
 import 'dart:math';
 import 'user_input.dart';
-import '../providers/products.dart';
 
 const int numberOfRecipe = 20;
 
@@ -103,24 +102,24 @@ class UserSavedProductsDataHelper {
         .setData(jsonProducts);
   }
 
-  static Product decodeProduct(var jsonRecipe) {
-    bool vegetarian = (jsonRecipe['vegetarian'] == 'true') ? true : false;
-    bool glutenFree = (jsonRecipe['glutenFree'] == 'true') ? true : false;
-    bool dairyFree = (jsonRecipe['dairyFree'] == 'true') ? true : false;
-    bool veryHealthy = (jsonRecipe['veryHealthy'] == 'true') ? true : false;
-    bool popular = (jsonRecipe['veryPopular'] == 'true') ? true : false;
-    bool cheap = (jsonRecipe['cheap'] == 'true') ? true : false;
-    bool lowFodmap = (jsonRecipe['lowFodmap'] == 'true') ? true : false;
-    String name = jsonRecipe['name'];
-    String photoURL = jsonRecipe['photoURL'];
+  static Product decodeProductFromJson(var jsonData) {
+    bool vegetarian = (jsonData['vegetarian'] == 'true') ? true : false;
+    bool glutenFree = (jsonData['glutenFree'] == 'true') ? true : false;
+    bool dairyFree = (jsonData['dairyFree'] == 'true') ? true : false;
+    bool veryHealthy = (jsonData['veryHealthy'] == 'true') ? true : false;
+    bool popular = (jsonData['veryPopular'] == 'true') ? true : false;
+    bool cheap = (jsonData['cheap'] == 'true') ? true : false;
+    bool lowFodmap = (jsonData['lowFodmap'] == 'true') ? true : false;
+    String name = jsonData['name'];
+    String photoURL = jsonData['photoURL'];
     List<String> ingredientList = [];
     List<String> amountList = [];
     List<String> unitList = [];
-    int numberofIngredients = jsonRecipe['ingredients'].length;
+    int numberofIngredients = jsonData['ingredients'].length;
     for (int j = 0; j < numberofIngredients; j++) {
-      String ingredient = jsonRecipe['ingredients'][j];
-      var amount = jsonRecipe['amount'][j];
-      String unit = jsonRecipe['unit'][j];
+      String ingredient = jsonData['ingredients'][j];
+      var amount = jsonData['amount'][j];
+      String unit = jsonData['unit'][j];
       ingredientList.add(ingredient);
       amountList.add(amount);
       unitList.add(unit);
@@ -158,7 +157,7 @@ class UserSavedProductsDataHelper {
         .then((DocumentSnapshot ds) {
       Product holder;
       for (int index = 0; index < ds.data['Products'].length; index++) {
-        holder = decodeProduct(ds.data['Products'][index]);
+        holder = decodeProductFromJson(ds.data['Products'][index]);
         savedProducts.add(holder);
       }
     });

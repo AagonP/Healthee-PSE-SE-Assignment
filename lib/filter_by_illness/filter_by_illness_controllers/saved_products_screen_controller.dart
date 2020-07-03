@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/product.dart';
 import '../../providers/saved_products.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import '../../providers/data_helper.dart';
 
 class SavedProductsScreenController {
   void navigateToFoodInfoScreen(
-      int idx, BuildContext context, List currentList) {
+      int idx, BuildContext context, List filteringProducts) {
     Navigator.pushNamed(context, 'FoodInfoScreen',
-        arguments: currentList.elementAt(idx));
+        arguments: filteringProducts.elementAt(idx));
   }
 
-  Future<Map<String, dynamic>> mappingProductToJson(
+  Future<Map<String, dynamic>> mapProductToJson(
       BuildContext context) async {
     int _savedProductsLength =
         Provider.of<SavedProducts>(context).savedProducts.length;
@@ -31,10 +29,10 @@ class SavedProductsScreenController {
     return temp;
   }
 
-  Widget displayProductImage(int index, List _currentList) {
-    if (_currentList.elementAt(index).photoURL != null)
+  Widget getProductImage(int index, List savedProducts) {
+    if (savedProducts.elementAt(index).photoURL != null)
       return Image.network(
-        _currentList.elementAt(index).photoURL,
+        savedProducts.elementAt(index).photoURL,
         fit: BoxFit.fill,
         alignment: Alignment.centerLeft,
         height: 80,
@@ -50,10 +48,10 @@ class SavedProductsScreenController {
   Future<void> updateUserSavedProducts(
       String userID, BuildContext context) async {
     UserSavedProductsDataHelper.postUserSavedProducts(
-        await mappingProductToJson(context), userID);
+        await mapProductToJson(context), userID);
   }
 
-  Future removeUserSavedProduct(int index,BuildContext context, List savedProducts) async {
+  Future<void> removeUserSavedProduct(int index,BuildContext context, List savedProducts) async {
     Provider.of<SavedProducts>(context)
         .removeProduct(savedProducts.elementAt(index));
     UserSavedProductsDataHelper.removeUserSavedProduct(

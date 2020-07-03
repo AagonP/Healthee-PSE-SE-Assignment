@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Illness {
-  bool obesity;
-  bool highBloodPressure;
-  bool stomache;
+   bool obesity;
+   bool highBloodPressure;
+    bool stomache;
   bool headache;
   bool celiac;
   bool glutenSensitivity;
