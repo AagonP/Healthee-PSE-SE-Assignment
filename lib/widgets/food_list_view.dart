@@ -28,13 +28,13 @@ class FoodListView extends StatelessWidget {
 
     void addToSelectingList(int index) {
       bool _isDuplicated = false;
-      Provider.of<Products>(context).selectedProducts.forEach((element) {
+      Provider.of<Products>(context).filteringProducts.forEach((element) {
         if (element.name == _currentList.elementAt(index).name)
           _isDuplicated = true;
       });
       if (!_isDuplicated)
         Provider.of<Products>(context)
-            .addSelectedProducts(_currentList.elementAt(index));
+            .addFilteringProduct(_currentList.elementAt(index));
     }
 
     return GridView.count(
