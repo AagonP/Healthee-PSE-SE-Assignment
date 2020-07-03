@@ -1,57 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/product.dart';
-import '../providers/saved_products.dart';
+import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/saved_products_screen_controller.dart';
+import '../../models/product.dart';
+import '../../providers/saved_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../providers/data_helper.dart';
+import '../../providers/data_helper.dart';
 
-class SavedListScreen extends StatelessWidget {
+class SavedListScreen extends StatelessWidget
+    with SavedProductsScreenController {
   @override
   Widget build(BuildContext context) {
-    Future<Map<String, dynamic>> mapping() async {
-      int _savedProductsLength =
-          Provider.of<SavedProducts>(context).savedProducts.length;
-      if (_savedProductsLength == 0) return null;
-      List<Map<String, dynamic>> jsonProducts = new List(_savedProductsLength);
-      for (int i = 0; i < _savedProductsLength; i++) {
-        jsonProducts[i] = await Provider.of<SavedProducts>(context)
-            .savedProducts
-            .elementAt(i)
-            .toJson();
-      }
-      Map<String, dynamic> temp = {
-        'Products': jsonProducts,
-      };
-      return temp;
-    }
-
-    Future<void> updateUserSavedProducts(String userID) async {
-      UserSavedProducts.postUserSavedProducts(await mapping(), userID);
-    }
-
-    final List<Product> _currentList =
+    final List<Product> _savedProducts =
         Provider.of<SavedProducts>(context).savedProducts;
-    void navigateToFoodInfoScreen(int idx) {
-      Navigator.pushNamed(context, 'FoodInfoScreen',
-          arguments: _currentList.elementAt(idx));
-    }
-
-    Widget displayProductImage(int index) {
-      if (_currentList.elementAt(index).photoURL != null)
-        return Image.network(
-          _currentList.elementAt(index).photoURL,
-          fit: BoxFit.fill,
-          alignment: Alignment.centerLeft,
-          height: 80,
-          width: 150,
-        );
-      else
-        return Container(
-          height: 90.0,
-          color: Colors.white,
-        );
-    }
 
     return Scaffold(
         appBar: AppBar(
@@ -61,7 +22,7 @@ class SavedListScreen extends StatelessWidget {
         body: GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2,
-          children: List.generate(_currentList.length, (index) {
+          children: List.generate(_savedProducts.length, (index) {
             return Card(
               shadowColor: Colors.grey,
               shape: RoundedRectangleBorder(
@@ -75,12 +36,13 @@ class SavedListScreen extends StatelessWidget {
                     margin: EdgeInsets.all(5),
                     child: GestureDetector(
                       onTap: () {
-                        navigateToFoodInfoScreen(index);
+                        navigateToFoodInfoScreen(
+                            index, context, _savedProducts);
                       },
                       // slide image function here
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
-                        child: displayProductImage(index),
+                        child: displayProductImage(index, _savedProducts),
                       ),
                     ),
                   ),
@@ -88,7 +50,7 @@ class SavedListScreen extends StatelessWidget {
                     width: 150,
                     height: 20,
                     child: AutoSizeText(
-                      _currentList.elementAt(index).name,
+                      _savedProducts.elementAt(index).name,
                       style: TextStyle(fontSize: 15.0),
                       minFontSize: 10.0,
                       maxLines: 2,
@@ -108,14 +70,9 @@ class SavedListScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.0)),
                             color: Colors.yellow[600],
                             child: IconButton(
-                              onPressed: () async {
-                                Provider.of<SavedProducts>(context)
-                                    .removeProduct(
-                                        _currentList.elementAt(index));
-                                UserSavedProducts.removeUserSavedProduct(
-                                    await UserSavedProducts.getCurrentUser());
-                                updateUserSavedProducts(
-                                    await UserSavedProducts.getCurrentUser());
+                              onPressed: () {
+                                removeUserSavedProduct(
+                                    index, context, _savedProducts);
                               },
                               icon: Icon(Icons.delete),
                               iconSize: 25,

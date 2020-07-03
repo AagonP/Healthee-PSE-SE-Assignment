@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/filter_health_input_screen.dart';
-import './screens/filter_screen.dart';
 import 'screens/search_product_screen.dart';
 import './screens/food_info.dart';
 import './providers/products.dart';
-
+import 'filter_by_illness/filter_by_illness_screens/filter_screen.dart';
+import 'filter_by_illness/filter_by_illness_screens/filter_health_input_screen.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import './providers/user_input.dart';
 import 'providers/saved_products.dart';
