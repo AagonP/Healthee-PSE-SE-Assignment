@@ -30,7 +30,7 @@ class FilterFoodListView extends StatelessWidget {
     }
 
     Future<void> updateUserSavedProducts(String userID) async {
-      UserSavedProducts.postUserSavedProducts(
+      UserSavedProductsDataHelper.postUserSavedProducts(
           await mappingProductToJson(), userID);
     }
 
@@ -167,7 +167,7 @@ class FilterFoodListView extends StatelessWidget {
                                 return;
                               }
                               _saveProduct(index);
-                              updateUserSavedProducts(await UserSavedProducts.getCurrentUser());
+                              updateUserSavedProducts(await UserSavedProductsDataHelper.getCurrentUser());
                             },
                             icon: Icon(Icons.save),
                             iconSize: 25,

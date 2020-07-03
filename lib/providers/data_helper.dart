@@ -93,7 +93,7 @@ class FoodData {
   }
 }
 
-class UserSavedProducts {
+class UserSavedProductsDataHelper {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static Future<void> postUserSavedProducts(
       Map<String, dynamic> jsonProducts, String userID) async {
