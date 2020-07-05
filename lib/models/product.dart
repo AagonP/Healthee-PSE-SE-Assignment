@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/illness.dart';
+import 'dart:convert';
 
 class Product {
   final String type;
@@ -22,12 +23,12 @@ class Product {
   final List<String> unit;
   bool isHealthy = true;
   Product(
-      {this.barCode,
-      this.description,
+      {this.type,
       this.name,
+      this.description,
       this.photoURL,
+      this.barCode,
       this.qrCode,
-      this.type,
       this.illness,
       this.vegetarian,
       this.glutenFree,
@@ -39,6 +40,23 @@ class Product {
       this.ingredients,
       this.amount,
       this.unit});
+  Future<Map<String, dynamic>> toJson() async => {
+        'type': this.type,
+        'name': this.name,
+        'description': this.description,
+        'photoURL': this.photoURL,
+        'barCode': this.barCode,
+        'qrCode': this.qrCode,
+        'illness': this.illness.toJson(),
+        'vegetarian': this.vegetarian,
+        'glutenFree': this.glutenFree,
+        'cheap': this.cheap,
+        'dairyFree': this.dairyFree,
+        'popular': this.popular,
+        'veryHealthy': this.veryHealthy,
+        'lowFodmap': this.lowFodmap,
+        'ingredients': this.ingredients,
+        'amount': this.amount,
+        'unit': this.unit,
+      };
 }
-
-

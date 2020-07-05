@@ -1,6 +1,15 @@
+import 'package:pse_assignment/models/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../models/product.dart';
+import 'dart:math';
+import 'user_input.dart';
+
+const int numberOfRecipe = 20;
 
 class DataHelper {
   Future<dynamic> fetchData(String url) async {
@@ -18,11 +27,149 @@ class DataHelper {
       throw Exception('Connection failed');
   }
 }
-//Map<String, String> queryParameters = {
-//  'query': name,
-//};
-//var uri = Uri.https(
-//  'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
-//  path,
-//  queryParameters,
-//);
+
+class FoodData {
+  DataHelper dataHelper = DataHelper();
+  List<int> id = List(numberOfRecipe);
+  List<dynamic> foodRecipeJson = List(numberOfRecipe);
+  List<Product> foodData = List(numberOfRecipe);
+  Random random = Random();
+  Future<dynamic> getFoodData(String name) async {
+    DataHelper dataHelper = DataHelper();
+    int offset = random.nextInt(50);
+    String idUrl =
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=${numberOfRecipe.toString()}&offset=${offset.toString()}&query=$name';
+    var foodIdJson = await dataHelper.fetchData(idUrl);
+    return foodIdJson;
+  }
+
+  Future<Product> decodeProduct(String id) async {
+    String recipeUrl =
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information';
+    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
+    bool vegetarian = jsonRecipe['vegetarian'];
+    bool glutenFree = jsonRecipe['glutenFree'];
+    bool dairyFree = jsonRecipe['dairyFree'];
+    bool veryHealthy = jsonRecipe['veryHealthy'];
+    bool popular = jsonRecipe['veryPopular'];
+    bool cheap = jsonRecipe['cheap'];
+    bool lowFodmap = jsonRecipe['lowFodmap'];
+    String title = jsonRecipe['title'];
+    String photoURL = jsonRecipe['image'];
+    List<String> ingredientList = [];
+    List<String> amountList = [];
+    List<String> unitList = [];
+    int numberofIngredients = jsonRecipe['extendedIngredients'].length;
+    for (int j = 0; j < numberofIngredients; j++) {
+      String ingredient = jsonRecipe['extendedIngredients'][j]['name'];
+      var amount = jsonRecipe['extendedIngredients'][j]['amount'];
+      String unit = jsonRecipe['extendedIngredients'][j]['unit'];
+      ingredientList.add(ingredient);
+      amountList.add(amount.toStringAsFixed(2));
+      unitList.add(unit);
+    }
+    Product product = Product(
+      vegetarian: vegetarian,
+      glutenFree: glutenFree,
+      dairyFree: dairyFree,
+      veryHealthy: veryHealthy,
+      popular: popular,
+      cheap: cheap,
+      lowFodmap: lowFodmap,
+      name: title,
+      photoURL: photoURL,
+      type: 'food',
+      barCode: '1',
+      qrCode: '1',
+      description: 'sth',
+      ingredients: ingredientList,
+      amount: amountList,
+      unit: unitList,
+      illness:
+          setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
+    );
+    return product;
+  }
+}
+
+class UserSavedProductsDataHelper {
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static Future<void> postUserSavedProducts(
+      Map<String, dynamic> jsonProducts, String userID) async {
+    await Firestore.instance
+        .collection('users')
+        .document(userID)
+        .setData(jsonProducts);
+  }
+
+  static Product decodeProductFromJson(var jsonData) {
+    bool vegetarian = (jsonData['vegetarian'] == 'true') ? true : false;
+    bool glutenFree = (jsonData['glutenFree'] == 'true') ? true : false;
+    bool dairyFree = (jsonData['dairyFree'] == 'true') ? true : false;
+    bool veryHealthy = (jsonData['veryHealthy'] == 'true') ? true : false;
+    bool popular = (jsonData['veryPopular'] == 'true') ? true : false;
+    bool cheap = (jsonData['cheap'] == 'true') ? true : false;
+    bool lowFodmap = (jsonData['lowFodmap'] == 'true') ? true : false;
+    String name = jsonData['name'];
+    String photoURL = jsonData['photoURL'];
+    List<String> ingredientList = [];
+    List<String> amountList = [];
+    List<String> unitList = [];
+    int numberofIngredients = jsonData['ingredients'].length;
+    for (int j = 0; j < numberofIngredients; j++) {
+      String ingredient = jsonData['ingredients'][j];
+      var amount = jsonData['amount'][j];
+      String unit = jsonData['unit'][j];
+      ingredientList.add(ingredient);
+      amountList.add(amount);
+      unitList.add(unit);
+    }
+    Product product = Product(
+      vegetarian: vegetarian,
+      glutenFree: glutenFree,
+      dairyFree: dairyFree,
+      veryHealthy: veryHealthy,
+      popular: popular,
+      cheap: cheap,
+      lowFodmap: lowFodmap,
+      name: name,
+      photoURL: photoURL,
+      type: 'food',
+      barCode: '1',
+      qrCode: '1',
+      description: 'sth',
+      ingredients: ingredientList,
+      amount: amountList,
+      unit: unitList,
+      illness:
+          setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
+    );
+    return product;
+  }
+
+  static Future<List<Product>> fetchUserSavedProducts(String userID) async {
+    List<Product> savedProducts = List();
+    var hold;
+    var temp = await Firestore.instance
+        .collection('users')
+        .document(userID)
+        .get()
+        .then((DocumentSnapshot ds) {
+      Product holder;
+      for (int index = 0; index < ds.data['Products'].length; index++) {
+        holder = decodeProductFromJson(ds.data['Products'][index]);
+        savedProducts.add(holder);
+      }
+    });
+    return savedProducts;
+  }
+
+  static Future<void> removeUserSavedProduct(String userID) async {
+    Firestore.instance.collection('users').document(userID).delete();
+  }
+
+  static Future<String> getCurrentUser() async {
+    final FirebaseUser user = await _auth.currentUser();
+    return user.uid.toString();
+  }
+}

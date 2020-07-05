@@ -1,17 +1,25 @@
 import 'package:flutter/cupertino.dart';
 
+import 'dart:convert';
+import 'dart:async';
+
 import '../models/product.dart';
 import './user_input.dart';
 
 // Mock products
 class Products with ChangeNotifier {
-  List<Product> _selectedProducts = [];
-  List<Product> get selectedProducts {
-    return [..._selectedProducts];
+  List<Product> _filteringProducts = [];
+  List<Product> get filteringProducts {
+    return [..._filteringProducts];
   }
 
-  void addSelectedProducts(Product product) {
-    _selectedProducts.add(product);
+  void addFilteringProduct(Product product) {
+    _filteringProducts.add(product);
+    notifyListeners();
+  }
+
+  void removeFilteringProduct(Product product) {
+    _filteringProducts.remove(product);
     notifyListeners();
   }
 
@@ -109,7 +117,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProductHealthValid(Product product, bool value) {
+  void updateProductHealthValidation(Product product, bool value) {
     product.isHealthy = value;
     notifyListeners();
   }

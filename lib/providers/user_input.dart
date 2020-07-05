@@ -1,7 +1,6 @@
 // Mock user input for health's setting
 import 'package:flutter/material.dart';
 
-import '../models/product.dart';
 import '../models/illness.dart';
 
 class UserInput with ChangeNotifier {
@@ -28,7 +27,7 @@ class UserInput with ChangeNotifier {
     return [..._healthInput];
   }
 
-  List<String> _illness = [
+  List<String> _illnessTags = [
     'Obesity',
     'High Blood Pressure',
     'Headache',
@@ -40,11 +39,11 @@ class UserInput with ChangeNotifier {
     'PeripheralVascular',
     'Stroke',
   ];
-  List<String> get illness {
-    return [..._illness];
+  List<String> get illnessTags {
+    return [..._illnessTags];
   }
 
-  void updateInput(String illness, bool value, int page) {
+  void updateUserInput(String illness, bool value, int page) {
     page = 0;
     switch (illness) {
       case 'Obesity':
