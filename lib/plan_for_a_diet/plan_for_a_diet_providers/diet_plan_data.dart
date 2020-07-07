@@ -14,8 +14,12 @@ class DietPlanData with ChangeNotifier{
     _userCalory = userDailyCalory;
     for (int i = 0; i < 1; i++) {
       _dailyList[i] = DailyData(i);
-      _dailyList[i].setDailyPlan(_userCalory);
+      await _dailyList[i].setDailyPlan(_userCalory);
     }
+    /*for (int i = 6; i < 30; i++) {
+      _dailyList[i] = DailyData(i);
+      _dailyList[i].setDailyPlan(_userCalory);
+    }*/
 
     notifyListeners();
   }
