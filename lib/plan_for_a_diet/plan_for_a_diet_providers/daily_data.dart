@@ -46,7 +46,7 @@ class Meal {
 
 class DailyData {
   int _index;
-  double _calory;
+  double _calory = 0;
   double _protein;
   double _fat;
   double _carbohydrate;
@@ -65,7 +65,7 @@ class DailyData {
   Future<void> setDailyPlan(double wantedCalory) async {
     DataHelper dataHelper = DataHelper();
     String idUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate?timeFrame=day&targetCalories=$wantedCalory&diet=normal&exclude=butter%252C%20lard%252C%20cake';
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate?timeFrame=day&targetCalories=$wantedCalory&diet=normal&exclude=oil%252C%20fat%252C%20cheese%252C%20sugar%252C%20chocolate%252C%20cream';
     var dailyDataJson = await dataHelper.fetchData(idUrl);
     var dailyCalory = dailyDataJson['nutrients']['calories'];
     var dailyProtein = dailyDataJson['nutrients']['protein'];
