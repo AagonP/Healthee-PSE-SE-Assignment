@@ -63,7 +63,7 @@ class FilterFoodListView extends StatelessWidget with FilterScreenController {
                 ),
                 Container(
                   width: 150,
-                  height: 20,
+                  height: 30,
                   child: AutoSizeText(
                     _filteringProducts.elementAt(index).name,
                     style: TextStyle(fontSize: 15.0),
@@ -81,9 +81,10 @@ class FilterFoodListView extends StatelessWidget with FilterScreenController {
                         height: 50,
                         margin: EdgeInsets.all(1),
                         child: Card(
+                          elevation: 5,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
-                          color: Colors.yellow[600],
+                          color: Colors.white,
                           child: IconButton(
                             onPressed: () async {
                               if (!_filteringProducts
@@ -110,9 +111,10 @@ class FilterFoodListView extends StatelessWidget with FilterScreenController {
                         height: 50,
                         margin: EdgeInsets.all(1),
                         child: Card(
+                          elevation: 5,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
-                          color: Colors.yellow[600],
+                          color: Colors.white,
                           child: IconButton(
                             onPressed: () {
                               removeFromFilteringList(

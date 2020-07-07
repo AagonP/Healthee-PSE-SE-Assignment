@@ -6,11 +6,14 @@ import '../../models/product.dart';
 import '../../providers/saved_products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-
 class SavedProductsScreen extends StatelessWidget
     with SavedProductsScreenController {
   @override
   Widget build(BuildContext context) {
+    final removeFromSavedProducts = SnackBar(
+      content: Text('You have removed the product from saved list!'),
+      duration: Duration(milliseconds: 500),
+    );
     final List<Product> _savedProducts =
         Provider.of<SavedProducts>(context).savedProducts;
 
@@ -24,7 +27,6 @@ class SavedProductsScreen extends StatelessWidget
           crossAxisCount: 2,
           children: List.generate(_savedProducts.length, (index) {
             return Card(
-              
               shadowColor: Colors.grey,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -49,7 +51,7 @@ class SavedProductsScreen extends StatelessWidget
                   ),
                   Container(
                     width: 150,
-                    height: 20,
+                    height: 30,
                     child: AutoSizeText(
                       _savedProducts.elementAt(index).name,
                       style: TextStyle(fontSize: 15.0),
@@ -67,16 +69,20 @@ class SavedProductsScreen extends StatelessWidget
                           height: 50,
                           margin: EdgeInsets.all(1),
                           child: Card(
+                            elevation: 5,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
-                            color: Colors.yellow[600],
-                            child: IconButton(
-                              onPressed: () {
-                                removeUserSavedProduct(
-                                    index, context, _savedProducts);
-                              },
-                              icon: Icon(Icons.delete),
-                              iconSize: 25,
+                            color: Colors.white,
+                            child: Builder(
+                              builder: (context) => IconButton(
+                                onPressed: () {
+                                  Scaffold.of(context).showSnackBar(removeFromSavedProducts);
+                                  removeUserSavedProduct(
+                                      index, context, _savedProducts);
+                                },
+                                icon: Icon(Icons.delete),
+                                iconSize: 25,
+                              ),
                             ),
                           ),
                         ),

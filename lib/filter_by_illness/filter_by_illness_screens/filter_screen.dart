@@ -19,34 +19,29 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'My cart',
+          'My filtering list',
         ),
       ),
       body: Column(children: <Widget>[
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
+            Card(
+              elevation: 5,
+              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              child: IconButton(
+                tooltip: 'Search products',
+                icon: Icon(Icons.search),
+                onPressed: () {
                   Navigator.pushNamed(context, 'HomePage');
                 },
-                child: Card(
-                  elevation: 5,
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: TextField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: 'Search product..',
-                      prefixIcon: Icon(Icons.search),
-                    ),
-                  ),
-                ),
               ),
             ),
             // Filter  function call here
             Card(
               elevation: 5,
               child: IconButton(
+                tooltip: 'Filter the list',
                 icon: Icon(Icons.filter_list),
                 onPressed: () {
                   //onPressedFilter
@@ -59,63 +54,82 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                 },
               ),
             ),
+            Card(
+              
+              elevation: 5,
+              child: IconButton(
+                tooltip: 'Set your illnesses',
+                icon: Icon(Icons.mode_edit),
+                onPressed: () {
+                  if (Provider.of<Products>(context).filteringProducts.length ==
+                      0) {
+                    showAlertOnEmptySelectingList(context);
+                  } else {
+                    Navigator.pushNamed(context, 'HealthInputScreen');
+                  }
+                },
+              ),
+            ),
+            Card(
+              elevation: 5,
+              child: IconButton(
+                tooltip: 'Show your saved products',
+                onPressed: () async {
+                  updateDataFromFirebase(
+                      await UserSavedProductsDataHelper.getCurrentUser(),
+                      context);
+                  //saved list page
+                  if (Provider.of<SavedProducts>(context)
+                          .savedProducts
+                          .length ==
+                      0) {
+                    showAlertOnSavedList(context);
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SavedProductsScreen()));
+                  }
+                },
+                icon: Badge(
+                    badgeColor: Colors.white,
+                    animationType: BadgeAnimationType.scale,
+                    badgeContent: Text((Provider.of<SavedProducts>(context)
+                            .savedProducts
+                            .length)
+                        .toString()),
+                    child: Icon(Icons.account_box)), //filter
+              ),
+            ),
+            //Input user setting
           ],
         ),
-        Row(children: <Widget>[
-          Expanded(
-            child: Card(
-              elevation: 5,
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  getFilterStatus(_isFilterOn, context),
-                  style: TextStyle(fontSize: 14),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: 410,
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                border: Border.symmetric(
+                  vertical: BorderSide(color: Colors.grey[300]),
+                ),
+              ),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                borderOnForeground: true,
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  child: Text(
+                    getFilterStatus(_isFilterOn, context),
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
             ),
-          ),
-          Card(
-            elevation: 5,
-            child: IconButton(
-              onPressed: () async {
-                updateDataFromFirebase(
-                    await UserSavedProductsDataHelper.getCurrentUser(),
-                    context);
-                //saved list page
-                if (Provider.of<SavedProducts>(context).savedProducts.length ==
-                    0) {
-                  showAlertOnSavedList(context);
-                } else {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SavedProductsScreen()));
-                }
-              },
-              icon: Badge(
-                  badgeColor: Colors.white,
-                  animationType: BadgeAnimationType.scale,
-                  badgeContent: Text(
-                      (Provider.of<SavedProducts>(context).savedProducts.length)
-                          .toString()),
-                  child: Icon(Icons.account_box)), //filter
-            ),
-          ),
-          //Input user setting
-          IconButton(
-            icon: Icon(Icons.add_box),
-            iconSize: 40,
-            onPressed: () {
-              if (Provider.of<Products>(context).filteringProducts.length == 0) {
-                showAlertOnEmptySelectingList(context);
-              } else {
-                Navigator.pushNamed(context, 'HealthInputScreen');
-              }
-            },
-          ),
-        ]),
+          ],
+        ),
         FilterFoodListView(),
       ]),
     );
