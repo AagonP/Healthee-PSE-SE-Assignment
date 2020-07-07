@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserHealthData with ChangeNotifier {
   // User's Data include:
@@ -15,37 +11,9 @@ class UserHealthData with ChangeNotifier {
   String _userExerciseFre = 'Sedentary';
   double _userDailyCalory = 0;
 
-  ///////////////////////
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-
   // This is the function used to estimate Calories needed for a day,
   // using Harris Benedict equation.
-
-  void _postUserHealthData() async {
-    var firebaseUser = await _auth.currentUser();
-    //Firestore.instance.collection("users").document(firebaseUser.uid).updateData(data);
-    /*Firestore.instance
-        .collection('users')
-        .document(firebaseUser.uid)
-        .get()
-        .then((value) {
-    });*/
-    await Firestore.instance.collection('users').document(firebaseUser.uid).setData({
-      'userHealthData': {
-        'userHeight': _userHeight,
-        'userWeight': _userWeight,
-        'userAge': _userAge,
-        'userIsMale': _userIsMale,
-        'userExerciseFreq': _userExerciseFre,
-      }
-    }, merge: true);
-  }
-
-  void getUserHealthData() async {
-    var firebaseUser = await _auth.currentUser();
-  }
-
-  void _estimateCalory() {
+  void estimateCalory() {
     double temp;
     if (_userIsMale == true) {
       temp = 88.362 +
@@ -100,15 +68,14 @@ class UserHealthData with ChangeNotifier {
     double userHeight,
     double userWeight,
     int userAge,
-  ) async {
+  ) {
     _userHeight = userHeight;
     _userWeight = userWeight;
     _userAge = userAge;
 
-    _estimateCalory();
+    estimateCalory();
     _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(4));
     notifyListeners();
-    _postUserHealthData();
   }
 
   void updateGenderData(
@@ -116,6 +83,7 @@ class UserHealthData with ChangeNotifier {
   ) {
     _userIsMale = userIsMale;
 
+    estimateCalory();
     notifyListeners();
   }
 
@@ -124,6 +92,7 @@ class UserHealthData with ChangeNotifier {
   ) {
     _userExerciseFre = userExerciseFre;
 
+    estimateCalory();
     notifyListeners();
   }
 }

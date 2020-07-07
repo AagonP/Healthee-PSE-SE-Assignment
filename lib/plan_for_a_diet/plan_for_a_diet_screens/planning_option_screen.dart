@@ -26,7 +26,6 @@ class PlanningOptionScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 30,
             letterSpacing: 2.0,
-            fontFamily: 'Pacifico',
           ),
         ),
       ),

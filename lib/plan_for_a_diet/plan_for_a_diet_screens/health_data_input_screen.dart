@@ -4,50 +4,17 @@ import 'package:provider/provider.dart';
 import '../plan_for_a_diet_providers/user_health_data.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import '../plan_for_a_diet_widgets/checkbox_list_widget.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class HealthDataInputScreen extends StatefulWidget {
-  @override
-  _HealthDataInputScreenState createState() => _HealthDataInputScreenState();
-}
-
-class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
+class HealthDataInputScreen extends StatelessWidget {
   double _userHeight = 0;
-
   double _userWeight = 0;
-
   int _userAge = 0;
-
-  bool showSpinner = false;
 
   void _clickSubmit(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.of(context).pushNamed(
       '/diet-timetable-screen',
     );
-  }
-
-  void handleFulfilledInput(BuildContext context, UserHealthData userHealthData,
-      DietPlanData dietPlanData) async {
-    userHealthData.updateHealthData(
-      _userHeight,
-      _userWeight,
-      _userAge,
-    );
-    setState(() {
-      showSpinner = true;
-    });
-    try {
-      await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
-      if (dietPlanData.dailyList[0] != null) {
-        _clickSubmit(context);
-      }
-      setState(() {
-        showSpinner = false;
-      });
-    } catch (e) {
-      print(e);
-    }
   }
 
   void _handleMissingInput(BuildContext context) {
@@ -78,7 +45,7 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    final _userHealthData = Provider.of<UserHealthData>(context);
+    final userHealthData = Provider.of<UserHealthData>(context);
     final _dietPlanData = Provider.of<DietPlanData>(context);
 
     // TODO: implement build
@@ -89,75 +56,77 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
           'Health Data',
           style: TextStyle(
             fontSize: 30,
-            letterSpacing: 2.0,
-            fontFamily: 'Pacifico',
           ),
         ),
       ),
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: ListView(
-          children: <Widget>[
-            Card(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: TextField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                onChanged: (heightValue) =>
-                    this._userHeight = double.parse(heightValue),
-                decoration: InputDecoration(
-                    hintText: 'Your height here!',
-                    labelText: 'Please input your height:'),
-              ),
+      body: ListView(
+        children: <Widget>[
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: TextField(
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChanged: (heightValue) =>
+                  this._userHeight = double.parse(heightValue),
+              decoration: InputDecoration(
+                  hintText: 'Your height here!',
+                  labelText: 'Please input your height:'),
             ),
-            Card(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: TextField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                onChanged: (weightValue) =>
-                    this._userWeight = double.parse(weightValue),
-                decoration: InputDecoration(
-                    hintText: 'Your weight here!',
-                    labelText: 'Please input your weight:'),
-              ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: TextField(
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChanged: (weightValue) =>
+                  this._userWeight = double.parse(weightValue),
+              decoration: InputDecoration(
+                  hintText: 'Your weight here!',
+                  labelText: 'Please input your weight:'),
             ),
-            Card(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: TextField(
-                keyboardType: TextInputType.numberWithOptions(),
-                onChanged: (ageValue) {
-                  this._userAge = int.parse(ageValue);
-                },
-                decoration: InputDecoration(
-                    hintText: 'Your age here!',
-                    labelText: 'Please input your age:'),
-              ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: TextField(
+              keyboardType: TextInputType.numberWithOptions(),
+              onChanged: (ageValue) {
+                this._userAge = int.parse(ageValue);
+              },
+              decoration: InputDecoration(
+                  hintText: 'Your age here!',
+                  labelText: 'Please input your age:'),
             ),
-            UserExerciseCheckbox(),
-            Center(
-              child: GestureDetector(
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+          ),
+          UserExerciseCheckbox(),
+          Center(
+            child: GestureDetector(
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                onTap: () {
-                  if (_userHeight == 0 || _userWeight == 0 || _userAge == 0) {
-                    _handleMissingInput(context);
-                  } else {
-                    handleFulfilledInput(context, _userHealthData, _dietPlanData);
-                  }
-                },
               ),
+              onTap: () {
+                if (_userHeight == 0 || _userWeight == 0 || _userAge == 0) {
+                  _handleMissingInput(context);
+                } else {
+                  userHealthData.updateHealthData(
+                    _userHeight,
+                    _userWeight,
+                    _userAge,
+                  );
+
+                  _dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+                  _clickSubmit(context);
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
