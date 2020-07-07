@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Welcome $name',
+                'Welcome ',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 30,

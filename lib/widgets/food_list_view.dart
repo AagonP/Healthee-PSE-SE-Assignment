@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../models/product.dart';
 import '../providers/products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class FoodListView extends StatelessWidget {
+  final addProductToFilteringListSnackBar = SnackBar(
+    content: Text('You have added a product to filtering list!'),
+    duration: Duration(milliseconds: 500),
+  );
   @override
   Widget build(BuildContext context) {
     final List<Product> _currentList = Provider.of<Products>(context).products;
@@ -32,9 +35,11 @@ class FoodListView extends StatelessWidget {
         if (element.name == _currentList.elementAt(index).name)
           _isDuplicated = true;
       });
-      if (!_isDuplicated)
+      if (!_isDuplicated) {
+        Scaffold.of(context).showSnackBar(addProductToFilteringListSnackBar);
         Provider.of<Products>(context)
             .addFilteringProduct(_currentList.elementAt(index));
+      }
     }
 
     return GridView.count(
@@ -66,7 +71,7 @@ class FoodListView extends StatelessWidget {
               ),
               Container(
                 width: 150,
-                height: 20,
+                height: 30,
                 child: AutoSizeText(
                   _currentList.elementAt(index).name,
                   style: TextStyle(fontSize: 15.0),
@@ -83,9 +88,10 @@ class FoodListView extends StatelessWidget {
                     height: 40,
                     margin: EdgeInsets.all(1),
                     child: Card(
+                      elevation: 5,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
-                      color: Colors.yellow[600],
+                      color: Colors.white,
                       child: IconButton(
                         alignment: Alignment.center,
                         onPressed: () {
