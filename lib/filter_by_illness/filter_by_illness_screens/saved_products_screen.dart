@@ -76,7 +76,8 @@ class SavedProductsScreen extends StatelessWidget
                             child: Builder(
                               builder: (context) => IconButton(
                                 onPressed: () {
-                                  Scaffold.of(context).showSnackBar(removeFromSavedProducts);
+                                  Scaffold.of(context)
+                                      .showSnackBar(removeFromSavedProducts);
                                   removeUserSavedProduct(
                                       index, context, _savedProducts);
                                 },
