@@ -40,57 +40,67 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                 ),
               ),
               SizedBox(
-                height: 30.0,
+                height: 20.0,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: MaterialButton(
-                  elevation: 5.0,
-                  color: Color(0xFFFECC4C),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'RegisterPage');
-                  },
-                  minWidth: 200.0,
-                  height: 50.0,
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600,
-                    ),
+              RoundedButton(
+                title: 'Sign Up',
+                onPressed: () {
+                  Navigator.pushNamed(context, 'RegisterPage');
+                },
+                textColor: Colors.white,
+                color: Color(0xFFFECC4C),
+                borderColor: Color(0xFFFECC4C),
+              ),
+              RoundedButton(
+                title: 'Log in',
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.pushNamed(context, 'LoginPage');
+                },
+                textColor: Color(0xFFFECC4C),
+                borderColor: Color(0xFFFECC4C),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                height: 20.0,
+                width: double.infinity,
+                child: Divider(
+                  color: Colors.grey,
+                ),
+              ),
+              RoundedButtonLink(
+                color: Color(0xFF3B5999),
+                title: 'Continue with Facebook',
+                image: Image(
+                  image: AssetImage(
+                    'image/facebook.png',
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: MaterialButton(
-                  color: Colors.white,
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    side: BorderSide(
-                      color: Color(0xFFFECC4C),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'LoginPage');
-                  },
-                  minWidth: 200.0,
-                  height: 50.0,
-                  child: Text(
-                    'Log in',
-                    style: TextStyle(
-                      color: Color(0xFFFECC4C),
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+              RoundedButtonLink(
+                color: Color(0xFF518DF8),
+                title: 'Continue with Google',
+                image: Image.asset(
+                  'image/brands-and-logotypes.png',
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 10.0,
+                  bottom: 10.0,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'NavigatePage');
+                  },
+                  child: Text(
+                    'Skip for now',
+                    style: TextStyle(
+                        color: Color(0xFFFECC4C), fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -100,30 +110,91 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 }
 
 class RoundedButton extends StatelessWidget {
-  RoundedButton({this.title, this.colour, @required this.onPressed});
+  RoundedButton(
+      {@required this.title,
+      @required this.color,
+      @required this.onPressed,
+      @required this.textColor,
+      this.borderColor});
 
-  final Color colour;
+  final Color textColor;
+  final Color color;
   final String title;
   final Function onPressed;
+  Color borderColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Material(
-        elevation: 5.0,
-        color: colour,
-        borderRadius: BorderRadius.circular(30.0),
+        color: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          side: BorderSide(
+            color: borderColor,
+          ),
+        ),
         child: MaterialButton(
           onPressed: onPressed,
           minWidth: 200.0,
-          height: 42.0,
+          height: 50.0,
           child: Text(
             title,
             style: TextStyle(
-              color: Colors.white,
+              color: textColor,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w600,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedButtonLink extends StatelessWidget {
+  final Color color;
+  final String title;
+  final Image image;
+
+  RoundedButtonLink({@required this.color, @required this.title, this.image});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      child: MaterialButton(
+        color: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        onPressed: () {},
+        minWidth: 200.0,
+        height: 50.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15.0,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Container(
+              width: 35.0,
+              height: 35.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: image,
+              ),
+            ),
+          ],
         ),
       ),
     );

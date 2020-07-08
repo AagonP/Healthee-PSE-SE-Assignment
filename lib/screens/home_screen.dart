@@ -52,7 +52,7 @@ class _NavigatePageState extends State<NavigatePage> {
                       ),
                     ),
                   ),
-                  //Second Title "Nutrion & Diet"
+                  //Second Title "Nutrition & Diet"
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                     child: Align(

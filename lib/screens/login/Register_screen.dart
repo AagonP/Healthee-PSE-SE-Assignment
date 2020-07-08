@@ -101,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     password = value;
                   },
                   validator: (value) =>
-                  (value.length < 6) ? 'Password can\'t less then 6' : null,
+                      (value.length < 6) ? 'Password can\'t less then 6' : null,
                 ),
                 SizedBox(
                   height: 10.0,
@@ -157,22 +157,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Colors.grey,
                   ),
                 ),
-                RoundRectangleButton(
-                  color: Color(0xFF3B5999),
-                  title: 'Sign up with Facebook',
-                  image: Image(
-                    image: AssetImage(
-                      'image/facebook.png',
-                    ),
-                  ),
-                ),
-                RoundRectangleButton(
-                  color: Color(0xFF518DF8),
-                  title: 'Sign up with Google',
-                  image: Image.asset(
-                    'image/brands-and-logotypes.png',
-                  ),
-                ),
                 Padding(
                   padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                   child: Row(
@@ -199,55 +183,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class RoundRectangleButton extends StatelessWidget {
-  final Color color;
-  final String title;
-  final Image image;
-
-  RoundRectangleButton(
-      {@required this.color, @required this.title, this.image});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: MaterialButton(
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        onPressed: () {},
-        minWidth: 200.0,
-        height: 50.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Container(
-              width: 35.0,
-              height: 35.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: image,
-              ),
-            ),
-          ],
         ),
       ),
     );
