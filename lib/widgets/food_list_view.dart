@@ -9,6 +9,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 class FoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final addProductToFilteringListSnackBar = SnackBar(
+      content: Text('You have added a product to filtering list!'),
+      duration: Duration(milliseconds: 500),
+    );
     final List<Product> _currentList = Provider.of<Products>(context).products;
     return GridView.count(
       //physics: NeverScrollableScrollPhysics(),
@@ -51,19 +55,12 @@ class FoodListView extends StatelessWidget {
                                   _currentList.elementAt(index).name)
                                 _isDuplicated = true;
                             });
-                            if (!_isDuplicated)
+                            if (!_isDuplicated){
+                              Scaffold.of(context).showSnackBar(addProductToFilteringListSnackBar);
                               Provider.of<Products>(context)
                                   .addFilteringProduct(
                                       _currentList.elementAt(index));
-                          },
-                        ),
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            Provider.of<Products>(context)
-                                .removeProduct(_currentList.elementAt(index));
+                            }
                           },
                         ),
                       ],
