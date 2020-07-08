@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart';
 import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
 import 'package:pse_assignment/filter_by_illness/filter_by_illness_screens/saved_products_screen.dart';
+import 'package:pse_assignment/providers/data_helper.dart';
 
-import '../../providers/data_helper.dart';
 import '../filter_by_illness_widgets/filtered_food_list_view.dart';
 import '../../providers/products.dart';
-import '../../providers/saved_products.dart';
 import 'saved_products_screen.dart';
+import '../filter_by_illness_controllers/saved_products_screen_controller.dart';
 
 class FilterScreen extends StatelessWidget with FilterScreenController {
   static bool _isFilterOn = false;
@@ -19,7 +18,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'My filtering list',
+          'Filter By Illness',
         ),
       ),
       body: Column(children: <Widget>[
@@ -41,23 +40,6 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
             Card(
               elevation: 5,
               child: IconButton(
-                tooltip: 'Filter the list',
-                icon: Icon(Icons.filter_list),
-                onPressed: () {
-                  //onPressedFilter
-                  if (Provider.of<Products>(context).filteringProducts.length ==
-                      0) {
-                    showAlertOnEmptySelectingList(context);
-                  }
-                  doFilterList(_isFilterOn, context);
-                  _isFilterOn = !_isFilterOn;
-                },
-              ),
-            ),
-            Card(
-              
-              elevation: 5,
-              child: IconButton(
                 tooltip: 'Set your illnesses',
                 icon: Icon(Icons.mode_edit),
                 onPressed: () {
@@ -73,32 +55,37 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
             Card(
               elevation: 5,
               child: IconButton(
+                tooltip: 'Filter the list',
+                icon: Icon(Icons.filter_list),
+                onPressed: () {
+                  //onPressedFilter
+                  if (Provider.of<Products>(context).filteringProducts.length ==
+                      0) {
+                    showAlertOnEmptySelectingList(context);
+                  }
+                  doFilterList(_isFilterOn, context);
+                  _isFilterOn = !_isFilterOn;
+                },
+              ),
+            ),
+
+            Card(
+              elevation: 5,
+              child: IconButton(
                 tooltip: 'Show your saved products',
                 onPressed: () async {
-                  updateDataFromFirebase(
-                      await UserSavedProductsDataHelper.getCurrentUser(),
+                  await updateUserSavedProductsToFirebase(
+                      UserSavedProductsDataHelper.getCurrentUser().toString(),
                       context);
-                  //saved list page
-                  if (Provider.of<SavedProducts>(context)
-                          .savedProducts
-                          .length ==
-                      0) {
-                    showAlertOnSavedList(context);
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SavedProductsScreen()));
-                  }
+                  await SavedProductsScreenController.updateDataFromFirebase(
+                      UserSavedProductsDataHelper.getCurrentUser().toString(),
+                      context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SavedProductsScreen()));
                 },
-                icon: Badge(
-                    badgeColor: Colors.white,
-                    animationType: BadgeAnimationType.scale,
-                    badgeContent: Text((Provider.of<SavedProducts>(context)
-                            .savedProducts
-                            .length)
-                        .toString()),
-                    child: Icon(Icons.account_box)), //filter
+                icon: Icon(Icons.account_box),
               ),
             ),
             //Input user setting
@@ -129,6 +116,25 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
               ),
             ),
           ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 5, 10, 15),
+              child: Text(
+                'My filtering list',
+                style: TextStyle(fontSize: 20, fontFamily: 'Pacifico'),
+              ),
+            ),
+          ],
+        ),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.symmetric(
+              vertical: BorderSide(color: Colors.black),
+            ),
+          ),
         ),
         FilterFoodListView(),
       ]),

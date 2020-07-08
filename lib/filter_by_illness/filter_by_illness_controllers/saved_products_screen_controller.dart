@@ -1,10 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/product.dart';
 
 import '../../providers/saved_products.dart';
 import '../../providers/data_helper.dart';
+import '../filter_by_illness_screens/saved_products_screen.dart';
 
 class SavedProductsScreenController {
+  static void _onLoading(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+            backgroundColor: Colors.transparent,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 100,
+                  height: 100,
+                  child: CircularProgressIndicator(),
+                ),
+              ],
+            ));
+      },
+    );
+  }
+
+  static Future<void> updateDataFromFirebase(
+      String userID, BuildContext context) async {
+    _onLoading(context);
+    List<Product> savedProducts =
+        await UserSavedProductsDataHelper.fetchUserSavedProducts(userID);
+    int savedProductLength = savedProducts.length;
+    for (int i = 0; i < savedProductLength; i++) {
+      bool _isDuplicated = false;
+      Provider.of<SavedProducts>(context).savedProducts.forEach((element) {
+        if (element.name == savedProducts[i].name) {
+          _isDuplicated = true;
+        }
+      });
+      if (!_isDuplicated) {
+        Provider.of<SavedProducts>(context).saveProduct(savedProducts[i]);
+      }
+    }
+    Navigator.pop(context);
+  }
+
+  Future<void> showAlertOnSavedList(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Oops!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Look like your saved product list is empty.'),
+                Text('Please save a product in you cart.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Got it'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void navigateToFoodInfoScreen(
       int idx, BuildContext context, List filteringProducts) {
     Navigator.pushNamed(context, 'FoodInfoScreen',
