@@ -6,9 +6,47 @@ import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import '../plan_for_a_diet_providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
-
-  void _clickFollowAvailablePlan(BuildContext context) {
+  void _clickInputData(BuildContext context) {
     Navigator.of(context).pushNamed('/health-data-input-screen');
+  }
+
+  void _handleNotFirstLogin(BuildContext context) {
+    showDialog(
+      context: context,
+      child: Center(
+        child: Container(
+          margin: EdgeInsets.all(30),
+          child: Card(
+            elevation: 15.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Your previous health data is:',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handleClickFAP(
+    BuildContext context,
+    UserHealthData userHealthData,
+  ) async {
+    await userHealthData.getUserHealthData();
+    if (userHealthData.userAge != 0) {
+      _handleNotFirstLogin(context);
+    } else {}
   }
 
   @override
@@ -42,9 +80,13 @@ class PlanningOptionScreen extends StatelessWidget {
             height: screenHeight / 12,
           ),
           GestureDetector(
-            onTap: () {
-              _clickFollowAvailablePlan(context);
+            onTap: () async {
+              await userHealthData.getUserHealthData();
+              _clickInputData(context);
             },
+            /*() async {
+              _handleClickFAP(context, userHealthData);
+            },*/
             child: Container(
               height: screenHeight / 10,
               width: screenWidth / (3 / 2.5),
