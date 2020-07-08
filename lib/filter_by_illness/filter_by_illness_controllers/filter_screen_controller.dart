@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../models/product.dart';
 import '../../providers/data_helper.dart';
 import '../../providers/products.dart';
 import '../../providers/user_input.dart';
 import '../../providers/saved_products.dart';
 
-
 class FilterScreenController {
+  final removeFromFilteringListSnackBar = SnackBar(
+    content: Text('You have removed a product from filtering list!'),
+    duration: Duration(milliseconds: 500 ),
+  );
+  final saveProductSnackBar = SnackBar(
+    content: Text('You have saved a product!'),
+    duration: Duration(milliseconds: 500 ),
+  );
+
   Future<void> updateDataFromFirebase(
       String userID, BuildContext context) async {
     List<Product> savedProducts =
@@ -42,7 +49,8 @@ class FilterScreenController {
     isFilterOn = false;
     Provider.of<Products>(context).filteringProducts.forEach(
       (element) {
-        Provider.of<Products>(context).updateProductHealthValidation(element, true);
+        Provider.of<Products>(context)
+            .updateProductHealthValidation(element, true);
       },
     );
   }
@@ -110,8 +118,7 @@ class FilterScreenController {
     );
   }
 
-  Future<Map<String, dynamic>> mapProductToJson(
-      BuildContext context) async {
+  Future<Map<String, dynamic>> mapProductToJson(BuildContext context) async {
     int _savedProductsLength =
         Provider.of<SavedProducts>(context).savedProducts.length;
     if (_savedProductsLength == 0) return null;
@@ -144,6 +151,7 @@ class FilterScreenController {
     if (!_isDuplicated) {
       Provider.of<SavedProducts>(context)
           .saveProduct(filteringProducts.elementAt(index));
+      Scaffold.of(context).showSnackBar(saveProductSnackBar);
     }
   }
 
@@ -151,6 +159,7 @@ class FilterScreenController {
       int index, BuildContext context, List filteringProducts) {
     Provider.of<Products>(context)
         .removeFilteringProduct(filteringProducts.elementAt(index));
+    Scaffold.of(context).showSnackBar(removeFromFilteringListSnackBar);
   }
 
   Future<void> showAlertOnSavingBlurred(

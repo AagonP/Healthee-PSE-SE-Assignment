@@ -11,8 +11,7 @@ class SavedProductsScreenController {
         arguments: filteringProducts.elementAt(idx));
   }
 
-  Future<Map<String, dynamic>> mapProductToJson(
-      BuildContext context) async {
+  Future<Map<String, dynamic>> mapProductToJson(BuildContext context) async {
     int _savedProductsLength =
         Provider.of<SavedProducts>(context).savedProducts.length;
     if (_savedProductsLength == 0) return null;
@@ -51,7 +50,8 @@ class SavedProductsScreenController {
         await mapProductToJson(context), userID);
   }
 
-  Future<void> removeUserSavedProduct(int index,BuildContext context, List savedProducts) async {
+  Future<void> removeUserSavedProduct(
+      int index, BuildContext context, List savedProducts) async {
     Provider.of<SavedProducts>(context)
         .removeProduct(savedProducts.elementAt(index));
     UserSavedProductsDataHelper.removeUserSavedProduct(
