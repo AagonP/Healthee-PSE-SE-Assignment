@@ -1,13 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
 import '../plan_for_a_diet_providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
-  void _clickInputData(BuildContext context) {
-    Navigator.of(context).pushNamed('/health-data-input-screen');
+  void _clickFAP(BuildContext context, UserHealthData userHealthData,
+      DietPlanData dietPlanData, ProgressDialog pr) async {
+    pr.show();
+
+    try {
+      await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+      pr.hide().whenComplete(
+          () => Navigator.of(context).pushNamed('/diet-timetable-screen'));
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _handleNotFirstLogin(BuildContext context) {
@@ -54,6 +65,22 @@ class PlanningOptionScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     final userHealthData = Provider.of<UserHealthData>(context);
+    final dietPlanData = Provider.of<DietPlanData>(context);
+
+    ProgressDialog pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      isDismissible: true,
+    );
+    pr.style(
+      message: 'Generating Plan...',
+      elevation: 5.0,
+      backgroundColor: Colors.white,
+      messageTextStyle: TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+      ),
+    );
 
     // TODO: implement screen to ask user for planing option
     return Scaffold(
@@ -80,9 +107,8 @@ class PlanningOptionScreen extends StatelessWidget {
             height: screenHeight / 12,
           ),
           GestureDetector(
-            onTap: () async {
-              await userHealthData.getUserHealthData();
-              _clickInputData(context);
+            onTap: () {
+              _clickFAP(context, userHealthData, dietPlanData, pr);
             },
             /*() async {
               _handleClickFAP(context, userHealthData);
