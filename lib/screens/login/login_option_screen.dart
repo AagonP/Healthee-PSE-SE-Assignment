@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginRegisterPage extends StatefulWidget {
   @override
@@ -8,6 +10,33 @@ class LoginRegisterPage extends StatefulWidget {
 }
 
 class _LoginRegisterPageState extends State<LoginRegisterPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<void> signInGoogle() async {
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+    final FirebaseUser user = authResult.user;
+
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+    if (await googleSignIn.isSignedIn()) {
+      print('yes bitch');
+    } else
+      print('fuck no');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +105,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     'image/facebook.png',
                   ),
                 ),
+                function: () {},
               ),
               RoundedButtonLink(
                 color: Color(0xFF518DF8),
@@ -83,6 +113,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                 image: Image.asset(
                   'image/brands-and-logotypes.png',
                 ),
+                function: () {
+                  signInGoogle().whenComplete(
+                      () => Navigator.pushNamed(context, 'NavigatePage'));
+                },
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -157,8 +191,10 @@ class RoundedButtonLink extends StatelessWidget {
   final Color color;
   final String title;
   final Image image;
+  final Function function;
 
-  RoundedButtonLink({@required this.color, @required this.title, this.image});
+  RoundedButtonLink(
+      {@required this.color, @required this.title, this.image, this.function});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -168,7 +204,7 @@ class RoundedButtonLink extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        onPressed: () {},
+        onPressed: function,
         minWidth: 200.0,
         height: 50.0,
         child: Row(
