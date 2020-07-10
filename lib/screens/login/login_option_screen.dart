@@ -10,33 +10,30 @@ class LoginRegisterPage extends StatefulWidget {
 }
 
 class _LoginRegisterPageState extends State<LoginRegisterPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  Future<void> signInGoogle() async {
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
-
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
-
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-    if (await googleSignIn.isSignedIn()) {
-      print('yes bitch');
-    } else
-      print('fuck no');
-  }
-
+//  Future<void> signInGoogle() async {
+//    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+//    final GoogleSignInAuthentication googleSignInAuthentication =
+//        await googleSignInAccount.authentication;
+//
+//    final AuthCredential credential = GoogleAuthProvider.getCredential(
+//      accessToken: googleSignInAuthentication.accessToken,
+//      idToken: googleSignInAuthentication.idToken,
+//    );
+//
+//    final AuthResult authResult = await _auth.signInWithCredential(credential);
+//    final FirebaseUser user = authResult.user;
+//
+//    assert(!user.isAnonymous);
+//    assert(await user.getIdToken() != null);
+//
+//    final FirebaseUser currentUser = await _auth.currentUser();
+//    assert(user.uid == currentUser.uid);
+//    if (await googleSignIn.isSignedIn()) {
+//      print('yes bitch');
+//    } else
+//      print('fuck no');
+//  }
+  FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,9 +110,12 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                 image: Image.asset(
                   'image/brands-and-logotypes.png',
                 ),
-                function: () {
-                  signInGoogle().whenComplete(
-                      () => Navigator.pushNamed(context, 'NavigatePage'));
+                function: () async {
+                  FirebaseUser user =
+                      await firebaseAuthService.signInWithGoogle();
+                  if (user != null) {
+                    Navigator.pushNamed(context, 'NavigatePage');
+                  }
                 },
               ),
               Padding(
@@ -234,5 +234,54 @@ class RoundedButtonLink extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class FirebaseAuthService {
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
+
+  FirebaseAuthService({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+        _googleSignIn = googleSignin ?? GoogleSignIn();
+
+  FirebaseUser _userFromFirebase(FirebaseUser user) {
+    if (user == null) {
+      return null;
+    }
+    return user;
+  }
+
+  Stream<FirebaseUser> get onAuthStateChanged {
+    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+  }
+
+  Future<FirebaseUser> signInAnonymously() async {
+    final authResult = await _firebaseAuth.signInAnonymously();
+    return _userFromFirebase(authResult.user);
+  }
+
+  Future<FirebaseUser> signInWithGoogle() async {
+    final googleUser = await _googleSignIn.signIn();
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final authResult = await _firebaseAuth.signInWithCredential(credential);
+
+    return _userFromFirebase(authResult.user);
+  }
+
+  Future<void> signOutWithGoogle() async {
+    // Sign out with firebase
+    await _firebaseAuth.signOut();
+    // Sign out with google
+    await _googleSignIn.signOut();
+  }
+
+  Future<FirebaseUser> currentUser() async {
+    final user = await _firebaseAuth.currentUser();
+    return _userFromFirebase(user);
   }
 }
