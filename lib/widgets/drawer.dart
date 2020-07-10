@@ -1,11 +1,16 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class CustomDrawer extends StatelessWidget {
+  final GoogleSignIn googleSignIn = new GoogleSignIn();
   Future<void> _signOut() async {
     try {
       await FirebaseAuth.instance.signOut();
+      if (await googleSignIn.isSignedIn()) {
+        await googleSignIn.signOut();
+      }
     } catch (e) {
       print(e); // TODO: show dialog with error
     }
