@@ -39,8 +39,8 @@ class MealFoodList extends StatelessWidget {
     return Card(
       child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(5.0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
             child: Row(
               children: <Widget>[
                 mealIcon,
@@ -48,20 +48,28 @@ class MealFoodList extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 30,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Colors.yellowAccent,
-                ),
-                Text(
-                  '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
-                ),
-              ],
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 30,
+              ),
+              Icon(
+                Icons.star,
+                color: Colors.lightBlueAccent,
+              ),
+              Text(
+                '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 15.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Image.network(
+                _dietPlanData
+                    .dailyList[_index - 1].threeMeals[_mealTypeIndex].imageUrl,
+              ),
             ),
           ),
         ],

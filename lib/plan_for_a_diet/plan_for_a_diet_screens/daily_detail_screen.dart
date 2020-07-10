@@ -20,6 +20,7 @@ class DailyDetailScreen extends StatelessWidget {
         title: Text(
           'Day $_index',
           style: TextStyle(
+            fontFamily: 'Pacifico',
             fontSize: 30,
             letterSpacing: 2.0,
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class NavigatePage extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class _NavigatePageState extends State<NavigatePage> {
   final _auth = FirebaseAuth.instance;
 
   FirebaseUser loginUser;
+
   @override
   void initState() {
     super.initState();
@@ -95,7 +97,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE9F4FE),
                     title: 'Plan a diet',
                     description: 'Make your own diet',
-                    navigate_page: '/planning-option-screen',
+                    navigate_page: '/health-data-input-screen',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -136,6 +138,13 @@ class NavigateTab extends StatelessWidget {
       @required this.navigate_page,
       this.image,
       this.description});
+
+  /////////////THIS FUNCTION IS FOR FETCHING USER HEALTH DATA
+  // IN PLAN FOR A DIET FEATURE.
+  void _clickPlanADiet(BuildContext context,) {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
