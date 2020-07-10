@@ -17,6 +17,8 @@ class _NavigatePageState extends State<NavigatePage> {
     getCurrentUser();
   }
 
+
+  
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser();

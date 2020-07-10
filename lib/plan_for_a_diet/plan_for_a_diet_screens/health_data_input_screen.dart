@@ -21,24 +21,27 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
   void _clickSubmit(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.of(context).pushNamed(
-      '/diet-timetable-screen',
+      '/planning-option-screen',
     );
   }
 
   void _handleFulfilledInput(BuildContext context, UserHealthData userHealthData,
       DietPlanData dietPlanData, ProgressDialog pr) async {
-    pr.show();
     userHealthData.updateHealthData(
       _userHeight,
       _userWeight,
       _userAge,
     );
+
+    _clickSubmit(context);
+    /*pr.show();
+
     try {
       await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
       pr.hide().whenComplete(() => _clickSubmit(context));
     } catch (e) {
       print(e);
-    }
+    }*/
   }
 
   void _handleMissingInput(BuildContext context) {
