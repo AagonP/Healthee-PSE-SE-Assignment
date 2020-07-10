@@ -24,17 +24,11 @@ import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/planning_option_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/user_health_data.dart';
 
-
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/drawer.dart';
 
 class NavigatePage extends StatefulWidget {
   @override
@@ -23,7 +24,8 @@ class _NavigatePageState extends State<NavigatePage> {
         loginUser = user;
         print(loginUser.email);
         print(loginUser.displayName);
-      }
+      } else
+        print('no user');
     } catch (e) {
       print(e);
     }
@@ -32,6 +34,25 @@ class _NavigatePageState extends State<NavigatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.clear_all,
+                color: Color(0xFFF1CB57),
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+      ),
+      drawer: CustomDrawer(),
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(
