@@ -1,8 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
-import 'dart:convert';
-import 'dart:async';
-
 import '../models/product.dart';
 import './user_input.dart';
 
