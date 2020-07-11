@@ -128,11 +128,15 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   onPressed: () async {
+                    // Fetch user health data, if first login,
+                    // navigate to HealthDataInputScreen,
+                    // if not, navigate to HomeScreen
                     await pr.show();
                     try {
                       final user = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
-                      var isFirstLogin = await userHealthData.getUserHealthData();
+                      var isFirstLogin =
+                          await userHealthData.getUserHealthData();
                       if (user != null) {
                         if (isFirstLogin == false) {
                           Future.delayed(Duration(seconds: 1)).then((value) {
