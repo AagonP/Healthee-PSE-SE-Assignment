@@ -21,7 +21,7 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
   void _clickSubmit(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.of(context).pushNamed(
-      '/planning-option-screen',
+      'NavigatePage',
     );
   }
 
