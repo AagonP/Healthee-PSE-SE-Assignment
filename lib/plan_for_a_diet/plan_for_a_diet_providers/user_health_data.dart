@@ -38,22 +38,23 @@ class UserHealthData with ChangeNotifier {
     }, merge: true);
   }
 
-  Future<void> getUserHealthData() async {
+  Future<bool> getUserHealthData() async {
     var firebaseUser = await _auth.currentUser();
-    Firestore.instance
+    var value = await Firestore.instance
         .collection('users')
         .document(firebaseUser.uid)
-        .get()
-        .then((value) {
-          Map <String, dynamic> tempMap = value.data['userAge'];
-      if (tempMap != null) {
-        _userHeight = tempMap['userHeight'];
-        _userWeight = tempMap['userWeight'];
-        _userAge = tempMap['userAge'];
-        _userIsMale = tempMap['userIsMale'];
-        _userExerciseFre = tempMap['userExerciseFreq'];
-      }
-    });
+        .get();
+    Map<String, dynamic> tempMap = value.data;
+    if (tempMap['userHealthData'] != null) {
+      _userHeight = tempMap['userHealthData']['userHeight'];
+      _userWeight = tempMap['userHealthData']['userWeight'];
+      _userAge = tempMap['userHealthData']['userAge'];
+      _userIsMale = tempMap['userHealthData']['userIsMale'];
+      _userExerciseFre = tempMap['userHealthData']['userExerciseFreq'];
+      return false;
+    } else {
+      return true;
+    }
   }
 
   void _estimateCalory() {
