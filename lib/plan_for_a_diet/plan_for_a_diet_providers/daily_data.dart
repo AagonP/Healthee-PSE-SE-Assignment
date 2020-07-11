@@ -89,7 +89,6 @@ class DailyData {
       var mealId = dailyDataJson['meals'][i]['id'];
       var mealTitle = dailyDataJson['meals'][i]['title'];
       var mealImageUrl = 'https://spoonacular.com/recipeImages/$mealId-556x370.jpg';
-      print(mealImageUrl);
       _threeMeals[i]
           .setAllForMeal(id: mealId, title: mealTitle, mealType: i, imageUrl: mealImageUrl);
     }

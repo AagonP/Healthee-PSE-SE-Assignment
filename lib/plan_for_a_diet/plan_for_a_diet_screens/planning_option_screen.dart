@@ -10,8 +10,8 @@ import '../plan_for_a_diet_providers/user_health_data.dart';
 class PlanningOptionScreen extends StatelessWidget {
   void _clickFAP(BuildContext context, UserHealthData userHealthData,
       DietPlanData dietPlanData, ProgressDialog pr) async {
+    //print('${userHealthData.userHeight}\n${userHealthData.userAge}');
     pr.show();
-
     try {
       await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
       pr.hide().whenComplete(
