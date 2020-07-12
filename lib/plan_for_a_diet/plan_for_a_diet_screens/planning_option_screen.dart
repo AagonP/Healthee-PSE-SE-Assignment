@@ -13,7 +13,11 @@ class PlanningOptionScreen extends StatelessWidget {
     //print('${userHealthData.userHeight}\n${userHealthData.userAge}');
     pr.show();
     try {
-      await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+      var isFirstPlan = await dietPlanData.getDietPlan();
+      if (isFirstPlan == true) {
+        await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+      }
+
       pr.hide().whenComplete(
           () => Navigator.of(context).pushNamed('/diet-timetable-screen'));
     } catch (e) {
@@ -21,7 +25,7 @@ class PlanningOptionScreen extends StatelessWidget {
     }
   }
 
-  void _handleNotFirstLogin(BuildContext context) {
+  /*void _handleNotFirstLogin(BuildContext context) {
     showDialog(
       context: context,
       child: Center(
@@ -58,7 +62,7 @@ class PlanningOptionScreen extends StatelessWidget {
     if (userHealthData.userAge != 0) {
       _handleNotFirstLogin(context);
     } else {}
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
