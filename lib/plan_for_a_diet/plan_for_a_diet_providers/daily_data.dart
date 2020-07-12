@@ -58,6 +58,7 @@ class DailyData {
   double _fat;
   double _carbohydrate;
   List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
+  bool _isChecked = false;
 
   DailyData(this._index);
 
@@ -118,6 +119,18 @@ class DailyData {
 
   List<Meal> get threeMeals {
     return [..._threeMeals];
+  }
+
+  bool get isChecked {
+    return _isChecked;
+  }
+
+  void checkDay() {
+    _isChecked = true;
+  }
+
+  void uncheckDay() {
+    _isChecked = false;
   }
 
 /*void setIndex(int index) {

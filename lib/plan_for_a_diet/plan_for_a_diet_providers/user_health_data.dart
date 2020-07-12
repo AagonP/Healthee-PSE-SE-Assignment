@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,6 +49,11 @@ class UserHealthData with ChangeNotifier {
       _userAge = tempMap['userHealthData']['userAge'];
       _userIsMale = tempMap['userHealthData']['userIsMale'];
       _userExerciseFre = tempMap['userHealthData']['userExerciseFreq'];
+
+      _estimateCalory();
+      _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(4));
+      notifyListeners();
+
       return false;
     } else {
       return true;

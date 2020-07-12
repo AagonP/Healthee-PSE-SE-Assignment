@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -25,8 +26,11 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
     );
   }
 
-  void _handleFulfilledInput(BuildContext context, UserHealthData userHealthData,
-      DietPlanData dietPlanData, ProgressDialog pr) async {
+  void _handleFulfilledInput(
+      BuildContext context,
+      UserHealthData userHealthData,
+      DietPlanData dietPlanData,
+      ProgressDialog pr) async {
     userHealthData.updateHealthData(
       _userHeight,
       _userWeight,
@@ -105,6 +109,12 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
       ),
       body: ListView(
         children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(15.0),
+            child:
+                Text('This is your first login, please input your health data'),
+          ),
           Card(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: TextField(
