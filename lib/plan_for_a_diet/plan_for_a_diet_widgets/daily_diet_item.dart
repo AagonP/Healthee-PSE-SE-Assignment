@@ -7,7 +7,16 @@ class DailyDietItem extends StatefulWidget {
   Color _backgroundColor = Colors.white;
   DietPlanData _dietPlanData;
 
-  DailyDietItem(this._index, this._dietPlanData);
+  DailyDietItem(this._index, this._dietPlanData) {
+    if (_dietPlanData.dailyList[_index - 1].isChecked == true) {
+      _itemColor = Colors.green[600];
+      _backgroundColor = Colors.green[100];
+    }
+    else {
+      _itemColor = Colors.black;
+      _backgroundColor = Colors.white;
+    }
+  }
 
   @override
   _DailyDietItemState createState() => _DailyDietItemState();

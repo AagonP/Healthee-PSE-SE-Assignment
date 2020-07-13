@@ -35,45 +35,6 @@ class DietPlanData with ChangeNotifier {
     }, merge: true);
   }
 
-  void _postDietPlan() async {
-    var firebaseUser = await _auth.currentUser();
-    for (int i = 0; i < 1; i++) {
-      print(_dailyList[i].isChecked);
-      Firestore.instance
-          .collection('users')
-          .document(firebaseUser.uid)
-          .setData({
-        'dietPlan': {
-          '$i': {
-            'calory': _dailyList[i].calory,
-            'carbohydrate': _dailyList[i].carbohydrate,
-            'fat': _dailyList[i].fat,
-            'protein': _dailyList[i].protein,
-            'isChecked': _dailyList[i].isChecked,
-            'breakfast': {
-              'title': _dailyList[i].threeMeals[0].title,
-              'imageUrl': _dailyList[i].threeMeals[0].imageUrl,
-              'id': _dailyList[i].threeMeals[0].id,
-              'servings': _dailyList[i].threeMeals[0].servings,
-            },
-            'lunch': {
-              'title': _dailyList[i].threeMeals[1].title,
-              'imageUrl': _dailyList[i].threeMeals[1].imageUrl,
-              'id': _dailyList[i].threeMeals[1].id,
-              'servings': _dailyList[i].threeMeals[1].servings,
-            },
-            'dinner': {
-              'title': _dailyList[i].threeMeals[2].title,
-              'imageUrl': _dailyList[i].threeMeals[2].imageUrl,
-              'id': _dailyList[i].threeMeals[2].id,
-              'servings': _dailyList[i].threeMeals[2].servings,
-            },
-          }
-        }
-      }, merge: true);
-    }
-  }
-
   Future<bool> getDietPlan() async {
     var firebaseUser = await _auth.currentUser();
     var value = await Firestore.instance
@@ -83,7 +44,7 @@ class DietPlanData with ChangeNotifier {
     Map<String, dynamic> tempMap = value.data;
     var dietPlanMap = tempMap['dietPlan'];
     if (dietPlanMap != null) {
-      for (int i = 0; i < 1; i++) {
+      for (int i = 0; i < 30; i++) {
         _dailyList[i] = DailyData(i);
         _dailyList[i].setAllForDay(
           calory: dietPlanMap['$i']['calory'],
@@ -124,16 +85,16 @@ class DietPlanData with ChangeNotifier {
 
   Future<void> setWholePlan(double userDailyCalory) async {
     _userCalory = userDailyCalory;
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 5; i++) {
       _dailyList[i] = DailyData(i);
       await _dailyList[i].setDailyPlan(_userCalory);
     }
-    /*for (int i = 6; i < 30; i++) {
+
+    for (int i = 5; i < 30; i++) {
       _dailyList[i] = DailyData(i);
       _dailyList[i].setDailyPlan(_userCalory);
-    }*/
+    }
 
-    _postDietPlan();
 
     notifyListeners();
   }
