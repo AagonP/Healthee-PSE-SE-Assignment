@@ -47,7 +47,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                       0) {
                     showAlertOnEmptySelectingList(context);
                   } else {
-                    Navigator.pushNamed(context, 'HealthInputScreen');
+                    Navigator.pushNamed(context, 'FilterHealthInputScreen');
                   }
                 },
               ),

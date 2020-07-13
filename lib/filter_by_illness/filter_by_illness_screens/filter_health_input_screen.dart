@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pse_assignment/providers/user_health_data.dart';
 
-import '../../providers/user_input.dart';
+
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (ctx) => UserInput(),
+      builder: (ctx) => UserHealthData(),
       child: ShowHealthInputForm(),
     );
   }
@@ -23,8 +24,8 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
   static List<bool> _illnessSelections =
       List<bool>.generate(numbOfIllness, (index) => false);
   void updateIllnessSelection(bool newValue, int index) {
-    Provider.of<UserInput>(context).updateUserInput(
-        Provider.of<UserInput>(context).illnessTags[index], newValue, 0);
+    Provider.of<UserHealthData>(context).updateUserInput(
+        Provider.of<UserHealthData>(context).illnessTags[index], newValue, 0);
     setState(() {
       _illnessSelections[index] = newValue;
     });
@@ -38,7 +39,7 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set filter by illnesses'),
+        title: Text('Illnesses'),
         centerTitle: true,
       ),
       body: Column(
@@ -49,7 +50,7 @@ class _ShowHealthInputFormState extends State<ShowHealthInputForm> {
                 itemCount: _illnessSelections.length,
                 itemBuilder: (context, index) {
                   return CheckboxListTile(
-                    title: Text(Provider.of<UserInput>(context).illnessTags[index]),
+                    title: Text(Provider.of<UserHealthData>(context).illnessTags[index]),
                     value: _illnessSelections[index],
                     onChanged: (bool newValue) {
                       updateIllnessSelection(newValue, index);

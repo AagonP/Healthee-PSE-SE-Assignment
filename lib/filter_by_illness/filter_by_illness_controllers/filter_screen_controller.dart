@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/product.dart';
 import '../../providers/data_helper.dart';
 import '../../providers/products.dart';
-import '../../providers/user_input.dart';
 import '../../providers/saved_products.dart';
+import '../../providers/user_health_data.dart';
 
 class FilterScreenController {
   final removeFromFilteringListSnackBar = SnackBar(
@@ -25,7 +24,7 @@ class FilterScreenController {
       Provider.of<Products>(context).filteringProducts.forEach(
         (element) {
           Provider.of<Products>(context)
-              .doFilter(Provider.of<UserInput>(context), element);
+              .doFilter(Provider.of<UserHealthData>(context), element);
         },
       );
       return;

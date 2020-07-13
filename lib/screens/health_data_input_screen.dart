@@ -150,6 +150,21 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
             ),
           ),
           UserExerciseCheckbox(),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('FilterHealthInputScreen');
+            },
+            child: Container(
+              child: Card(
+                elevation: 5.0,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Text('Press here to select your illnesses!'),
+                ),
+              ),
+            ),
+          ),
           Center(
             child: GestureDetector(
               child: Card(
