@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
 import '../../providers/data_helper.dart';
-import 'package:provider/provider.dart';
-import 'user_health_data.dart';
-import 'dart:math';
-import '../../providers/data_helper.dart';
+import 'dart:async';
 
 class Meal {
   String _imageUrl;
 
   int _id;
   String _title;
+  int _servings;
 
   // mealType = 0 => Breakfast, = 1 => Lunch, = 2 => Dinner.
   int _mealType;
@@ -31,6 +28,10 @@ class Meal {
     return _imageUrl;
   }
 
+  int get servings {
+    return _servings;
+  }
+
   /*void setId(String id) {
     _id = id;
   }
@@ -43,11 +44,13 @@ class Meal {
     _mealType = mealType;
   }*/
 
-  void setAllForMeal({int id, String title, int mealType, String imageUrl}) {
+  void setAllForMeal(
+      {int id, String title, int mealType, String imageUrl, int servings}) {
     _id = id;
     _title = title;
     _mealType = mealType;
     _imageUrl = imageUrl;
+    _servings = servings;
   }
 }
 
@@ -60,14 +63,21 @@ class DailyData {
   List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
   bool _isChecked = false;
 
+
   DailyData(this._index);
 
-  void setAllForDay(
-      {double calory, double protein, double fat, double carbohydrate}) {
+  void setAllForDay({
+    double calory,
+    double protein,
+    double fat,
+    double carbohydrate,
+    bool isChecked = false,
+  }) {
     _calory = calory;
     _protein = protein;
     _fat = fat;
     _carbohydrate = carbohydrate;
+    _isChecked = isChecked;
   }
 
   Future<void> setDailyPlan(double wantedCalory) async {
@@ -81,21 +91,33 @@ class DailyData {
     var dailyCarbohydrate = dailyDataJson['nutrients']['carbohydrates'];
 
     setAllForDay(
-        calory: dailyCalory,
-        protein: dailyProtein,
-        fat: dailyFat,
-        carbohydrate: dailyCarbohydrate);
+      calory: dailyCalory,
+      protein: dailyProtein,
+      fat: dailyFat,
+      carbohydrate: dailyCarbohydrate,
+    );
 
     for (int i = 0; i < 3; i++) {
       var mealId = dailyDataJson['meals'][i]['id'];
       var mealTitle = dailyDataJson['meals'][i]['title'];
-      var mealImageUrl = 'https://spoonacular.com/recipeImages/$mealId-556x370.jpg';
-      _threeMeals[i]
-          .setAllForMeal(id: mealId, title: mealTitle, mealType: i, imageUrl: mealImageUrl);
+      var mealImageUrl =
+          'https://spoonacular.com/recipeImages/$mealId-556x370.jpg';
+      var mealServings = dailyDataJson['meals'][i]['servings'];
+      _threeMeals[i].setAllForMeal(
+        id: mealId,
+        title: mealTitle,
+        mealType: i,
+        imageUrl: mealImageUrl,
+        servings: mealServings,
+      );
     }
   }
 
 // Getters and Setters.
+
+  void setChecked(bool isChecked) {
+    _isChecked = isChecked;
+  }
 
   int get index {
     return _index;
@@ -123,14 +145,6 @@ class DailyData {
 
   bool get isChecked {
     return _isChecked;
-  }
-
-  void checkDay() {
-    _isChecked = true;
-  }
-
-  void uncheckDay() {
-    _isChecked = false;
   }
 
 /*void setIndex(int index) {

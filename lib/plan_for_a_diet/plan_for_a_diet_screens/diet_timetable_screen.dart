@@ -39,7 +39,10 @@ class DietTimetableScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+    ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     var screenHeight = MediaQuery.of(context).size.height;
+    final dietPlanData = routeArgs['dietPlanData'];
 
 
     // TODO: implement build of DietTimetableScreen
@@ -107,7 +110,7 @@ class DietTimetableScreen extends StatelessWidget {
                 shrinkWrap: true,
                 children: _oneMonthList
                     .map(
-                      (index) => DailyDietItem(index),
+                      (index) => DailyDietItem(index, dietPlanData),
                     )
                     .toList(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
