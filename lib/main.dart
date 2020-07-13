@@ -7,7 +7,6 @@ import './providers/products.dart';
 import 'filter_by_illness/filter_by_illness_screens/filter_screen.dart';
 import 'filter_by_illness/filter_by_illness_screens/filter_health_input_screen.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import './providers/user_input.dart';
 import 'providers/saved_products.dart';
 import './screens/scan_screen.dart';
 import './screens/welcome_screen.dart';
@@ -35,7 +34,6 @@ class MyApp extends StatelessWidget {
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
         ChangeNotifierProvider<SavedProducts>(
             builder: (context) => SavedProducts()),
@@ -64,7 +62,7 @@ class MyApp extends StatelessWidget {
           'WelcomePage': (context) => WelcomePage(),
           'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
-          'HealthInputScreen': (context) => Wrapper(),
+          'FilterHealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
 
           // The following routes are for Plan For A Diet feature.

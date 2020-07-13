@@ -99,17 +99,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              //TODO: Add user information here
-              //TODO: Generate string ID for user
-              //TODO: Save user info
-            },
-            icon: Icon(Icons.account_circle),
-            iconSize: 30,
-          ),
-        ],
       ),
       //Drawer here
 

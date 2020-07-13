@@ -28,6 +28,7 @@ class FilterFoodListView extends StatelessWidget with FilterScreenController {
             child: Column(
               children: <Widget>[
                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                   child: GestureDetector(
                     onTap: () {
                       //NavigateToFoodInfoScreen()
