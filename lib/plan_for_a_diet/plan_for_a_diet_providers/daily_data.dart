@@ -6,7 +6,9 @@ import 'dart:math';
 import '../../providers/data_helper.dart';
 
 class Meal {
-  String _id;
+  String _imageUrl;
+
+  int _id;
   String _title;
 
   // mealType = 0 => Breakfast, = 1 => Lunch, = 2 => Dinner.
@@ -17,12 +19,16 @@ class Meal {
     return _title;
   }
 
-  String get id {
+  int get id {
     return _id;
   }
 
   int get mealType {
     return _mealType;
+  }
+
+  String get imageUrl {
+    return _imageUrl;
   }
 
   /*void setId(String id) {
@@ -37,10 +43,11 @@ class Meal {
     _mealType = mealType;
   }*/
 
-  void setAllForMeal({String id, String title, int mealType}) {
+  void setAllForMeal({int id, String title, int mealType, String imageUrl}) {
     _id = id;
     _title = title;
     _mealType = mealType;
+    _imageUrl = imageUrl;
   }
 }
 
@@ -51,6 +58,7 @@ class DailyData {
   double _fat;
   double _carbohydrate;
   List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
+  bool _isChecked = false;
 
   DailyData(this._index);
 
@@ -71,7 +79,7 @@ class DailyData {
     var dailyProtein = dailyDataJson['nutrients']['protein'];
     var dailyFat = dailyDataJson['nutrients']['fat'];
     var dailyCarbohydrate = dailyDataJson['nutrients']['carbohydrates'];
-    print(dailyDataJson);
+
     setAllForDay(
         calory: dailyCalory,
         protein: dailyProtein,
@@ -81,9 +89,9 @@ class DailyData {
     for (int i = 0; i < 3; i++) {
       var mealId = dailyDataJson['meals'][i]['id'];
       var mealTitle = dailyDataJson['meals'][i]['title'];
-
+      var mealImageUrl = 'https://spoonacular.com/recipeImages/$mealId-556x370.jpg';
       _threeMeals[i]
-          .setAllForMeal(id: mealId.toString(), title: mealTitle, mealType: i);
+          .setAllForMeal(id: mealId, title: mealTitle, mealType: i, imageUrl: mealImageUrl);
     }
   }
 
@@ -111,6 +119,18 @@ class DailyData {
 
   List<Meal> get threeMeals {
     return [..._threeMeals];
+  }
+
+  bool get isChecked {
+    return _isChecked;
+  }
+
+  void checkDay() {
+    _isChecked = true;
+  }
+
+  void uncheckDay() {
+    _isChecked = false;
   }
 
 /*void setIndex(int index) {

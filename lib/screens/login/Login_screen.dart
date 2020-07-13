@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
+// Packages for fetching user's health data
+import 'package:provider/provider.dart';
+import '../../plan_for_a_diet/plan_for_a_diet_providers/user_health_data.dart';
+
+// This class is for handling clicking Login
+class LoginDataFetcher {}
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,7 +24,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    pr = ProgressDialog(context);
+    // This is for fetching User's Health Data.
+    final userHealthData = Provider.of<UserHealthData>(context);
+
+    pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+    );
     pr.style(
         message: 'Logging in...',
         borderRadius: 30.0,
@@ -31,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
         messageTextStyle: TextStyle(
             color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -111,16 +125,30 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   onPressed: () async {
+                    // Fetch user health data, if first login,
+                    // navigate to HealthDataInputScreen,
+                    // if not, navigate to HomeScreen
                     await pr.show();
                     try {
                       final user = await _auth.signInWithEmailAndPassword(
                           email: email, password: password);
+                      var isFirstLogin =
+                          await userHealthData.getUserHealthData();
                       if (user != null) {
-                        Future.delayed(Duration(seconds: 1)).then((value) {
-                          pr.hide().whenComplete(() {
-                            Navigator.pushNamed(context, 'NavigatePage');
+                        if (isFirstLogin == false) {
+                          Future.delayed(Duration(seconds: 1)).then((value) {
+                            pr.hide().whenComplete(() {
+                              Navigator.pushNamed(context, 'NavigatePage');
+                            });
                           });
-                        });
+                        } else {
+                          Future.delayed(Duration(seconds: 1)).then((value) {
+                            pr.hide().whenComplete(() {
+                              Navigator.pushNamed(
+                                  context, '/health-data-input-screen');
+                            });
+                          });
+                        }
                       }
                     } catch (e) {
                       print(e);

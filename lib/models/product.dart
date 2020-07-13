@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import '../models/illness.dart';
-import 'dart:convert';
 
 class Product {
   final String type;

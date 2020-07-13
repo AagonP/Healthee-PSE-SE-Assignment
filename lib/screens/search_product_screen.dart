@@ -76,6 +76,7 @@ class _HomePageState extends State<HomePage> {
       if (product.name != null)
         Provider.of<Products>(context).addProduct(product);
     }
+    Provider.of<Products>(context).updateDisplayProduct('all');
   }
 
   void navigateToFilterScreen(BuildContext context) {
@@ -92,6 +93,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Product> displayList = Provider.of<Products>(context).products;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -116,10 +119,10 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
-                'Welcome ',
-                textAlign: TextAlign.left,
+                'Recipe and Product ',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30,
                   fontFamily: 'Pacifico',
@@ -220,10 +223,8 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.all(10),
           ),
-          Container(
-            child: Expanded(
-              child: FoodListView(),
-            ),
+          Expanded(
+            child: FoodListView(),
           ),
         ],
       ),

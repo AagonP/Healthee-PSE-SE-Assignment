@@ -13,12 +13,12 @@ class FoodListView extends StatelessWidget {
       content: Text('You have added a product to filtering list!'),
       duration: Duration(milliseconds: 500),
     );
-    final List<Product> _currentList = Provider.of<Products>(context).products;
+    List<Product> _list = Provider.of<Products>(context).displayProducts;
     return GridView.count(
       //physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       crossAxisCount: 2,
-      children: List.generate(_currentList.length, (index) {
+      children: List.generate(_list.length, (index) {
         return Container(
           width: 50.0,
           child: Card(
@@ -35,7 +35,7 @@ class FoodListView extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, 'FoodInfoScreen',
-                          arguments: _currentList.elementAt(index));
+                          arguments: _list.elementAt(index));
                     },
                     // slide image function here
                     child: Slidable(
@@ -51,8 +51,7 @@ class FoodListView extends StatelessWidget {
                             Provider.of<Products>(context)
                                 .filteringProducts
                                 .forEach((element) {
-                              if (element.name ==
-                                  _currentList.elementAt(index).name)
+                              if (element.name == _list.elementAt(index).name)
                                 _isDuplicated = true;
                             });
                             if (!_isDuplicated){
@@ -61,14 +60,24 @@ class FoodListView extends StatelessWidget {
                                   .addFilteringProduct(
                                       _currentList.elementAt(index));
                             }
+                                  .addFilteringProduct(_list.elementAt(index));
+                          },
+                        ),
+                        IconSlideAction(
+                          caption: 'Delete',
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () {
+                            Provider.of<Products>(context)
+                                .removeProduct(_list.elementAt(index));
                           },
                         ),
                       ],
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
-                        child: (_currentList.elementAt(index).photoURL != null)
+                        child: (_list.elementAt(index).photoURL != null)
                             ? Image.network(
-                                _currentList.elementAt(index).photoURL,
+                                _list.elementAt(index).photoURL,
                               )
                             : Container(
                                 height: 90.0,
@@ -85,7 +94,7 @@ class FoodListView extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                         child: AutoSizeText(
-                          _currentList.elementAt(index).name,
+                          _list.elementAt(index).name,
                           style: TextStyle(fontSize: 15.0),
                           minFontSize: 10.0,
                           maxLines: 2,

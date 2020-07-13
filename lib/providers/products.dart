@@ -1,8 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
-import 'dart:convert';
-import 'dart:async';
-
 import '../models/product.dart';
 import './user_input.dart';
 
@@ -24,6 +20,86 @@ class Products with ChangeNotifier {
   }
 
   List<Product> _products = [];
+  List<Product> _displayProducts = [];
+  Map<String, bool> map = {
+    'Vegan': false,
+    'DairyFree': false,
+    'LowFodMap': false,
+    'cheap': false
+  };
+  List<Product> get displayProducts {
+    return [..._displayProducts];
+  }
+
+  void updateDisplayProduct(String key) {
+    bool isValid = true;
+    map.forEach((key, value) {
+      if (value == true) {
+        isValid = false;
+      }
+    });
+    if (isValid == true) {
+      _displayProducts.clear();
+      _displayProducts.addAll(_products);
+    } else {
+      if (_displayProducts.length == _products.length) {
+        _displayProducts.clear();
+      }
+      switch (key) {
+        case 'Vegan':
+          print('vega called again');
+          print('Product: ${_products.length}');
+          if (map['Vegan'] == true) {
+            _displayProducts.addAll(
+                _products.where((element) => element.vegetarian).toList());
+            print(_displayProducts.length);
+          } else
+            _displayProducts.removeWhere((element) =>
+                element.vegetarian &&
+                !element.dairyFree &&
+                !element.lowFodmap &&
+                !element.cheap);
+          break;
+        case 'DairyFree':
+          if (map['DairyFree'] == true) {
+            _displayProducts.addAll(
+                _products.where((element) => element.dairyFree).toList());
+          } else
+            _displayProducts.removeWhere((element) =>
+                element.dairyFree &&
+                !element.vegetarian &&
+                !element.lowFodmap &&
+                !element.cheap);
+          break;
+        case 'LowFodMap':
+          if (map['LowFodMap'] == true) {
+            _displayProducts.addAll(
+                _products.where((element) => element.lowFodmap).toList());
+          } else
+            _displayProducts.removeWhere((element) =>
+                element.lowFodmap &&
+                !element.dairyFree &&
+                !element.vegetarian &&
+                !element.cheap);
+          break;
+        case 'cheap':
+          if (map['cheap'] == true) {
+            _displayProducts
+                .addAll(_products.where((element) => element.cheap).toList());
+          } else
+            _displayProducts.removeWhere((element) =>
+                element.cheap &&
+                !element.dairyFree &&
+                !element.lowFodmap &&
+                !element.vegetarian);
+          break;
+      }
+    }
+    _displayProducts = _displayProducts.toSet().toList();
+    print(_displayProducts.length);
+    notifyListeners();
+  }
+
   List<Product> get products {
     return [..._products];
   }
@@ -35,6 +111,7 @@ class Products with ChangeNotifier {
 
   void clearProduct() {
     _products.clear();
+    _displayProducts.clear();
     notifyListeners();
   }
 

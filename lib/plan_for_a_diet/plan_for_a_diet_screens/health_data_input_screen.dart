@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -21,24 +22,30 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
   void _clickSubmit(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.of(context).pushNamed(
-      '/diet-timetable-screen',
+      'NavigatePage',
     );
   }
 
-  void _handleFulfilledInput(BuildContext context, UserHealthData userHealthData,
-      DietPlanData dietPlanData, ProgressDialog pr) async {
-    pr.show();
+  void _handleFulfilledInput(
+      BuildContext context,
+      UserHealthData userHealthData,
+      DietPlanData dietPlanData,
+      ProgressDialog pr) async {
     userHealthData.updateHealthData(
       _userHeight,
       _userWeight,
       _userAge,
     );
+
+    _clickSubmit(context);
+    /*pr.show();
+
     try {
       await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
       pr.hide().whenComplete(() => _clickSubmit(context));
     } catch (e) {
       print(e);
-    }
+    }*/
   }
 
   void _handleMissingInput(BuildContext context) {
@@ -102,6 +109,12 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
       ),
       body: ListView(
         children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(15.0),
+            child:
+                Text('This is your first login, please input your health data'),
+          ),
           Card(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: TextField(

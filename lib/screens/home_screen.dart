@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/drawer.dart';
 
 class NavigatePage extends StatefulWidget {
   @override
@@ -23,7 +24,8 @@ class _NavigatePageState extends State<NavigatePage> {
         loginUser = user;
         print(loginUser.email);
         print(loginUser.displayName);
-      }
+      } else
+        print('no user');
     } catch (e) {
       print(e);
     }
@@ -32,6 +34,25 @@ class _NavigatePageState extends State<NavigatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.clear_all,
+                color: Color(0xFFF1CB57),
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+      ),
+      drawer: CustomDrawer(),
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(
@@ -73,7 +94,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFFDF4DE),
                     title: 'Search recipe \n and product',
                     description: 'Get the best food just for you',
-                    navigate_page: 'HomePage',
+                    navigatePage: 'HomePage',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -84,7 +105,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Colors.red[50],
                     title: 'Filter by Illness',
                     description: 'Know what suits your health',
-                    navigate_page: 'FilterScreen',
+                    navigatePage: 'FilterScreen',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -95,7 +116,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE9F4FE),
                     title: 'Plan a diet',
                     description: 'Make your own diet',
-                    navigate_page: '/planning-option-screen',
+                    navigatePage: '/planning-option-screen',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -106,7 +127,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE8F3EB),
                     title: 'Scan a product',
                     description: 'Get product information \n with your camera',
-                    navigate_page: 'HomePage',
+                    navigatePage: 'HomePage',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -128,19 +149,19 @@ class NavigateTab extends StatelessWidget {
   final String title;
   final String description;
   final Image image;
-  final String navigate_page;
+  final String navigatePage;
 
   NavigateTab(
       {@required this.color,
       @required this.title,
-      @required this.navigate_page,
+      @required this.navigatePage,
       this.image,
       this.description});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, navigate_page);
+        Navigator.pushNamed(context, navigatePage);
       },
       child: Container(
         margin: EdgeInsets.symmetric(

@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginRegisterPage extends StatefulWidget {
-  @override
-  _LoginRegisterPageState createState() => _LoginRegisterPageState();
-}
-
-class _LoginRegisterPageState extends State<LoginRegisterPage> {
+class LoginRegisterPage extends StatelessWidget {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +74,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     'image/facebook.png',
                   ),
                 ),
+                function: () {},
               ),
               RoundedButtonLink(
                 color: Color(0xFF518DF8),
@@ -83,6 +82,13 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                 image: Image.asset(
                   'image/brands-and-logotypes.png',
                 ),
+                function: () async {
+                  FirebaseUser user =
+                      await firebaseAuthService.signInWithGoogle();
+                  if (user != null) {
+                    Navigator.pushNamed(context, 'NavigatePage');
+                  }
+                },
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -157,8 +163,10 @@ class RoundedButtonLink extends StatelessWidget {
   final Color color;
   final String title;
   final Image image;
+  final Function function;
 
-  RoundedButtonLink({@required this.color, @required this.title, this.image});
+  RoundedButtonLink(
+      {@required this.color, @required this.title, this.image, this.function});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -168,7 +176,7 @@ class RoundedButtonLink extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        onPressed: () {},
+        onPressed: function,
         minWidth: 200.0,
         height: 50.0,
         child: Row(
@@ -198,5 +206,54 @@ class RoundedButtonLink extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class FirebaseAuthService {
+  final FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
+
+  FirebaseAuthService({FirebaseAuth firebaseAuth, GoogleSignIn googleSignin})
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+        _googleSignIn = googleSignin ?? GoogleSignIn();
+
+  FirebaseUser _userFromFirebase(FirebaseUser user) {
+    if (user == null) {
+      return null;
+    }
+    return user;
+  }
+
+  Stream<FirebaseUser> get onAuthStateChanged {
+    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+  }
+
+  Future<FirebaseUser> signInAnonymously() async {
+    final authResult = await _firebaseAuth.signInAnonymously();
+    return _userFromFirebase(authResult.user);
+  }
+
+  Future<FirebaseUser> signInWithGoogle() async {
+    final googleUser = await _googleSignIn.signIn();
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    final authResult = await _firebaseAuth.signInWithCredential(credential);
+
+    return _userFromFirebase(authResult.user);
+  }
+
+  Future<void> signOutWithGoogle() async {
+    // Sign out with firebase
+    await _firebaseAuth.signOut();
+    // Sign out with google
+    await _googleSignIn.signOut();
+  }
+
+  Future<FirebaseUser> currentUser() async {
+    final user = await _firebaseAuth.currentUser();
+    return _userFromFirebase(user);
   }
 }

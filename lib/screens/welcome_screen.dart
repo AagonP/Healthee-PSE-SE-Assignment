@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -8,6 +9,7 @@ class WelcomePage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               SizedBox(
                 height: 50.0,
@@ -47,8 +49,12 @@ class WelcomePage extends StatelessWidget {
                 height: 50.0,
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, 'LoginRegisterPage');
+                onTap: () async {
+                  if (await FirebaseAuth.instance.currentUser() == null) {
+                    Navigator.pushNamed(context, 'LoginRegisterPage');
+                  } else {
+                    Navigator.pushNamed(context, 'NavigatePage');
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.all(20.0),
