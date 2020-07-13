@@ -17,12 +17,12 @@ import './screens/login/Register_screen.dart';
 import './screens/login/Login_screen.dart';
 
 // The following are all the files supporting for Plan For A Diet.
-import './plan_for_a_diet/plan_for_a_diet_screens/health_data_input_screen.dart';
+import 'screens/health_data_input_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/planning_option_screen.dart';
-import './plan_for_a_diet/plan_for_a_diet_providers/user_health_data.dart';
+import 'providers/user_health_data.dart';
 
 void main() {
   runApp(MyApp());

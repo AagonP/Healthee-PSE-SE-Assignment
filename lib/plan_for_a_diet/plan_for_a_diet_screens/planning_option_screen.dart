@@ -5,7 +5,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
-import '../plan_for_a_diet_providers/user_health_data.dart';
+import '../../providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
   void _clickFAP(BuildContext context, UserHealthData userHealthData,

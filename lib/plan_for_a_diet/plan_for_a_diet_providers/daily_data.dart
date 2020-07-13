@@ -1,5 +1,7 @@
 import '../../providers/data_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Meal {
   String _imageUrl;
@@ -32,18 +34,6 @@ class Meal {
     return _servings;
   }
 
-  /*void setId(String id) {
-    _id = id;
-  }
-
-  void setTitle(String title) {
-    _title = title;
-  }
-
-  void setMealType(int mealType) {
-    _mealType = mealType;
-  }*/
-
   void setAllForMeal(
       {int id, String title, int mealType, String imageUrl, int servings}) {
     _id = id;
@@ -63,8 +53,46 @@ class DailyData {
   List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
   bool _isChecked = false;
 
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   DailyData(this._index);
+
+  void _postDailyPlan() async{
+    var firebaseUser = await _auth.currentUser();
+    Firestore.instance
+        .collection('users')
+        .document(firebaseUser.uid)
+        .setData({
+      'dietPlan': {
+        '$_index': {
+          'calory': _calory,
+          'carbohydrate': _carbohydrate,
+          'fat': _fat,
+          'protein': _protein,
+          'isChecked': _isChecked,
+          'breakfast': {
+            'title': _threeMeals[0].title,
+            'imageUrl': _threeMeals[0].imageUrl,
+            'id': _threeMeals[0].id,
+            'servings': _threeMeals[0].servings,
+          },
+          'lunch': {
+            'title': _threeMeals[1].title,
+            'imageUrl': _threeMeals[1].imageUrl,
+            'id': _threeMeals[1].id,
+            'servings': _threeMeals[1].servings,
+          },
+          'dinner': {
+            'title': _threeMeals[2].title,
+            'imageUrl': _threeMeals[2].imageUrl,
+            'id': _threeMeals[2].id,
+            'servings': _threeMeals[2].servings,
+          },
+        }
+      }
+    }, merge: true);
+  }
 
   void setAllForDay({
     double calory,
@@ -111,6 +139,7 @@ class DailyData {
         servings: mealServings,
       );
     }
+    _postDailyPlan();
   }
 
 // Getters and Setters.
@@ -146,28 +175,4 @@ class DailyData {
   bool get isChecked {
     return _isChecked;
   }
-
-/*void setIndex(int index) {
-    _index = index;
-  }
-
-  void setCalory(double calory) {
-    _calory = calory;
-  }
-
-  void setProtein(double protein) {
-    _protein = protein;
-  }
-
-  void setFat(double fat) {
-    _fat = fat;
-  }
-
-  void setCarbohydrate(double carbohydrate) {
-    _carbohydrate = carbohydrate;
-  }
-
-  void setThreeMeals(List<Meal> threeMeals) {
-    _threeMeals = threeMeals;
-  }*/
 }
