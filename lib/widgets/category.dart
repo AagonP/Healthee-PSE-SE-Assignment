@@ -7,73 +7,86 @@ class RoundTypeButton extends StatefulWidget {
   final Color color;
   final String image;
   final String title;
+  final Function function;
+
   RoundTypeButton(
-      {@required this.color, @required this.image, @required this.title});
+      {@required this.color,
+      @required this.image,
+      @required this.title,
+      this.function});
 
   @override
   _RoundTypeButtonState createState() => _RoundTypeButtonState();
 }
 
 class _RoundTypeButtonState extends State<RoundTypeButton> {
+  bool isActivated = false;
   void sortByCategory() {
-    setState(() {
-      List<Product> currentList = Provider.of<Products>(context).products;
-      for (int i = 0; i < currentList.length; i++) {
-        switch (widget.title) {
-          case 'Vegan':
-            if (!currentList.elementAt(i).vegetarian)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-          case 'DairyFree':
-            if (!currentList.elementAt(i).dairyFree)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-          case 'LowFodMap':
-            if (!currentList.elementAt(i).dairyFree)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-          case 'Cheap':
-            if (!currentList.elementAt(i).cheap)
-              Provider.of<Products>(context)
-                  .removeProduct(currentList.elementAt(i));
-            break;
-        }
-      }
-    });
+    switch (widget.title) {
+      case 'Vegan':
+        print('vegan called');
+
+        Provider.of<Products>(context).map['Vegan'] =
+            !Provider.of<Products>(context).map['Vegan'];
+        print(Provider.of<Products>(context).map['Vegan']);
+        Provider.of<Products>(context).updateDisplayProduct('Vegan');
+        break;
+      case 'DairyFree':
+        Provider.of<Products>(context).map['DairyFree'] =
+            !Provider.of<Products>(context).map['DairyFree'];
+        Provider.of<Products>(context).updateDisplayProduct('DairyFree');
+        break;
+      case 'LowFodMap':
+        Provider.of<Products>(context).map['LowFodMap'] =
+            !Provider.of<Products>(context).map['LowFodMap'];
+        Provider.of<Products>(context).updateDisplayProduct('LowFodMap');
+        break;
+      case 'Cheap':
+        Provider.of<Products>(context).map['cheap'] =
+            !Provider.of<Products>(context).map['cheap'];
+        Provider.of<Products>(context).updateDisplayProduct('cheap');
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        RawMaterialButton(
-          constraints: BoxConstraints.tightFor(
-            width: 50.0,
-            height: 50.0,
+    return Container(
+      decoration: BoxDecoration(
+        color: isActivated
+            ? Colors.orangeAccent.withOpacity(0.4)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Column(
+        children: <Widget>[
+          RawMaterialButton(
+            constraints: BoxConstraints.tightFor(
+              width: 50.0,
+              height: 50.0,
+            ),
+            onPressed: () {
+              isActivated = !isActivated;
+              sortByCategory();
+            },
+            elevation: 2.0,
+            fillColor: widget.color,
+            child: Image.asset(
+              widget.image,
+              fit: BoxFit.cover,
+              width: 30.0,
+              height: 30.0,
+            ),
+            shape: CircleBorder(
+              side: BorderSide(color: Colors.white),
+            ),
           ),
-          onPressed: () {
-            sortByCategory();
-          },
-          elevation: 2.0,
-          fillColor: widget.color,
-          child: Image.asset(
-            widget.image,
-            fit: BoxFit.cover,
-            width: 30.0,
-            height: 30.0,
+          Text(
+            widget.title,
+            style: TextStyle(fontSize: 11.0),
           ),
-          shape: CircleBorder(
-            side: BorderSide(color: Colors.white),
-          ),
-        ),
-        Text(
-          widget.title,
-          style: TextStyle(fontSize: 11.0),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
