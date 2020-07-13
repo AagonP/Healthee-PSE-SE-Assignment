@@ -18,8 +18,10 @@ class PlanningOptionScreen extends StatelessWidget {
         await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
       }
 
-      pr.hide().whenComplete(
-          () => Navigator.of(context).pushNamed('/diet-timetable-screen'));
+      pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
+            '/diet-timetable-screen',
+            arguments: {'dietPlanData': dietPlanData},
+          ));
     } catch (e) {
       print(e);
     }

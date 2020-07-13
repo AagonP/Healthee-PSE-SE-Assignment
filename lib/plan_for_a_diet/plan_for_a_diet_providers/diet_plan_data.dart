@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'user_health_data.dart';
-import '../../providers/data_helper.dart';
 import 'daily_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
@@ -14,10 +11,34 @@ class DietPlanData with ChangeNotifier {
   ///////////////////////
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  void checkDay(int index) async {
+    _dailyList[index].setChecked(true);
+    var firebaseUser = await _auth.currentUser();
+    Firestore.instance.collection('users').document(firebaseUser.uid).setData({
+      'dietPlan': {
+        '$index': {
+          'isChecked': true,
+        },
+      }
+    }, merge: true);
+  }
+
+  void uncheckDay(int index) async {
+    _dailyList[index].setChecked(false);
+    var firebaseUser = await _auth.currentUser();
+    Firestore.instance.collection('users').document(firebaseUser.uid).setData({
+      'dietPlan': {
+        '$index': {
+          'isChecked': false,
+        },
+      }
+    }, merge: true);
+  }
+
   void _postDietPlan() async {
     var firebaseUser = await _auth.currentUser();
-    //Firestore.instance.collection("users").document(firebaseUser.uid).updateData(data);
     for (int i = 0; i < 1; i++) {
+      print(_dailyList[i].isChecked);
       Firestore.instance
           .collection('users')
           .document(firebaseUser.uid)
@@ -28,20 +49,24 @@ class DietPlanData with ChangeNotifier {
             'carbohydrate': _dailyList[i].carbohydrate,
             'fat': _dailyList[i].fat,
             'protein': _dailyList[i].protein,
+            'isChecked': _dailyList[i].isChecked,
             'breakfast': {
               'title': _dailyList[i].threeMeals[0].title,
               'imageUrl': _dailyList[i].threeMeals[0].imageUrl,
               'id': _dailyList[i].threeMeals[0].id,
+              'servings': _dailyList[i].threeMeals[0].servings,
             },
             'lunch': {
               'title': _dailyList[i].threeMeals[1].title,
               'imageUrl': _dailyList[i].threeMeals[1].imageUrl,
               'id': _dailyList[i].threeMeals[1].id,
+              'servings': _dailyList[i].threeMeals[1].servings,
             },
             'dinner': {
               'title': _dailyList[i].threeMeals[2].title,
               'imageUrl': _dailyList[i].threeMeals[2].imageUrl,
               'id': _dailyList[i].threeMeals[2].id,
+              'servings': _dailyList[i].threeMeals[2].servings,
             },
           }
         }
@@ -65,11 +90,13 @@ class DietPlanData with ChangeNotifier {
           carbohydrate: dietPlanMap['$i']['carbohydrate'],
           fat: dietPlanMap['$i']['fat'],
           protein: dietPlanMap['$i']['protein'],
+          isChecked: dietPlanMap['$i']['isChecked'],
         );
         _dailyList[i].threeMeals[0].setAllForMeal(
               id: dietPlanMap['$i']['breakfast']['id'],
               title: dietPlanMap['$i']['breakfast']['title'],
               imageUrl: dietPlanMap['$i']['breakfast']['imageUrl'],
+              servings: dietPlanMap['$i']['breakfast']['servings'],
               mealType: 0,
             );
 
@@ -77,6 +104,7 @@ class DietPlanData with ChangeNotifier {
               id: dietPlanMap['$i']['lunch']['id'],
               title: dietPlanMap['$i']['lunch']['title'],
               imageUrl: dietPlanMap['$i']['lunch']['imageUrl'],
+              servings: dietPlanMap['$i']['lunch']['servings'],
               mealType: 1,
             );
 
@@ -84,6 +112,7 @@ class DietPlanData with ChangeNotifier {
               id: dietPlanMap['$i']['dinner']['id'],
               title: dietPlanMap['$i']['dinner']['title'],
               imageUrl: dietPlanMap['$i']['dinner']['imageUrl'],
+              servings: dietPlanMap['$i']['dinner']['servings'],
               mealType: 2,
             );
       }
