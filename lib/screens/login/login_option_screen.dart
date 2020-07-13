@@ -4,36 +4,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginRegisterPage extends StatefulWidget {
-  @override
-  _LoginRegisterPageState createState() => _LoginRegisterPageState();
-}
-
-class _LoginRegisterPageState extends State<LoginRegisterPage> {
-//  Future<void> signInGoogle() async {
-//    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-//    final GoogleSignInAuthentication googleSignInAuthentication =
-//        await googleSignInAccount.authentication;
-//
-//    final AuthCredential credential = GoogleAuthProvider.getCredential(
-//      accessToken: googleSignInAuthentication.accessToken,
-//      idToken: googleSignInAuthentication.idToken,
-//    );
-//
-//    final AuthResult authResult = await _auth.signInWithCredential(credential);
-//    final FirebaseUser user = authResult.user;
-//
-//    assert(!user.isAnonymous);
-//    assert(await user.getIdToken() != null);
-//
-//    final FirebaseUser currentUser = await _auth.currentUser();
-//    assert(user.uid == currentUser.uid);
-//    if (await googleSignIn.isSignedIn()) {
-//      print('yes bitch');
-//    } else
-//      print('fuck no');
-//  }
-  FirebaseAuthService firebaseAuthService = FirebaseAuthService();
+class LoginRegisterPage extends StatelessWidget {
+  final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

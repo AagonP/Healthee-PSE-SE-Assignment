@@ -17,8 +17,6 @@ class _NavigatePageState extends State<NavigatePage> {
     getCurrentUser();
   }
 
-
-  
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser();
@@ -96,7 +94,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFFDF4DE),
                     title: 'Search recipe \n and product',
                     description: 'Get the best food just for you',
-                    navigate_page: 'HomePage',
+                    navigatePage: 'HomePage',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -107,7 +105,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Colors.red[50],
                     title: 'Filter by Illness',
                     description: 'Know what suits your health',
-                    navigate_page: 'FilterScreen',
+                    navigatePage: 'FilterScreen',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -118,7 +116,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE9F4FE),
                     title: 'Plan a diet',
                     description: 'Make your own diet',
-                    navigate_page: '/planning-option-screen',
+                    navigatePage: '/planning-option-screen',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -129,7 +127,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE8F3EB),
                     title: 'Scan a product',
                     description: 'Get product information \n with your camera',
-                    navigate_page: 'HomePage',
+                    navigatePage: 'HomePage',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -151,19 +149,19 @@ class NavigateTab extends StatelessWidget {
   final String title;
   final String description;
   final Image image;
-  final String navigate_page;
+  final String navigatePage;
 
   NavigateTab(
       {@required this.color,
       @required this.title,
-      @required this.navigate_page,
+      @required this.navigatePage,
       this.image,
       this.description});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, navigate_page);
+        Navigator.pushNamed(context, navigatePage);
       },
       child: Container(
         margin: EdgeInsets.symmetric(
