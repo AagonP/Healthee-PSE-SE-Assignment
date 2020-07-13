@@ -4,7 +4,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 // Packages for fetching user's health data
 import 'package:provider/provider.dart';
-import '../../plan_for_a_diet/plan_for_a_diet_providers/user_health_data.dart';
+import '../../providers/user_health_data.dart';
 
 // This class is for handling clicking Login
 class LoginDataFetcher {}

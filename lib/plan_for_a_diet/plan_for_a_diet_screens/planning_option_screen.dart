@@ -5,7 +5,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
-import '../plan_for_a_diet_providers/user_health_data.dart';
+import '../../providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
   void _clickFAP(BuildContext context, UserHealthData userHealthData,
@@ -18,8 +18,10 @@ class PlanningOptionScreen extends StatelessWidget {
         await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
       }
 
-      pr.hide().whenComplete(
-          () => Navigator.of(context).pushNamed('/diet-timetable-screen'));
+      pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
+            '/diet-timetable-screen',
+            arguments: {'dietPlanData': dietPlanData},
+          ));
     } catch (e) {
       print(e);
     }

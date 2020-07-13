@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../plan_for_a_diet_widgets/meal_food_list.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
 class DailyDetailScreen extends StatelessWidget {
   @override
@@ -10,15 +8,15 @@ class DailyDetailScreen extends StatelessWidget {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     var screenWidth = MediaQuery.of(context).size.width;
-    final _index = routeArgs['index'];
-    final _dietPlanData = Provider.of<DietPlanData>(context);
+    final index = routeArgs['index'];
+    final dietPlanData = routeArgs['dietPlanData'];
 
     // TODO: implement DailyDetailScreen build
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Day $_index',
+          'Day $index',
           style: TextStyle(
             fontFamily: 'Pacifico',
             fontSize: 30,
@@ -32,9 +30,9 @@ class DailyDetailScreen extends StatelessWidget {
           SizedBox(
             height: 5.0,
           ),
-          MealFoodList(_index, 0, 'Breakfast', _dietPlanData),
-          MealFoodList(_index, 1, 'Lunch', _dietPlanData),
-          MealFoodList(_index, 2, 'Dinner', _dietPlanData),
+          MealFoodList(index, 0, 'Breakfast', dietPlanData),
+          MealFoodList(index, 1, 'Lunch', dietPlanData),
+          MealFoodList(index, 2, 'Dinner', dietPlanData),
           Card(
             child: Column(
               children: <Widget>[
@@ -60,7 +58,7 @@ class DailyDetailScreen extends StatelessWidget {
                         Icons.star,
                         color: Colors.yellowAccent,
                       ),
-                      Text('Calories: ${_dietPlanData.dailyList[_index - 1].calory}'),
+                      Text('Calories: ${dietPlanData.dailyList[index - 1].calory}'),
                     ],
                   ),
                 ),
@@ -74,7 +72,7 @@ class DailyDetailScreen extends StatelessWidget {
                         Icons.star,
                         color: Colors.yellowAccent,
                       ),
-                      Text('Protein: ${_dietPlanData.dailyList[_index - 1].protein}'),
+                      Text('Protein: ${dietPlanData.dailyList[index - 1].protein}'),
                     ],
                   ),
                 ),
@@ -88,7 +86,7 @@ class DailyDetailScreen extends StatelessWidget {
                         Icons.star,
                         color: Colors.yellowAccent,
                       ),
-                      Text('Fat: ${_dietPlanData.dailyList[_index - 1].fat}'),
+                      Text('Fat: ${dietPlanData.dailyList[index - 1].fat}'),
                     ],
                   ),
                 ),
@@ -102,7 +100,7 @@ class DailyDetailScreen extends StatelessWidget {
                         Icons.star,
                         color: Colors.yellowAccent,
                       ),
-                      Text('Carbohydrates: ${_dietPlanData.dailyList[_index - 1].carbohydrate}'),
+                      Text('Carbohydrates: ${dietPlanData.dailyList[index - 1].carbohydrate}'),
                     ],
                   ),
                 ),
