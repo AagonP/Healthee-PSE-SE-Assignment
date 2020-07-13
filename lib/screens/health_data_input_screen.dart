@@ -5,7 +5,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import '../providers/user_health_data.dart';
 import '../plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
-import '../plan_for_a_diet/plan_for_a_diet_widgets/checkbox_list_widget.dart';
+import '../widgets/checkbox_list_widget.dart';
 
 class HealthDataInputScreen extends StatefulWidget {
   @override
