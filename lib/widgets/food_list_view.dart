@@ -54,22 +54,12 @@ class FoodListView extends StatelessWidget {
                               if (element.name == _list.elementAt(index).name)
                                 _isDuplicated = true;
                             });
-                            if (!_isDuplicated){
-                              Scaffold.of(context).showSnackBar(addProductToFilteringListSnackBar);
+                            if (!_isDuplicated) {
+                              Scaffold.of(context).showSnackBar(
+                                  addProductToFilteringListSnackBar);
                               Provider.of<Products>(context)
-                                  .addFilteringProduct(
-                                      _currentList.elementAt(index));
-                            }
                                   .addFilteringProduct(_list.elementAt(index));
-                          },
-                        ),
-                        IconSlideAction(
-                          caption: 'Delete',
-                          color: Colors.red,
-                          icon: Icons.delete,
-                          onTap: () {
-                            Provider.of<Products>(context)
-                                .removeProduct(_list.elementAt(index));
+                            }
                           },
                         ),
                       ],
