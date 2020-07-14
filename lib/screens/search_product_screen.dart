@@ -21,22 +21,6 @@ class _HomePageState extends State<HomePage> {
   FirebaseUser user;
   String name = '';
   @override
-  void initState() {
-    super.initState();
-
-    getUser();
-  }
-
-  void getUser() async {
-    user = await _auth.currentUser();
-    setState(() {
-      if (user != null) {
-        name = user.displayName;
-      } else
-        name = '';
-    });
-  }
-
   void updateAfterScan(var key) {
     setState(() {
       res = key.toString();
@@ -93,8 +77,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Product> displayList = Provider.of<Products>(context).products;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -225,6 +207,19 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: FoodListView(),
+          ),
+          Visibility(
+            visible: true,
+            child: FlatButton(
+              color: Color(0xFFFECC4C),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              child: Text(
+                'Load more',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onPressed: () {},
+            ),
           ),
         ],
       ),

@@ -9,7 +9,7 @@ import '../models/product.dart';
 import 'dart:math';
 import 'user_input.dart';
 
-const int numberOfRecipe = 20;
+const int numberOfRecipe = 10;
 
 class DataHelper {
   Future<dynamic> fetchData(String url) async {
