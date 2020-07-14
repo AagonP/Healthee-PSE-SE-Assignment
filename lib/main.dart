@@ -7,7 +7,6 @@ import './providers/products.dart';
 import 'filter_by_illness/filter_by_illness_screens/filter_screen.dart';
 import 'filter_by_illness/filter_by_illness_screens/filter_health_input_screen.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import './providers/user_input.dart';
 import 'providers/saved_products.dart';
 import './screens/scan_screen.dart';
 import './screens/welcome_screen.dart';
@@ -17,12 +16,12 @@ import './screens/login/Register_screen.dart';
 import './screens/login/Login_screen.dart';
 
 // The following are all the files supporting for Plan For A Diet.
-import './plan_for_a_diet/plan_for_a_diet_screens/health_data_input_screen.dart';
+import 'screens/health_data_input_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/planning_option_screen.dart';
-import './plan_for_a_diet/plan_for_a_diet_providers/user_health_data.dart';
+import 'providers/user_health_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +34,6 @@ class MyApp extends StatelessWidget {
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserInput>(builder: (context) => UserInput()),
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
         ChangeNotifierProvider<SavedProducts>(
             builder: (context) => SavedProducts()),
@@ -64,7 +62,7 @@ class MyApp extends StatelessWidget {
           'WelcomePage': (context) => WelcomePage(),
           'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
-          'HealthInputScreen': (context) => Wrapper(),
+          'FilterHealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
 
           // The following routes are for Plan For A Diet feature.

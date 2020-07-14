@@ -74,6 +74,9 @@ class CustomDrawer extends StatelessWidget {
           _drawerTitle(
             icon: Icons.face,
             title: 'Change information',
+            ontap: () {
+              Navigator.of(context).pushNamed('');
+            },
           ),
           _drawerTitle(
               icon: Icons.chevron_left,

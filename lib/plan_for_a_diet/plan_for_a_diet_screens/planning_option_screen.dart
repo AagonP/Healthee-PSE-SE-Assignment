@@ -5,7 +5,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 
-import '../plan_for_a_diet_providers/user_health_data.dart';
+import '../../providers/user_health_data.dart';
 
 class PlanningOptionScreen extends StatelessWidget {
   void _clickFAP(BuildContext context, UserHealthData userHealthData,
@@ -13,15 +13,21 @@ class PlanningOptionScreen extends StatelessWidget {
     //print('${userHealthData.userHeight}\n${userHealthData.userAge}');
     pr.show();
     try {
-      await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
-      pr.hide().whenComplete(
-          () => Navigator.of(context).pushNamed('/diet-timetable-screen'));
+      var isFirstPlan = await dietPlanData.getDietPlan();
+      if (isFirstPlan == true) {
+        await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+      }
+
+      pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
+            '/diet-timetable-screen',
+            arguments: {'dietPlanData': dietPlanData},
+          ));
     } catch (e) {
       print(e);
     }
   }
 
-  void _handleNotFirstLogin(BuildContext context) {
+  /*void _handleNotFirstLogin(BuildContext context) {
     showDialog(
       context: context,
       child: Center(
@@ -58,7 +64,7 @@ class PlanningOptionScreen extends StatelessWidget {
     if (userHealthData.userAge != 0) {
       _handleNotFirstLogin(context);
     } else {}
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

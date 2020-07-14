@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-import '../plan_for_a_diet_providers/user_health_data.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
-import '../plan_for_a_diet_widgets/checkbox_list_widget.dart';
+import '../providers/user_health_data.dart';
+import '../plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
+import '../widgets/checkbox_list_widget.dart';
 
 class HealthDataInputScreen extends StatefulWidget {
   @override
@@ -25,8 +26,11 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
     );
   }
 
-  void _handleFulfilledInput(BuildContext context, UserHealthData userHealthData,
-      DietPlanData dietPlanData, ProgressDialog pr) async {
+  void _handleFulfilledInput(
+      BuildContext context,
+      UserHealthData userHealthData,
+      DietPlanData dietPlanData,
+      ProgressDialog pr) async {
     userHealthData.updateHealthData(
       _userHeight,
       _userWeight,
@@ -105,6 +109,12 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
       ),
       body: ListView(
         children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(15.0),
+            child:
+                Text('This is your first login, please input your health data'),
+          ),
           Card(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: TextField(
@@ -140,6 +150,21 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
             ),
           ),
           UserExerciseCheckbox(),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('FilterHealthInputScreen');
+            },
+            child: Container(
+              child: Card(
+                elevation: 5.0,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Text('Press here to select your illnesses!'),
+                ),
+              ),
+            ),
+          ),
           Center(
             child: GestureDetector(
               child: Card(

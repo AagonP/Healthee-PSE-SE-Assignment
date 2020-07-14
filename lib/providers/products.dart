@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../models/product.dart';
-import './user_input.dart';
+import 'user_health_data.dart';
 
 // Mock products
 class Products with ChangeNotifier {
@@ -121,7 +121,7 @@ class Products with ChangeNotifier {
     notifyListeners();
   }
 
-  void doFilter(UserInput userInput, Product product) {
+  void doFilter(UserHealthData userInput, Product product) {
     //Check the health's setting of user
     if (userInput.healthInput[0].obesity) {
       if (!product.illness.obesity) {
