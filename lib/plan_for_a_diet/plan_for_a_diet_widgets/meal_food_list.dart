@@ -42,23 +42,41 @@ class MealFoodList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 mealIcon,
                 Text(_mealType),
+                Expanded(
+                  child: IconButton(
+                    alignment: Alignment.centerRight,
+                    icon: Icon(
+                      Icons.mode_edit,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                          '/search-food-for-plan-screen');
+                    },
+                  ),
+                )
               ],
             ),
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
                 width: 30,
               ),
               Icon(
                 Icons.star,
+                size: 18,
                 color: Colors.lightBlueAccent,
               ),
-              Text(
-                '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+              Expanded(
+                child: Text(
+                  '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+                ),
               ),
             ],
           ),
