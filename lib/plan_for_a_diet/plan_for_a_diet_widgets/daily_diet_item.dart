@@ -28,7 +28,6 @@ class _DailyDietItemState extends State<DailyDietItem> {
       '/daily-detail-screen',
       arguments: {
         'index': widget._index,
-        'dietPlanData': widget._dietPlanData,
       },
     );
   }
