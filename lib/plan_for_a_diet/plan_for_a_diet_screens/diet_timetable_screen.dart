@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import 'package:provider/provider.dart';
 import '../plan_for_a_diet_widgets/daily_diet_item.dart';
 
 class DietTimetableScreen extends StatelessWidget {
@@ -39,10 +40,8 @@ class DietTimetableScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-    ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     var screenHeight = MediaQuery.of(context).size.height;
-    final dietPlanData = routeArgs['dietPlanData'];
+    final dietPlanData = Provider.of<DietPlanData>(context);
 
 
     // TODO: implement build of DietTimetableScreen
