@@ -9,14 +9,12 @@ import '../../providers/user_health_data.dart';
 class FilterScreenController {
   final removeFromFilteringListSnackBar = SnackBar(
     content: Text('You have removed a product from filtering list!'),
-    duration: Duration(milliseconds: 500 ),
+    duration: Duration(milliseconds: 500),
   );
   final saveProductSnackBar = SnackBar(
     content: Text('You have saved a product!'),
-    duration: Duration(milliseconds: 500 ),
+    duration: Duration(milliseconds: 500),
   );
-
-  
 
   void doFilterList(bool isFilterOn, BuildContext context) {
     if (!isFilterOn) {
@@ -72,8 +70,6 @@ class FilterScreenController {
       },
     );
   }
-
-  
 
   Future<Map<String, dynamic>> mapProductToJson(BuildContext context) async {
     int _savedProductsLength =

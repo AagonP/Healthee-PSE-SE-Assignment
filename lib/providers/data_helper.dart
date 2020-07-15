@@ -9,7 +9,7 @@ import '../models/product.dart';
 import 'dart:math';
 import 'user_health_data.dart';
 
-const int numberOfRecipe = 20;
+const int numberOfRecipe = 1;
 
 class DataHelper {
   Future<dynamic> fetchData(String url) async {
@@ -36,7 +36,7 @@ class FoodData {
   Random random = Random();
   Future<dynamic> getFoodData(String name) async {
     DataHelper dataHelper = DataHelper();
-    int offset = random.nextInt(50);
+    int offset = random.nextInt(1);
     String idUrl =
         'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=${numberOfRecipe.toString()}&offset=${offset.toString()}&query=$name';
     var foodIdJson = await dataHelper.fetchData(idUrl);
@@ -89,6 +89,13 @@ class FoodData {
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
     return product;
+  }
+
+  Future<void> uploadProduct(Map<String, dynamic> json) async {
+    await Firestore.instance
+        .collection('data')
+        .document('Product')
+        .setData(json, merge: true);
   }
 }
 

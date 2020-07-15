@@ -21,22 +21,6 @@ class _HomePageState extends State<HomePage> {
   FirebaseUser user;
   String name = '';
   @override
-  void initState() {
-    super.initState();
-
-    getUser();
-  }
-
-  void getUser() async {
-    user = await _auth.currentUser();
-    setState(() {
-      if (user != null) {
-        name = user.displayName;
-      } else
-        name = '';
-    });
-  }
-
   void updateAfterScan(var key) {
     setState(() {
       res = key.toString();
@@ -59,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
 //Text input controller
   var _controller = TextEditingController();
-  List<String> id = List(20);
+  //List<String> id = List(20);
   var input;
   FoodData foodData = FoodData();
 
@@ -67,16 +51,29 @@ class _HomePageState extends State<HomePage> {
   void updateUI(String name) async {
     Provider.of<Products>(context).clearProduct();
     var data = await foodData.getFoodData(name);
-    for (int i = 0; i < 20; i++) {
-      var foodId = data['results'][i]['id'];
-      id[i] = foodId.toString();
-    }
-    for (int i = 0; i < 20; i++) {
-      Product product = await foodData.decodeProduct(id[i]);
-      if (product.name != null)
-        Provider.of<Products>(context).addProduct(product);
-    }
-    Provider.of<Products>(context).updateDisplayProduct('all');
+    print(data);
+    var foodId = data['results'][0]['id'];
+    String id = foodId.toString();
+    DataHelper dataHelper = DataHelper();
+    String recipeUrl =
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information';
+    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
+    print(jsonRecipe);
+    int num = 1;
+    Map<String, dynamic> temp = {
+      'Product${num.toString()}': jsonRecipe,
+    };
+    await foodData.uploadProduct(temp);
+//    for (int i = 0; i < 20; i++) {
+//      var foodId = data['results'][i]['id'];
+//      id[i] = foodId.toString();
+//    }
+//    for (int i = 0; i < 20; i++) {
+//      Product product = await foodData.decodeProduct(id[i]);
+//      if (product.name != null)
+//        Provider.of<Products>(context).addProduct(product);
+//    }
+//    Provider.of<Products>(context).updateDisplayProduct('all');
   }
 
   void navigateToFilterScreen(BuildContext context) {
@@ -93,8 +90,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Product> displayList = Provider.of<Products>(context).products;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -214,6 +209,19 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             child: FoodListView(),
+          ),
+          Visibility(
+            visible: true,
+            child: FlatButton(
+              color: Color(0xFFFECC4C),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              child: Text(
+                'Load more',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              onPressed: () {},
+            ),
           ),
         ],
       ),
