@@ -116,13 +116,13 @@ class UserHealthData with ChangeNotifier {
     double userHeight,
     double userWeight,
     int userAge,
-  ) async {
+  ) {
     _userHeight = userHeight;
     _userWeight = userWeight;
     _userAge = userAge;
 
     _estimateCalory();
-    _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(4));
+    _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(2));
     notifyListeners();
     _postUserHealthData();
   }
