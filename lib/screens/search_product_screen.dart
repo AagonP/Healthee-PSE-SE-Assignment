@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
@@ -50,20 +50,9 @@ class _HomePageState extends State<HomePage> {
 //Update UI when loading product list
   void updateUI(String name) async {
     Provider.of<Products>(context).clearProduct();
-    var data = await foodData.getFoodData(name);
+    var data = await foodData.getFoodData(name, 10, 0);
     print(data);
-    var foodId = data['results'][0]['id'];
-    String id = foodId.toString();
-    DataHelper dataHelper = DataHelper();
-    String recipeUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information';
-    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
-    print(jsonRecipe);
-    int num = 1;
-    Map<String, dynamic> temp = {
-      'Product${num.toString()}': jsonRecipe,
-    };
-    await foodData.uploadProduct(temp);
+    foodData.uploadDataFromApiToFireBase(data, 10, name);
 //    for (int i = 0; i < 20; i++) {
 //      var foodId = data['results'][i]['id'];
 //      id[i] = foodId.toString();

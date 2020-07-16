@@ -1,0 +1,37 @@
+List<String> removeEntry = [
+  'preparationMinutes',
+  'cookingMinutes',
+  'aggregateLikes',
+  'creditsText',
+  'sourceName',
+  'gaps',
+  'pricePerServing',
+  'readyInMinutes',
+  'imageType',
+  'summary',
+  'cuisines',
+  'occasions',
+  'winePairing',
+  'instructions',
+  'analyzedInstructions',
+  'originalId',
+  'weightWatcherSmartPoints',
+  'spoonacularScore',
+  'healthScore',
+  'sourceUrl',
+  'dishTypes',
+];
+List<String> keepNutrient = [
+  'Calories',
+  'Fat',
+  'Saturated Fat',
+  'Carbohydrates',
+  'Net Carbohydrates',
+  'Cholesterol',
+  'Protein',
+];
+List<String> keepIngredientValue = [
+  'name',
+  'amount',
+  'unit',
+];
