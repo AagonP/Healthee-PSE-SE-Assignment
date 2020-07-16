@@ -17,6 +17,7 @@ import './screens/login/Login_screen.dart';
 
 // The following are all the files supporting for Plan For A Diet.
 import 'screens/health_data_input_screen.dart';
+import 'screens/health_data_view_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
           '/diet-timetable-screen': (context) => DietTimetableScreen(),
           '/daily-detail-screen': (context) => DailyDetailScreen(),
           '/search-food-for-plan-screen': (context) => SearchFoodForPlan(),
-
+          '/health-data-view-screen': (context) => HealthDataViewScreen(),
           'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },

@@ -30,11 +30,10 @@ class PADClickHandler {
     );
 
     if (dietPlanData.dailyList[29] != null) {
-      pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
+      Navigator.of(context).pushNamed(
         '/diet-timetable-screen',
-      ));
-    }
-    else {
+      );
+    } else {
       pr.show();
       try {
         var isFirstPlan = await dietPlanData.getDietPlan();
@@ -43,8 +42,8 @@ class PADClickHandler {
         }
 
         pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
-          '/diet-timetable-screen',
-        ));
+              '/diet-timetable-screen',
+            ));
       } catch (e) {
         print(e);
       }

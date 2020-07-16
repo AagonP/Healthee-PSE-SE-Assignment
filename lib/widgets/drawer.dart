@@ -73,9 +73,9 @@ class CustomDrawer extends StatelessWidget {
           _drawerHeader(),
           _drawerTitle(
             icon: Icons.face,
-            title: 'Change information',
+            title: 'View information',
             ontap: () {
-              Navigator.of(context).pushNamed('');
+              Navigator.of(context).pushNamed('/health-data-view-screen');
             },
           ),
           _drawerTitle(
