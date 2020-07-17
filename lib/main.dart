@@ -26,6 +26,7 @@ import 'providers/user_health_data.dart';
 
 void main() {
   runApp(MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
