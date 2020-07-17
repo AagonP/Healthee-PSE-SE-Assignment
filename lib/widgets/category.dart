@@ -54,7 +54,7 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
     return Container(
       decoration: BoxDecoration(
         color: isActivated
-            ? Colors.orangeAccent.withOpacity(0.4)
+            ? Colors.orangeAccent.withOpacity(0.3)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(6),
       ),
