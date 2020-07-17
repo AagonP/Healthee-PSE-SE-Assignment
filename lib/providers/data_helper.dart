@@ -45,10 +45,7 @@ class FoodData {
     return foodIdJson;
   }
 
-  Future<Product> decodeProduct(String id) async {
-    String recipeUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information?includeNutrition=true';
-    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
+  Future<Product> decodeProduct(dynamic jsonRecipe) async {
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
     bool dairyFree = jsonRecipe['dairyFree'];
@@ -109,6 +106,20 @@ class FoodData {
   Map trimJson(Map json) {
     json.removeWhere((key, value) => removeEntry.contains(key));
     return json;
+  }
+
+  Future<DocumentSnapshot> getEntry(String name) async {
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('data').getDocuments();
+    List<DocumentSnapshot> result = querySnapshot.documents;
+    for (int i = 0; i < querySnapshot.documents.length; i++) {
+      var a = querySnapshot.documents[i];
+      print(a.documentID);
+      if (name == a.documentID) {
+        print('match : ${a.documentID}');
+        return a;
+      }
+    }
   }
 
   void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {

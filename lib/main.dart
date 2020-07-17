@@ -31,8 +31,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-    FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+//    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+//    FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
