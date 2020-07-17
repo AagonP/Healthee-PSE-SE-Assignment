@@ -6,7 +6,7 @@ import './screens/food_info.dart';
 import './providers/products.dart';
 import 'filter_by_illness/filter_by_illness_screens/filter_screen.dart';
 import 'filter_by_illness/filter_by_illness_screens/filter_health_input_screen.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import './filter_by_illness/filter_by_illness_screens/saved_products_screen.dart';
 import 'providers/saved_products.dart';
 import './screens/scan_screen.dart';
 import './screens/welcome_screen.dart';
@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
           'FilterScreen': (context) => FilterScreen(),
           'FilterHealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
+          'SavedProductsScreen': (context) => SavedProductsScreen(),
 
           // The following routes are for Plan For A Diet feature.
           '/health-data-input-screen': (context) => HealthDataInputScreen(),

@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
 
-import '../models/product.dart';
-import '../providers/products.dart';
+import '../../models/product.dart';
+import '../../providers/products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../providers/data_helper.dart';
-import '../providers/saved_products.dart';
 
-class FoodListView extends StatelessWidget with FilterScreenController {
+class RecipeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<Product> _filteringProducts =
-        Provider.of<Products>(context).filteringProducts;
-    final saveProductSnackbar = SnackBar(
-      content: Text('You have saved a product!'),
+    final addProductToFilteringListSnackBar = SnackBar(
+      content: Text('You have added a product to filtering list!'),
       duration: Duration(milliseconds: 500),
     );
     List<Product> _list = Provider.of<Products>(context).displayProducts;
@@ -48,25 +43,23 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                       actionExtentRatio: 0.25,
                       secondaryActions: <Widget>[
                         IconSlideAction(
-                          caption: 'Save',
-                          color: Colors.blue,
-                          icon: Icons.save,
-                          onTap: () async {
-                            Scaffold.of(context).showSnackBar(saveProductSnackbar);
-                            if (!_filteringProducts
-                                .elementAt(index)
-                                .isHealthy) {
-                              //Alert dialog here
-                              showAlertOnSavingBlurred(
-                                  index, context, _filteringProducts);
-                              return;
+                          caption: 'Add',
+                          color: Colors.green,
+                          icon: Icons.add,
+                          onTap: () {
+                            bool _isDuplicated = false;
+                            Provider.of<Products>(context)
+                                .filteringProducts
+                                .forEach((element) {
+                              if (element.name == _list.elementAt(index).name)
+                                _isDuplicated = true;
+                            });
+                            if (!_isDuplicated) {
+                              Scaffold.of(context).showSnackBar(
+                                  addProductToFilteringListSnackBar);
+                              Provider.of<Products>(context)
+                                  .addFilteringProduct(_list.elementAt(index));
                             }
-                            Provider.of<SavedProducts>(context)
-                                .saveProduct(_list.elementAt(index));
-                            updateUserSavedProductsToFirebase(
-                                await UserSavedProductsDataHelper
-                                    .getCurrentUser(),
-                                context);
                           },
                         ),
                       ],
