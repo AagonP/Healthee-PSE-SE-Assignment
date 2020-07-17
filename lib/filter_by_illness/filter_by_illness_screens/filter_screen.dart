@@ -33,8 +33,10 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                 tooltip: 'Search products',
                 icon: Icon(Icons.search),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()));
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SearchScreen()));
                 },
               ),
             ),
@@ -45,7 +47,12 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                 tooltip: 'Set your illnesses',
                 icon: Icon(Icons.mode_edit),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'FilterHealthInputScreen');
+                  if (Provider.of<Products>(context).filteringProducts.length ==
+                      0) {
+                    showAlertOnEmptySelectingList(context);
+                  } else {
+                    Navigator.pushNamed(context, 'FilterHealthInputScreen');
+                  }
                 },
               ),
             ),
