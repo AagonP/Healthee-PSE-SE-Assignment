@@ -4,7 +4,6 @@ import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/f
 import 'package:pse_assignment/filter_by_illness/filter_by_illness_screens/saved_products_screen.dart';
 import 'package:pse_assignment/providers/data_helper.dart';
 
-import '../filter_by_illness_screens/search_screen.dart';
 import '../filter_by_illness_widgets/filtered_food_list_view.dart';
 import '../../providers/products.dart';
 import 'saved_products_screen.dart';
@@ -33,10 +32,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                 tooltip: 'Search products',
                 icon: Icon(Icons.search),
                 onPressed: () {
-                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchScreen()));
+                  Navigator.pushNamed(context, 'HomePage');
                 },
               ),
             ),

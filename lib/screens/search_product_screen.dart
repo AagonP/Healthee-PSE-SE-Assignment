@@ -8,11 +8,9 @@ import '../widgets/food_list_view.dart';
 import '../providers/data_helper.dart';
 import '../widgets/category.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import '../filter_by_illness/filter_by_illness_controllers/saved_products_screen_controller.dart';
 import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -187,7 +185,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class BottomBar extends StatelessWidget with FilterScreenController {
+class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -210,15 +208,7 @@ class BottomBar extends StatelessWidget with FilterScreenController {
           BottomNavItem(
             title: 'Favorite',
             svgScr: 'image/love-and-romance.svg',
-            press: () async {
-              await updateUserSavedProductsToFirebase(
-                  UserSavedProductsDataHelper.getCurrentUser().toString(),
-                  context);
-              await SavedProductsScreenController.updateDataFromFirebase(
-                  UserSavedProductsDataHelper.getCurrentUser().toString(),
-                  context);
-              Navigator.pushNamed(context, 'SavedProductsScreen');
-            },
+            press: () {},
           ),
         ],
       ),
