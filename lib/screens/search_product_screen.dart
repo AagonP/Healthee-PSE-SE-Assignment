@@ -10,7 +10,7 @@ import '../widgets/category.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pse_assignment/widgets/BottomNavigator.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,7 +44,6 @@ class _HomePageState extends State<HomePage> {
 
 //Text input controller
   var _controller = TextEditingController();
-  //List<String> id = List(20);
   var input;
   FoodData foodData = FoodData();
 
@@ -85,16 +84,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xFFF8F8F8),
+      backgroundColor: Color(0xFFF6F7F8),
       bottomNavigationBar: BottomBar(),
       body: Column(
         children: <Widget>[
           //Title "Healthee"
           SafeArea(
             child: Container(
-              //height: size.height * 0.4,
+              height: size.height * 0.35,
               decoration: BoxDecoration(
                 color: Color(0xFFFDF4DE),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(35.0),
+                  bottomRight: Radius.circular(35.0),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -175,85 +178,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-
           Expanded(
             child: FoodListView(),
           ),
         ],
       ),
     );
-  }
-}
-
-class BottomBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-      height: 70,
-      color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          BottomNavItem(
-            title: 'Generate',
-            svgScr: 'image/search.svg',
-            press: () {},
-          ),
-          BottomNavItem(
-            title: 'Scan',
-            svgScr: 'image/price.svg',
-            press: () {},
-          ),
-          BottomNavItem(
-            title: 'Favorite',
-            svgScr: 'image/love-and-romance.svg',
-            press: () {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class BottomNavItem extends StatefulWidget {
-  final String title;
-  final String svgScr;
-  final Function press;
-  bool isActive = false;
-  BottomNavItem(
-      {@required this.title, @required this.svgScr, @required this.press});
-  @override
-  _BottomNavItemState createState() => _BottomNavItemState();
-}
-
-class _BottomNavItemState extends State<BottomNavItem> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          widget.isActive = !widget.isActive;
-        });
-        widget.press();
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          SvgPicture.asset(
-            widget.svgScr,
-            color: widget.isActive ? Color(0xFFF1CB57) : Colors.black87,
-          ),
-          Text(
-            widget.title,
-            style: TextStyle(
-                fontSize: 12.0,
-                color: widget.isActive ? Color(0xFFF1CB57) : Colors.black87),
-          ),
-        ],
-      ),
-    );
-    ;
   }
 }
 
