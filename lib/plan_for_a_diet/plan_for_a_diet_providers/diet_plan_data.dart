@@ -81,6 +81,7 @@ class DietPlanData with ChangeNotifier {
 
   Future<void> setWholePlan(UserHealthData userHealthData) async {
     var queryValue = await Firestore.instance.collection('data').getDocuments();
+    var firebaseUser = await _auth.currentUser();
 
     var documents = queryValue.documents;
 
@@ -138,9 +139,11 @@ class DietPlanData with ChangeNotifier {
       sumDinnerRecipes += dinnerTagSizeList[i];
     }
 
+    String userOnlineId = firebaseUser.uid;
     for (int i = 0; i < 30; i++) {
       _dailyList[i] = DailyData(i);
       _dailyList[i].setDailyPlan(
+        userOnlineId,
         documents,
         breakfastTagSizeList,
         sumBreakfastRecipes,

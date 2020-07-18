@@ -15,7 +15,7 @@ class MealFoodList extends StatelessWidget {
     if (_mealType == 'Breakfast') {
       return Icon(
         Icons.brightness_6,
-        color: Colors.yellowAccent,
+        color: Colors.yellow,
       );
     } else if (_mealType == 'Lunch') {
       return Icon(
@@ -39,12 +39,23 @@ class MealFoodList extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 0.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 mealIcon,
-                Text(_mealType),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  _mealType,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Pacifico',
+                    letterSpacing: 2.0,
+                    fontSize: 15.0,
+                  ),
+                ),
                 Expanded(
                   child: IconButton(
                     alignment: Alignment.centerRight,
@@ -53,8 +64,8 @@ class MealFoodList extends StatelessWidget {
                       size: 20,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushNamed(
-                          '/search-food-for-plan-screen');
+                      Navigator.of(context)
+                          .pushNamed('/search-food-for-plan-screen');
                     },
                   ),
                 )
@@ -72,9 +83,235 @@ class MealFoodList extends StatelessWidget {
                 size: 18,
                 color: Colors.lightBlueAccent,
               ),
+              SizedBox(
+                width: 2.0,
+              ),
               Expanded(
-                child: Text(
-                  '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Name: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 30,
+              ),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: Colors.lightBlueAccent,
+              ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Servings: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].servings}',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 30,
+              ),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: Colors.lightBlueAccent,
+              ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Nutrients per serving: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 60,
+              ),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: Colors.yellow,
+              ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Calories: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].calory} (calories)',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 60,
+              ),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: Colors.yellow,
+              ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Protein: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].protein} (g)',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 60,
+              ),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: Colors.yellow,
+              ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Fat: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].fat} (g)',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                width: 60,
+              ),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: Colors.yellow,
+              ),
+              SizedBox(
+                width: 2.0,
+              ),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Carbohydrate: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].carbohydrates} (g)',
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

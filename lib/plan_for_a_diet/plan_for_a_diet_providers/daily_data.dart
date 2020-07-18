@@ -74,12 +74,13 @@ class Meal {
 
   String _title;
   int _servings;
+  int _servingSize;
 
   double _calory;
   double _protein;
   double _fat;
   double _carbohydrates;
-  List<Ingredient> _ingredients = new List();
+  List<Ingredient> _ingredients = List();
 
   // mealType = 0 => Breakfast, = 1 => Lunch, = 2 => Dinner.
   int _mealType;
@@ -101,6 +102,10 @@ class Meal {
     return _servings;
   }
 
+  int get servingSize {
+    return _servingSize;
+  }
+
   double get calory {
     return _calory;
   }
@@ -117,6 +122,10 @@ class Meal {
     return _carbohydrates;
   }
 
+  List<Ingredient> get ingredients {
+    return [..._ingredients];
+  }
+
   void setAllForMeal({
     String title,
     int mealType,
@@ -126,6 +135,7 @@ class Meal {
     double protein,
     double fat,
     double carbohydrates,
+    int servingSize,
   }) {
     _title = title;
     _mealType = mealType;
@@ -135,6 +145,7 @@ class Meal {
     _protein = protein;
     _fat = fat;
     _carbohydrates = carbohydrates;
+    _servingSize = servingSize;
   }
 }
 
@@ -151,9 +162,32 @@ class DailyData {
 
   DailyData(this._index);
 
-  void _postDailyPlan() async {
-    var firebaseUser = await _auth.currentUser();
-    Firestore.instance.collection('users').document(firebaseUser.uid).setData({
+  void _postDailyPlan(String userOnlineId) {
+    Map<String, dynamic> breakfastIngredients = Map();
+    for (int i = 0; i < _threeMeals[0]._ingredients.length; i++) {
+      breakfastIngredients['$i'] = {
+        'name': _threeMeals[0]._ingredients[i].name,
+        'amount': _threeMeals[0]._ingredients[i].amount,
+        'unit': _threeMeals[0]._ingredients[i].unit,
+      };
+    }
+    Map<String, dynamic> lunchIngredients = Map();
+    for (int i = 0; i < _threeMeals[1]._ingredients.length; i++) {
+      lunchIngredients['$i'] = {
+        'name': _threeMeals[1]._ingredients[i].name,
+        'amount': _threeMeals[1]._ingredients[i].amount,
+        'unit': _threeMeals[1]._ingredients[i].unit,
+      };
+    }
+    Map<String, dynamic> dinnerIngredients = Map();
+    for (int i = 0; i < _threeMeals[2]._ingredients.length; i++) {
+      dinnerIngredients['$i'] = {
+        'name': _threeMeals[2]._ingredients[i].name,
+        'amount': _threeMeals[2]._ingredients[i].amount,
+        'unit': _threeMeals[2]._ingredients[i].unit,
+      };
+    }
+    Firestore.instance.collection('users').document(userOnlineId).setData({
       'dietPlan': {
         '$_index': {
           'calory': _calory,
@@ -162,19 +196,37 @@ class DailyData {
           'protein': _protein,
           'isChecked': _isChecked,
           'breakfast': {
-            'title': _threeMeals[0].title,
-            'imageUrl': _threeMeals[0].imageUrl,
-            'servings': _threeMeals[0].servings,
+            'title': _threeMeals[0]._title,
+            'imageUrl': _threeMeals[0]._imageUrl,
+            'servings': _threeMeals[0]._servings,
+            'servingSize': _threeMeals[0]._servingSize,
+            'calory': _threeMeals[0]._calory,
+            'carbohydrate': _threeMeals[0]._carbohydrates,
+            'fat': _threeMeals[0]._fat,
+            'protein': _threeMeals[0]._protein,
+            'ingredients': breakfastIngredients,
           },
           'lunch': {
-            'title': _threeMeals[1].title,
-            'imageUrl': _threeMeals[1].imageUrl,
-            'servings': _threeMeals[1].servings,
+            'title': _threeMeals[1]._title,
+            'imageUrl': _threeMeals[1]._imageUrl,
+            'servings': _threeMeals[1]._servings,
+            'servingSize': _threeMeals[0]._servingSize,
+            'calory': _threeMeals[1]._calory,
+            'carbohydrate': _threeMeals[1]._carbohydrates,
+            'fat': _threeMeals[1]._fat,
+            'protein': _threeMeals[1]._protein,
+            'ingredients': lunchIngredients,
           },
           'dinner': {
-            'title': _threeMeals[2].title,
-            'imageUrl': _threeMeals[2].imageUrl,
-            'servings': _threeMeals[2].servings,
+            'title': _threeMeals[2]._title,
+            'imageUrl': _threeMeals[2]._imageUrl,
+            'servings': _threeMeals[2]._servings,
+            'servingSize': _threeMeals[0]._servingSize,
+            'calory': _threeMeals[2]._calory,
+            'carbohydrate': _threeMeals[2]._carbohydrates,
+            'fat': _threeMeals[2]._fat,
+            'protein': _threeMeals[2]._protein,
+            'ingredients': dinnerIngredients,
           },
         }
       }
@@ -205,7 +257,7 @@ class DailyData {
     //TODO: Breakfasts should have: apple, banana, egg, cheese, orange, potato, bread, avocado, juice.
 
     while (true) {
-      var randFactor = new Random();
+      var randFactor = Random();
       int tagIndex = 0;
       int recipeIndex = 0;
       int randIndex = randFactor.nextInt(sumBreakfastRecipes);
@@ -285,6 +337,7 @@ class DailyData {
           fat: recipeJson['nutrition']['nutrients'][1]['amount'],
           carbohydrates: recipeJson['nutrition']['nutrients'][3]['amount'],
           protein: recipeJson['nutrition']['nutrients'][6]['amount'],
+          servingSize: recipeJson['servings'],
         );
 
         for (int i = 0; i < recipeJson['extendedIngredients'].length; i++) {
@@ -302,16 +355,16 @@ class DailyData {
   }
 
   void setLunch(
-      List<DocumentSnapshot> documents,
-      List<int> lunchTagSizeList,
-      int sumLunchRecipes,
-      double lunchLBCal,
-      double lunchUBCal,
-      ) {
+    List<DocumentSnapshot> documents,
+    List<int> lunchTagSizeList,
+    int sumLunchRecipes,
+    double lunchLBCal,
+    double lunchUBCal,
+  ) {
     //TODO: Lunches should have: beef, chicken, crab, ham, meat, pasta, pork, shrimp, steak.
 
     while (true) {
-      var randFactor = new Random();
+      var randFactor = Random();
       int tagIndex = 0;
       int recipeIndex = 0;
       int randIndex = randFactor.nextInt(sumLunchRecipes);
@@ -391,6 +444,7 @@ class DailyData {
           fat: recipeJson['nutrition']['nutrients'][1]['amount'],
           carbohydrates: recipeJson['nutrition']['nutrients'][3]['amount'],
           protein: recipeJson['nutrition']['nutrients'][6]['amount'],
+          servingSize: recipeJson['servings'],
         );
 
         for (int i = 0; i < recipeJson['extendedIngredients'].length; i++) {
@@ -408,17 +462,17 @@ class DailyData {
   }
 
   void setDinner(
-      List<DocumentSnapshot> documents,
-      List<int> dinnerTagSizeList,
-      int sumDinnerRecipes,
-      double dinnerLBCal,
-      double dinnerUBCal,
-      ) {
+    List<DocumentSnapshot> documents,
+    List<int> dinnerTagSizeList,
+    int sumDinnerRecipes,
+    double dinnerLBCal,
+    double dinnerUBCal,
+  ) {
     //TODO: Dinners should have: cucumber, fish, mushroom, salad, salmon, sauce, soup,
     //TODO: spinach, tomato, tuna, vegetable.
 
     while (true) {
-      var randFactor = new Random();
+      var randFactor = Random();
       int tagIndex = 0;
       int recipeIndex = 0;
       int randIndex = randFactor.nextInt(sumDinnerRecipes);
@@ -510,6 +564,7 @@ class DailyData {
           fat: recipeJson['nutrition']['nutrients'][1]['amount'],
           carbohydrates: recipeJson['nutrition']['nutrients'][3]['amount'],
           protein: recipeJson['nutrition']['nutrients'][6]['amount'],
+          servingSize: recipeJson['servings'],
         );
 
         for (int i = 0; i < recipeJson['extendedIngredients'].length; i++) {
@@ -527,6 +582,7 @@ class DailyData {
   }
 
   void setDailyPlan(
+    String userOnlineId,
     List<DocumentSnapshot> documents,
     List<int> breakfastTagSizeList,
     int sumBreakfastRecipes,
@@ -571,7 +627,7 @@ class DailyData {
       _carbohydrate += _threeMeals[i]._carbohydrates * servings;
       _protein += _threeMeals[i]._protein * servings;
     }
-    _postDailyPlan();
+    _postDailyPlan(userOnlineId);
 
 /*DataHelper dataHelper = DataHelper();
     String idUrl =

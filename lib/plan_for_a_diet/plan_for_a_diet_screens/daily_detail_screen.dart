@@ -44,12 +44,101 @@ class DailyDetailScreen extends StatelessWidget {
                         Icons.format_list_bulleted,
                         color: Colors.lightBlueAccent,
                       ),
-                      Text('Daily Nutrients:'),
+                      Text(
+                        'Daily nutrients:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Pacifico',
+                          letterSpacing: 2.0,
+                          fontSize: 15.0,
+                        ),
+                      ),
                     ],
                   ),
                 ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 18,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: 2.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Calories: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                            '${dietPlanData.dailyList[index - 1].calory} (calories)'),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 18,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: 2.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Protein: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                            '${dietPlanData.dailyList[index - 1].protein} (g)'),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 18,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      width: 2.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Fat: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                            '${dietPlanData.dailyList[index - 1].fat} (g)'),
+                      ],
+                    ),
+                  ],
+                ),
                 Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                   child: Row(
                     children: <Widget>[
                       SizedBox(
@@ -58,57 +147,23 @@ class DailyDetailScreen extends StatelessWidget {
                       Icon(
                         Icons.star,
                         size: 18,
-                        color: Colors.lightBlueAccent,
+                        color: Colors.yellow,
                       ),
-                      Text('Calories: ${dietPlanData.dailyList[index - 1].calory} (cals)'),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Row(
-                    children: <Widget>[
                       SizedBox(
-                        width: 30,
+                        width: 2.0,
                       ),
-                      Icon(
-                        Icons.star,
-                        size: 18,
-                        color: Colors.lightBlueAccent,
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            'Carbohydrates: ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                              '${dietPlanData.dailyList[index - 1].carbohydrate} (g)'),
+                        ],
                       ),
-                      Text('Protein: ${dietPlanData.dailyList[index - 1].protein} (g)'),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Icon(
-                        Icons.star,
-                        size: 18,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      Text('Fat: ${dietPlanData.dailyList[index - 1].fat} (g)'),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 10.0),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Icon(
-                        Icons.star,
-                        size: 18,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      Text('Carbohydrates: ${dietPlanData.dailyList[index - 1].carbohydrate} (g)'),
                     ],
                   ),
                 ),
