@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pse_assignment/providers/data_helper.dart';
 
-class BottomBar extends StatelessWidget {
+int selectedIndex = -1;
+
+class BottomBar extends StatefulWidget {
+  @override
+  _BottomBarState createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  FoodData foodData = FoodData();
+
+  void displayRandom() async {
+    await foodData.getRandomProduct(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,8 +28,9 @@ class BottomBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: BottomNavItem(
-              title: 'Home Page',
+              title: 'Homepage',
               svgScr: 'image/sydney-opera-house.svg',
+              index: 0,
               press: () {
                 Navigator.pop(context);
               },
@@ -26,7 +41,12 @@ class BottomBar extends StatelessWidget {
             child: BottomNavItem(
               title: 'Generate',
               svgScr: 'image/search.svg',
-              press: () {},
+              index: 1,
+              press: () {
+                setState(() {
+                  selectedIndex = 1;
+                });
+              },
             ),
           ),
           Padding(
@@ -34,7 +54,13 @@ class BottomBar extends StatelessWidget {
             child: BottomNavItem(
               title: 'Scan',
               svgScr: 'image/price.svg',
-              press: () {},
+              index: 2,
+              press: () {
+                print('called $selectedIndex');
+                setState(() {
+                  selectedIndex = 2;
+                });
+              },
             ),
           ),
           Padding(
@@ -42,7 +68,12 @@ class BottomBar extends StatelessWidget {
             child: BottomNavItem(
               title: 'Favorite',
               svgScr: 'image/love-and-romance.svg',
-              press: () {},
+              index: 3,
+              press: () {
+                setState(() {
+                  selectedIndex = 3;
+                });
+              },
             ),
           ),
           Padding(
@@ -50,7 +81,13 @@ class BottomBar extends StatelessWidget {
             child: BottomNavItem(
               title: 'Random',
               svgScr: 'image/dice.svg',
-              press: () {},
+              index: 4,
+              press: () {
+                setState(() {
+                  selectedIndex = 4;
+                });
+                displayRandom();
+              },
             ),
           ),
         ],
@@ -59,39 +96,34 @@ class BottomBar extends StatelessWidget {
   }
 }
 
-class BottomNavItem extends StatefulWidget {
+class BottomNavItem extends StatelessWidget {
   final String title;
   final String svgScr;
   final Function press;
-  bool isActive = false;
+  final int index;
   BottomNavItem(
-      {@required this.title, @required this.svgScr, @required this.press});
-  @override
-  _BottomNavItemState createState() => _BottomNavItemState();
-}
-
-class _BottomNavItemState extends State<BottomNavItem> {
+      {@required this.title,
+      @required this.svgScr,
+      @required this.press,
+      @required this.index});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          widget.isActive = !widget.isActive;
-        });
-        widget.press();
-      },
+      onTap: press,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           SvgPicture.asset(
-            widget.svgScr,
-            color: widget.isActive ? Color(0xFFF1CB57) : Colors.black87,
+            svgScr,
+            color: index == selectedIndex ? Color(0xFFF1CB57) : Colors.black87,
           ),
           Text(
-            widget.title,
+            title,
             style: TextStyle(
                 fontSize: 12.0,
-                color: widget.isActive ? Color(0xFFF1CB57) : Colors.black87),
+                color: index == selectedIndex
+                    ? Color(0xFFF1CB57)
+                    : Colors.black87),
           ),
         ],
       ),
