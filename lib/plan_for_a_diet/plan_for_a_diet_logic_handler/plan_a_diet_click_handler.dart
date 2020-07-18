@@ -38,7 +38,7 @@ class PADClickHandler {
       try {
         var isFirstPlan = await dietPlanData.getDietPlan();
         if (isFirstPlan == true) {
-          await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
+          await dietPlanData.setWholePlan(userHealthData);
         }
 
         pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
