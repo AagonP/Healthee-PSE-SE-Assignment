@@ -13,6 +13,8 @@ class UserHealthData with ChangeNotifier {
   bool _userIsMale = true;
   String _userExerciseFre = 'Sedentary';
   double _userDailyCalory = 0;
+  double _userLBCalory = 0;
+  double _userUBCalory = 0;
 
   ///////////////////////
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -86,6 +88,12 @@ class UserHealthData with ChangeNotifier {
     } else {
       _userDailyCalory = temp * 1.9;
     }
+    _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(2));
+
+    _userLBCalory = _userDailyCalory * 92.5 / 100;
+    _userLBCalory = double.parse(_userLBCalory.toStringAsFixed(2));
+    _userUBCalory = _userDailyCalory * 107.5 / 100;
+    _userUBCalory = double.parse(_userUBCalory.toStringAsFixed(2));
   }
 
   double get userHeight {
@@ -112,6 +120,14 @@ class UserHealthData with ChangeNotifier {
     return _userDailyCalory;
   }
 
+  double get userUBCalory {
+    return _userUBCalory;
+  }
+
+  double get userLBCalory {
+    return _userLBCalory;
+  }
+
   void updateHealthData(
     double userHeight,
     double userWeight,
@@ -122,7 +138,6 @@ class UserHealthData with ChangeNotifier {
     _userAge = userAge;
 
     _estimateCalory();
-    _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(2));
     notifyListeners();
     _postUserHealthData();
   }
