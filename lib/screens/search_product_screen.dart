@@ -48,18 +48,17 @@ class _HomePageState extends State<HomePage> {
   FoodData foodData = FoodData();
 
   //this function is for uploading data to firebase
-  void uploadData(String name) async {
-    var data = await foodData.getFoodData(name, 10, 0);
-    print(data);
-    foodData.uploadDataFromApiToFireBase(data, 10, name);
-  }
+//  void updateUI(String name) async {
+//    var data = await foodData.getFoodData(name, 10, 10);
+//    print(data);
+//    foodData.uploadDataFromApiToFireBase(data, 10, name);
+//  }
 
-  //Update UI when loading product list
+  ////Update UI when loading product list
   void updateUI(String name) async {
     Provider.of<Products>(context).clearProduct();
     DocumentSnapshot documentSnapshot = await foodData.getEntry(name);
     List<dynamic> recipe = documentSnapshot.data['Recipe'];
-
     for (int i = 0; i < 10; i++) {
       Product product = await foodData.decodeProduct(recipe[i]);
       if (product.name != null)
@@ -88,16 +87,15 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomBar(),
       body: Column(
         children: <Widget>[
-          //Title "Healthee"
           SafeArea(
             child: Container(
               height: size.height * 0.35,
               decoration: BoxDecoration(
-                color: Color(0xFFFDF4DE),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(35.0),
-                  bottomRight: Radius.circular(35.0),
-                ),
+                color: Color(0xFFFCECC5),
+//                borderRadius: BorderRadius.only(
+//                  bottomLeft: Radius.circular(35.0),
+//                  bottomRight: Radius.circular(35.0),
+//                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -108,8 +106,9 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF07084B),
-                        fontSize: 30,
+                        fontSize: 33,
                         fontFamily: 'Pacifico',
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     Container(
@@ -149,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         RoundTypeButton(
-                          color: Color(0xFFF7F6C5),
+                          color: Color(0xFFFEC2C2),
                           image: 'image/food.png',
                           title: 'Vegan',
                         ),

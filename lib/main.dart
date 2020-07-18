@@ -14,6 +14,7 @@ import 'screens/home_screen.dart';
 import './screens/login/login_option_screen.dart';
 import './screens/login/Register_screen.dart';
 import './screens/login/Login_screen.dart';
+import 'package:flutter/services.dart';
 
 // The following are all the files supporting for Plan For A Diet.
 import 'screens/health_data_input_screen.dart';
@@ -31,8 +32,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-//    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-//    FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
+    // SystemChrome.setEnabledSystemUIOverlays([]);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Products>(builder: (context) => Products()),
