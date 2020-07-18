@@ -11,6 +11,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pse_assignment/widgets/BottomNavigator.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,10 +19,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _auth = FirebaseAuth.instance;
   FirebaseUser user;
   String name = '';
-  @override
+
+  String res = "Sample code";
+
+//Text input controller
+  var _controller = TextEditingController();
+  var input;
+  FoodData foodData = FoodData();
+  bool showSpinner = false;
+
   void updateAfterScan(var key) {
     setState(() {
       res = key.toString();
@@ -40,13 +48,6 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  String res = "Sample code";
-
-//Text input controller
-  var _controller = TextEditingController();
-  var input;
-  FoodData foodData = FoodData();
-
   //this function is for uploading data to firebase
 //  void updateUI(String name) async {
 //    var data = await foodData.getFoodData(name, 10, 10);
@@ -56,6 +57,9 @@ class _HomePageState extends State<HomePage> {
 
   ////Update UI when loading product list
   void updateUI(String name) async {
+    setState(() {
+      showSpinner = true;
+    });
     Provider.of<Products>(context).clearProduct();
     DocumentSnapshot documentSnapshot = await foodData.getEntry(name);
     List<dynamic> recipe = documentSnapshot.data['Recipe'];
@@ -65,6 +69,9 @@ class _HomePageState extends State<HomePage> {
         Provider.of<Products>(context).addProduct(product);
     }
     Provider.of<Products>(context).updateDisplayProduct('all');
+    setState(() {
+      showSpinner = false;
+    });
   }
 
   void navigateToFilterScreen(BuildContext context) {
@@ -85,102 +92,105 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFFF6F7F8),
       bottomNavigationBar: BottomBar(),
-      body: Column(
-        children: <Widget>[
-          SafeArea(
-            child: Container(
-              height: size.height * 0.35,
-              decoration: BoxDecoration(
-                color: Color(0xFFFCECC5),
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Column(
+          children: <Widget>[
+            SafeArea(
+              child: Container(
+                height: size.height * 0.35,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFCECC5),
 //                borderRadius: BorderRadius.only(
 //                  bottomLeft: Radius.circular(35.0),
 //                  bottomRight: Radius.circular(35.0),
 //                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'Recipe and Product',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF07084B),
-                        fontSize: 33,
-                        fontFamily: 'Pacifico',
-                        fontWeight: FontWeight.w500,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Recipe and Product',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF07084B),
+                          fontSize: 33,
+                          fontFamily: 'Pacifico',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 7,
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(29.5),
-                      ),
-                      child: TextField(
-                        controller: _controller,
-                        autofocus: false,
-                        onSubmitted: (context) {
-                          searchOnSubmitted(context);
-                        },
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () => _controller.clear(),
-                            icon: Icon(
-                              Icons.clear,
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: 7,
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(29.5),
+                        ),
+                        child: TextField(
+                          controller: _controller,
+                          autofocus: false,
+                          onSubmitted: (context) {
+                            searchOnSubmitted(context);
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () => _controller.clear(),
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            hintText: "Search",
+                            hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
+                            icon: Icon(Icons.search),
+                            border: InputBorder.none,
                           ),
-                          hintText: "Search",
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          icon: Icon(Icons.search),
-                          border: InputBorder.none,
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        RoundTypeButton(
-                          color: Color(0xFFFEC2C2),
-                          image: 'image/food.png',
-                          title: 'Vegan',
-                        ),
-                        RoundTypeButton(
-                          color: Color(0xFFCEFFC0),
-                          image: 'image/dairy.png',
-                          title: 'DairyFree',
-                        ),
-                        RoundTypeButton(
-                          color: Color(0xFFFEE1C7),
-                          image: 'image/fruit.png',
-                          title: 'LowFodMap',
-                        ),
-                        RoundTypeButton(
-                          color: Color(0xFFFDDFFA),
-                          image: 'image/coin.png',
-                          title: 'Cheap',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                  ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          RoundTypeButton(
+                            color: Color(0xFFFEC2C2),
+                            image: 'image/food.png',
+                            title: 'Vegan',
+                          ),
+                          RoundTypeButton(
+                            color: Color(0xFFCEFFC0),
+                            image: 'image/dairy.png',
+                            title: 'DairyFree',
+                          ),
+                          RoundTypeButton(
+                            color: Color(0xFFFEE1C7),
+                            image: 'image/fruit.png',
+                            title: 'LowFodMap',
+                          ),
+                          RoundTypeButton(
+                            color: Color(0xFFFDDFFA),
+                            image: 'image/coin.png',
+                            title: 'Cheap',
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: FoodListView(),
-          ),
-        ],
+            Expanded(
+              child: FoodListView(),
+            ),
+          ],
+        ),
       ),
     );
   }

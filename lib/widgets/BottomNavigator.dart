@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pse_assignment/providers/data_helper.dart';
 
 int selectedIndex = -1;
 
@@ -9,6 +10,12 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
+  FoodData foodData = FoodData();
+
+  void displayRandom() async {
+    await foodData.getRandomProduct(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,6 +86,7 @@ class _BottomBarState extends State<BottomBar> {
                 setState(() {
                   selectedIndex = 4;
                 });
+                displayRandom();
               },
             ),
           ),

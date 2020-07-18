@@ -10,6 +10,9 @@ import '../models/product.dart';
 import 'dart:math';
 import 'user_health_data.dart';
 import 'list_of_entry.dart';
+import 'package:pse_assignment/models/product.dart';
+import 'package:provider/provider.dart';
+import '../providers/products.dart';
 
 const int numberOfRecipe = 1;
 
@@ -44,10 +47,7 @@ class FoodData {
     return foodIdJson;
   }
 
-  Future<Product> decodeProduct(String id) async {
-    String recipeUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information?includeNutrition=true';
-    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
+  Future<Product> decodeProduct(dynamic jsonRecipe) async {
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
     bool dairyFree = jsonRecipe['dairyFree'];
@@ -92,19 +92,23 @@ class FoodData {
     return product;
   }
 
-  Future<List<dynamic>> getRandomProduct() async {
+  Future<void> getRandomProduct(BuildContext context) async {
     List<dynamic> randomJson = [];
     Random random = Random();
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection('data').getDocuments();
-    print('yeah ${querySnapshot.documents.length}');
     for (int i = 0; i < 10; i++) {
       DocumentSnapshot documentSnapshot = querySnapshot
           .documents[random.nextInt(querySnapshot.documents.length)];
       randomJson.add(documentSnapshot.data['Recipe']
           [random.nextInt(documentSnapshot.data['Recipe'].length)]);
     }
-    return randomJson;
+    Provider.of<Products>(context).clearProduct();
+    for (int i = 0; i < 10; i++) {
+      Product product = await decodeProduct(randomJson[i]);
+      Provider.of<Products>(context).addProduct(product);
+    }
+    Provider.of<Products>(context).updateDisplayProduct('all');
   }
 
   Future<void> uploadProduct(Map<String, dynamic> json) async {
@@ -131,7 +135,7 @@ class FoodData {
     List<DocumentSnapshot> result = querySnapshot.documents;
     for (int i = 0; i < querySnapshot.documents.length; i++) {
       var a = querySnapshot.documents[i];
-      print(a.documentID);
+      //print(a.documentID);
       if (name == a.documentID) {
         print('match : ${a.documentID}');
         return a;

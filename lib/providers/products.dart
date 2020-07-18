@@ -31,6 +31,10 @@ class Products with ChangeNotifier {
     return [..._displayProducts];
   }
 
+  bool displayProductIsEmpty() {
+    return _displayProducts.isEmpty;
+  }
+
   void updateDisplayProduct(String key) {
     bool isValid = true;
     map.forEach((key, value) {
