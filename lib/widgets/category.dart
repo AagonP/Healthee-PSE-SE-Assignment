@@ -53,6 +53,13 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 10),
+            blurRadius: 33,
+            color: Color(0xFFF8D377).withOpacity(.60),
+          ),
+        ],
         color: isActivated
             ? Colors.orangeAccent.withOpacity(0.3)
             : Colors.transparent,
@@ -69,7 +76,7 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
               isActivated = !isActivated;
               sortByCategory();
             },
-            elevation: 2.0,
+            elevation: 1.0,
             fillColor: widget.color,
             child: Image.asset(
               widget.image,

@@ -35,7 +35,6 @@ class FoodData {
   List<int> id = List(numberOfRecipe);
   List<dynamic> foodRecipeJson = List(numberOfRecipe);
   List<Product> foodData = List(numberOfRecipe);
-  Random random = Random();
   Future<Map> getFoodData(String name, int num, int off) async {
     DataHelper dataHelper = DataHelper();
     //int offset = random.nextInt(1);
@@ -45,7 +44,10 @@ class FoodData {
     return foodIdJson;
   }
 
-  Future<Product> decodeProduct(dynamic jsonRecipe) async {
+  Future<Product> decodeProduct(String id) async {
+    String recipeUrl =
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information?includeNutrition=true';
+    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
     bool dairyFree = jsonRecipe['dairyFree'];
@@ -88,6 +90,21 @@ class FoodData {
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
     return product;
+  }
+
+  Future<List<dynamic>> getRandomProduct() async {
+    List<dynamic> randomJson = [];
+    Random random = Random();
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('data').getDocuments();
+    print('yeah ${querySnapshot.documents.length}');
+    for (int i = 0; i < 10; i++) {
+      DocumentSnapshot documentSnapshot = querySnapshot
+          .documents[random.nextInt(querySnapshot.documents.length)];
+      randomJson.add(documentSnapshot.data['Recipe']
+          [random.nextInt(documentSnapshot.data['Recipe'].length)]);
+    }
+    return randomJson;
   }
 
   Future<void> uploadProduct(Map<String, dynamic> json) async {
