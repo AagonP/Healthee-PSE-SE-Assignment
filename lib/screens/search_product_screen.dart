@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
@@ -12,6 +11,7 @@ import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pse_assignment/widgets/BottomNavigator.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../providers/list_of_entry.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,7 +28,26 @@ class _HomePageState extends State<HomePage> {
   var _controller = TextEditingController();
   var input;
   FoodData foodData = FoodData();
-  bool showSpinner = false;
+  @override
+  void initState() {
+    firstLoad();
+    super.initState();
+  }
+
+//  void getListFromFireBase() async {
+//    suggestion.clear();
+//    QuerySnapshot querySnapshot =
+//        await Firestore.instance.collection('data').getDocuments();
+//    for (int i = 0; i < querySnapshot.documents.length; i++) {
+//      var a = querySnapshot.documents[i];
+//      suggestion.add(a.documentID);
+//      print(suggestion[i]);
+//    }
+//  }
+
+  void firstLoad() async {
+    await foodData.getRandomProduct(context);
+  }
 
   void updateAfterScan(var key) {
     setState(() {
@@ -55,59 +74,34 @@ class _HomePageState extends State<HomePage> {
 //    foodData.uploadDataFromApiToFireBase(data, 10, name);
 //  }
 
-  ////Update UI when loading product list
-  void updateUI(String name) async {
-    setState(() {
-      showSpinner = true;
-    });
-    Provider.of<Products>(context).clearProduct();
-    DocumentSnapshot documentSnapshot = await foodData.getEntry(name);
-    List<dynamic> recipe = documentSnapshot.data['Recipe'];
-    for (int i = 0; i < 10; i++) {
-      Product product = await foodData.decodeProduct(recipe[i]);
-      if (product.name != null)
-        Provider.of<Products>(context).addProduct(product);
-    }
-    Provider.of<Products>(context).updateDisplayProduct('all');
-    setState(() {
-      showSpinner = false;
-    });
-  }
-
   void navigateToFilterScreen(BuildContext context) {
     //NavigateToFilterScreen()
     Navigator.pushNamed(context, 'FilterScreen');
   }
 
-  void searchOnSubmitted(String context) {
-    //onSubmittedChange(String key)
-    print(context);
-    input = context;
-    updateUI(input);
+  void searchOnSubmitted(String name) {
+    print(name);
+    foodData.getRecipe(context, name);
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFFF6F7F8),
       bottomNavigationBar: BottomBar(),
       body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
+        inAsyncCall: Provider.of<Products>(context).displayProductIsEmpty(),
         child: Column(
           children: <Widget>[
             SafeArea(
               child: Container(
-                height: size.height * 0.35,
+                //height: size.height * 0.35,
                 decoration: BoxDecoration(
                   color: Color(0xFFFCECC5),
-//                borderRadius: BorderRadius.only(
-//                  bottomLeft: Radius.circular(35.0),
-//                  bottomRight: Radius.circular(35.0),
-//                ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     children: <Widget>[
                       Text(
@@ -120,37 +114,69 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: 7,
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(29.5),
-                        ),
-                        child: TextField(
-                          controller: _controller,
-                          autofocus: false,
-                          onSubmitted: (context) {
-                            searchOnSubmitted(context);
-                          },
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () => _controller.clear(),
-                              icon: Icon(
-                                Icons.clear,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            hintText: "Search",
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                            ),
-                            icon: Icon(Icons.search),
-                            border: InputBorder.none,
+                      GestureDetector(
+                        onTap: () {
+                          showSearch(context: context, delegate: SearchInput());
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 25,
                           ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(29.5),
+                          ),
+                          height: 50,
+                          width: double.infinity,
+                          child: Stack(
+                            children: <Widget>[
+                              Align(
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                ),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              Center(
+                                child: Text(
+                                  'Search...',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+//                        child: TextField(
+//                          controller: _controller,
+//                          autofocus: false,
+////                          onSubmitted: (context) {
+////                            searchOnSubmitted(context);
+////                          },
+//                          onTap: () {
+//                            showSearch(
+//                                context: context, delegate: SearchInput());
+//                          },
+//                          decoration: InputDecoration(
+//                            suffixIcon: IconButton(
+//                              onPressed: () => _controller.clear(),
+//                              icon: Icon(
+//                                Icons.clear,
+//                                color: Colors.grey,
+//                              ),
+//                            ),
+//                            hintText: "Search",
+//                            hintStyle: TextStyle(
+//                              color: Colors.grey,
+//                            ),
+//                            icon: Icon(Icons.search),
+//                            border: InputBorder.none,
+//                          ),
+//                        ),
                         ),
                       ),
                       Row(
@@ -193,6 +219,82 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+}
+
+class SearchInput extends SearchDelegate<String> {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    FoodData foodData = FoodData();
+    print('suggestion called');
+    final suggestionList = query.isEmpty
+        ? suggestion
+        : suggestion.where((e) => e.startsWith(query.toLowerCase())).toList();
+    print(suggestionList.length);
+    return suggestionList.isEmpty
+        ? ListTile(
+            leading: Icon(Icons.do_not_disturb_alt),
+            title: Text(
+              'Not found',
+            ),
+          )
+        : ListView.builder(
+            itemBuilder: (context, index) => ListTile(
+              onTap: () async {
+                await foodData.getRecipe(context, suggestionList[index]);
+                Navigator.pop(context);
+              },
+              leading: Icon(Icons.fastfood),
+              title: RichText(
+                text: TextSpan(
+                  text: suggestionList[index].substring(0, query.length),
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: suggestionList[index].substring(query.length),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            itemCount: suggestionList.length,
+          );
   }
 }
 
