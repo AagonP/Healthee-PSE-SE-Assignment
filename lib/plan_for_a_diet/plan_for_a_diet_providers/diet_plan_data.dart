@@ -63,6 +63,7 @@ class DietPlanData with ChangeNotifier {
               protein: dietPlanMap['$i']['breakfast']['protein'],
               fat: dietPlanMap['$i']['breakfast']['fat'],
               carbohydrate: dietPlanMap['$i']['breakfast']['carbohydrate'],
+              servingSize: dietPlanMap['$i']['breakfast']['servingSize'],
             );
         for (int j = 0;; j++) {
           if (dietPlanMap['$i']['breakfast']['ingredients']['$j'] == null)
@@ -88,6 +89,7 @@ class DietPlanData with ChangeNotifier {
               protein: dietPlanMap['$i']['lunch']['protein'],
               fat: dietPlanMap['$i']['lunch']['fat'],
               carbohydrate: dietPlanMap['$i']['lunch']['carbohydrate'],
+              servingSize: dietPlanMap['$i']['breakfast']['servingSize'],
             );
         for (int j = 0;; j++) {
           if (dietPlanMap['$i']['lunch']['ingredients']['$j'] == null)
@@ -112,6 +114,7 @@ class DietPlanData with ChangeNotifier {
               protein: dietPlanMap['$i']['dinner']['protein'],
               fat: dietPlanMap['$i']['dinner']['fat'],
               carbohydrate: dietPlanMap['$i']['dinner']['carbohydrate'],
+              servingSize: dietPlanMap['$i']['breakfast']['servingSize'],
             );
         for (int j = 0;; j++) {
           if (dietPlanMap['$i']['dinner']['ingredients']['$j'] == null)

@@ -43,103 +43,28 @@ class DailyDetailScreen extends StatelessWidget {
                       Icon(
                         Icons.format_list_bulleted,
                         color: Colors.lightBlueAccent,
+                        size: 20.0,
                       ),
-                      Text(
-                        'Daily nutrients:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pacifico',
-                          letterSpacing: 2.0,
-                          fontSize: 15.0,
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                          child: Text(
+                            'Daily nutrients',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Icon(
-                      Icons.star,
-                      size: 18,
-                      color: Colors.yellow,
-                    ),
-                    SizedBox(
-                      width: 2.0,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Calories: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                            '${dietPlanData.dailyList[index - 1].calory} (calories)'),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Icon(
-                      Icons.star,
-                      size: 18,
-                      color: Colors.yellow,
-                    ),
-                    SizedBox(
-                      width: 2.0,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Protein: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                            '${dietPlanData.dailyList[index - 1].protein} (g)'),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Icon(
-                      Icons.star,
-                      size: 18,
-                      color: Colors.yellow,
-                    ),
-                    SizedBox(
-                      width: 2.0,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Fat: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                            '${dietPlanData.dailyList[index - 1].fat} (g)'),
-                      ],
-                    ),
-                  ],
-                ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(
                         width: 30,
@@ -152,17 +77,154 @@ class DailyDetailScreen extends StatelessWidget {
                       SizedBox(
                         width: 2.0,
                       ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Carbohydrates: ',
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                              fontSize: 16.0,
+                              color: Colors.black,
                             ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Calories: ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                '${dietPlanData.dailyList[index - 1].calory} (calories)',
+                              ),
+                            ],
                           ),
-                          Text(
-                              '${dietPlanData.dailyList[index - 1].carbohydrate} (g)'),
-                        ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 18,
+                        color: Colors.yellow,
+                      ),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Protein: ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                '${dietPlanData.dailyList[index - 1].protein} (g)',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 18,
+                        color: Colors.yellow,
+                      ),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Fat: ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                '${dietPlanData.dailyList[index - 1].fat} (g)',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Icon(
+                        Icons.star,
+                        size: 18,
+                        color: Colors.yellow,
+                      ),
+                      SizedBox(
+                        width: 2.0,
+                      ),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Carbohydrate: ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                '${dietPlanData.dailyList[index - 1].carbohydrate} (g)',
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
