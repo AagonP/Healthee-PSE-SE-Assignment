@@ -16,16 +16,19 @@ class MealFoodList extends StatelessWidget {
       return Icon(
         Icons.brightness_6,
         color: Colors.yellow,
+        size: 20.0,
       );
     } else if (_mealType == 'Lunch') {
       return Icon(
         Icons.brightness_5,
         color: Colors.redAccent,
+        size: 20.0,
       );
     } else {
       return Icon(
         Icons.brightness_4,
         color: Colors.blueGrey,
+        size: 20.0,
       );
     }
   }
@@ -51,9 +54,23 @@ class MealFoodList extends StatelessWidget {
                   _mealType,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Pacifico',
-                    letterSpacing: 2.0,
-                    fontSize: 15.0,
+                    fontSize: 18.0,
+                  ),
+                ),
+                Expanded(
+                  child: IconButton(
+                    alignment: Alignment.centerLeft,
+                    icon: Icon(
+                      Icons.search,
+                      size: 20.0,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        '/meal-info-screen',
+                        arguments: _dietPlanData
+                            .dailyList[_index - 1].threeMeals[_mealTypeIndex],
+                      );
+                    },
                   ),
                 ),
                 Expanded(
@@ -61,14 +78,14 @@ class MealFoodList extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     icon: Icon(
                       Icons.mode_edit,
-                      size: 20,
+                      size: 20.0,
                     ),
                     onPressed: () {
                       Navigator.of(context)
                           .pushNamed('/search-food-for-plan-screen');
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -97,11 +114,15 @@ class MealFoodList extends StatelessWidget {
                           text: 'Name: ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                           ),
                         ),
                         TextSpan(
                           text:
                               '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
                         ),
                       ],
                     ),
@@ -125,21 +146,28 @@ class MealFoodList extends StatelessWidget {
                 width: 2.0,
               ),
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Servings: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Servings: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text:
-                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].servings}',
-                      ),
-                    ],
+                        TextSpan(
+                          text:
+                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].servings}',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -160,17 +188,21 @@ class MealFoodList extends StatelessWidget {
                 width: 2.0,
               ),
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Nutrients per serving: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Nutrients per serving: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -191,21 +223,28 @@ class MealFoodList extends StatelessWidget {
                 width: 2.0,
               ),
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Calories: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Calories: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text:
-                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].calory} (calories)',
-                      ),
-                    ],
+                        TextSpan(
+                          text:
+                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].calory} (calories)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -226,21 +265,28 @@ class MealFoodList extends StatelessWidget {
                 width: 2.0,
               ),
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Protein: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Protein: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text:
-                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].protein} (g)',
-                      ),
-                    ],
+                        TextSpan(
+                          text:
+                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].protein} (g)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -261,21 +307,28 @@ class MealFoodList extends StatelessWidget {
                 width: 2.0,
               ),
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Fat: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Fat: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text:
-                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].fat} (g)',
-                      ),
-                    ],
+                        TextSpan(
+                          text:
+                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].fat} (g)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -296,21 +349,28 @@ class MealFoodList extends StatelessWidget {
                 width: 2.0,
               ),
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Carbohydrate: ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Carbohydrate: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text:
-                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].carbohydrate} (g)',
-                      ),
-                    ],
+                        TextSpan(
+                          text:
+                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].carbohydrate} (g)',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
