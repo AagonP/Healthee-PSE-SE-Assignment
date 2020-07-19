@@ -11,7 +11,7 @@ import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pse_assignment/widgets/BottomNavigator.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import '../providers/list_of_entry.dart';
+import '../widgets/delegate_search.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -89,212 +89,107 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFFF6F7F8),
       bottomNavigationBar: BottomBar(),
-      body: ModalProgressHUD(
-        inAsyncCall: Provider.of<Products>(context).displayProductIsEmpty(),
-        child: Column(
-          children: <Widget>[
-            SafeArea(
-              child: Container(
-                //height: size.height * 0.35,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFCECC5),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Recipe and Product',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF07084B),
-                          fontSize: 33,
-                          fontFamily: 'Pacifico',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showSearch(context: context, delegate: SearchInput());
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 25,
-                          ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(29.5),
-                          ),
-                          height: 50,
-                          width: double.infinity,
-                          child: Stack(
-                            children: <Widget>[
-                              Align(
-                                child: Icon(
-                                  Icons.search,
-                                  color: Colors.grey,
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              Center(
-                                child: Text(
-                                  'Search...',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-//                        child: TextField(
-//                          controller: _controller,
-//                          autofocus: false,
-////                          onSubmitted: (context) {
-////                            searchOnSubmitted(context);
-////                          },
-//                          onTap: () {
-//                            showSearch(
-//                                context: context, delegate: SearchInput());
-//                          },
-//                          decoration: InputDecoration(
-//                            suffixIcon: IconButton(
-//                              onPressed: () => _controller.clear(),
-//                              icon: Icon(
-//                                Icons.clear,
-//                                color: Colors.grey,
-//                              ),
-//                            ),
-//                            hintText: "Search",
-//                            hintStyle: TextStyle(
-//                              color: Colors.grey,
-//                            ),
-//                            icon: Icon(Icons.search),
-//                            border: InputBorder.none,
-//                          ),
-//                        ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          RoundTypeButton(
-                            color: Color(0xFFFEC2C2),
-                            image: 'image/food.png',
-                            title: 'Vegan',
-                          ),
-                          RoundTypeButton(
-                            color: Color(0xFFCEFFC0),
-                            image: 'image/dairy.png',
-                            title: 'DairyFree',
-                          ),
-                          RoundTypeButton(
-                            color: Color(0xFFFEE1C7),
-                            image: 'image/fruit.png',
-                            title: 'LowFodMap',
-                          ),
-                          RoundTypeButton(
-                            color: Color(0xFFFDDFFA),
-                            image: 'image/coin.png',
-                            title: 'Cheap',
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                    ],
-                  ),
-                ),
+      body: Column(
+        children: <Widget>[
+          SafeArea(
+            child: Container(
+              //height: size.height * 0.35,
+              decoration: BoxDecoration(
+                color: Color(0xFFFCECC5),
               ),
-            ),
-            Expanded(
-              child: FoodListView(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SearchInput extends SearchDelegate<String> {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation,
-      ),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return null;
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    FoodData foodData = FoodData();
-    print('suggestion called');
-    final suggestionList = query.isEmpty
-        ? suggestion
-        : suggestion.where((e) => e.startsWith(query.toLowerCase())).toList();
-    print(suggestionList.length);
-    return suggestionList.isEmpty
-        ? ListTile(
-            leading: Icon(Icons.do_not_disturb_alt),
-            title: Text(
-              'Not found',
-            ),
-          )
-        : ListView.builder(
-            itemBuilder: (context, index) => ListTile(
-              onTap: () async {
-                await foodData.getRecipe(context, suggestionList[index]);
-                Navigator.pop(context);
-              },
-              leading: Icon(Icons.fastfood),
-              title: RichText(
-                text: TextSpan(
-                  text: suggestionList[index].substring(0, query.length),
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: suggestionList[index].substring(query.length),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Recipe and Product',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.grey,
+                        color: Color(0xFF07084B),
+                        fontSize: 33,
+                        fontFamily: 'Pacifico',
+                        fontWeight: FontWeight.w500,
                       ),
-                    )
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showSearch(context: context, delegate: SearchInput());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 25,
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(29.5),
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                        child: Stack(
+                          children: <Widget>[
+                            Align(
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              ),
+                              alignment: Alignment.centerLeft,
+                            ),
+                            Center(
+                              child: Text(
+                                'Search...',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        RoundTypeButton(
+                          color: Color(0xFFFEC2C2),
+                          image: 'image/food.png',
+                          title: 'Vegan',
+                        ),
+                        RoundTypeButton(
+                          color: Color(0xFFCEFFC0),
+                          image: 'image/dairy.png',
+                          title: 'DairyFree',
+                        ),
+                        RoundTypeButton(
+                          color: Color(0xFFFEE1C7),
+                          image: 'image/fruit.png',
+                          title: 'LowFodMap',
+                        ),
+                        RoundTypeButton(
+                          color: Color(0xFFFDDFFA),
+                          image: 'image/coin.png',
+                          title: 'Cheap',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                   ],
                 ),
               ),
             ),
-            itemCount: suggestionList.length,
-          );
+          ),
+          Expanded(
+            child: FoodListView(),
+          ),
+        ],
+      ),
+    );
   }
 }
 
