@@ -308,7 +308,7 @@ class MealFoodList extends StatelessWidget {
                       ),
                       TextSpan(
                         text:
-                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].carbohydrates} (g)',
+                        '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].carbohydrate} (g)',
                       ),
                     ],
                   ),
