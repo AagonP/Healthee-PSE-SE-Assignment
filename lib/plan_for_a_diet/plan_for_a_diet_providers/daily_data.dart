@@ -79,7 +79,7 @@ class Meal {
   double _calory;
   double _protein;
   double _fat;
-  double _carbohydrates;
+  double _carbohydrate;
   List<Ingredient> _ingredients = List();
 
   // mealType = 0 => Breakfast, = 1 => Lunch, = 2 => Dinner.
@@ -118,12 +118,16 @@ class Meal {
     return _fat;
   }
 
-  double get carbohydrates {
-    return _carbohydrates;
+  double get carbohydrate {
+    return _carbohydrate;
   }
 
   List<Ingredient> get ingredients {
     return [..._ingredients];
+  }
+
+  List<Ingredient> get accessIngredients {
+    return _ingredients;
   }
 
   void setAllForMeal({
@@ -134,7 +138,7 @@ class Meal {
     double calory,
     double protein,
     double fat,
-    double carbohydrates,
+    double carbohydrate,
     int servingSize,
   }) {
     _title = title;
@@ -144,8 +148,11 @@ class Meal {
     _calory = calory;
     _protein = protein;
     _fat = fat;
-    _carbohydrates = carbohydrates;
+    _carbohydrate = carbohydrate;
     _servingSize = servingSize;
+  }
+
+  void setIngredients(String name, String unit, double amount) {
   }
 }
 
@@ -157,8 +164,6 @@ class DailyData {
   double _carbohydrate = 0;
   List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
   bool _isChecked = false;
-
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   DailyData(this._index);
 
@@ -201,7 +206,7 @@ class DailyData {
             'servings': _threeMeals[0]._servings,
             'servingSize': _threeMeals[0]._servingSize,
             'calory': _threeMeals[0]._calory,
-            'carbohydrate': _threeMeals[0]._carbohydrates,
+            'carbohydrate': _threeMeals[0]._carbohydrate,
             'fat': _threeMeals[0]._fat,
             'protein': _threeMeals[0]._protein,
             'ingredients': breakfastIngredients,
@@ -212,7 +217,7 @@ class DailyData {
             'servings': _threeMeals[1]._servings,
             'servingSize': _threeMeals[0]._servingSize,
             'calory': _threeMeals[1]._calory,
-            'carbohydrate': _threeMeals[1]._carbohydrates,
+            'carbohydrate': _threeMeals[1]._carbohydrate,
             'fat': _threeMeals[1]._fat,
             'protein': _threeMeals[1]._protein,
             'ingredients': lunchIngredients,
@@ -223,7 +228,7 @@ class DailyData {
             'servings': _threeMeals[2]._servings,
             'servingSize': _threeMeals[0]._servingSize,
             'calory': _threeMeals[2]._calory,
-            'carbohydrate': _threeMeals[2]._carbohydrates,
+            'carbohydrate': _threeMeals[2]._carbohydrate,
             'fat': _threeMeals[2]._fat,
             'protein': _threeMeals[2]._protein,
             'ingredients': dinnerIngredients,
@@ -335,7 +340,7 @@ class DailyData {
           servings: (breakfastUBCal ~/ mealCalory),
           calory: mealCalory,
           fat: recipeJson['nutrition']['nutrients'][1]['amount'],
-          carbohydrates: recipeJson['nutrition']['nutrients'][3]['amount'],
+          carbohydrate: recipeJson['nutrition']['nutrients'][3]['amount'],
           protein: recipeJson['nutrition']['nutrients'][6]['amount'],
           servingSize: recipeJson['servings'],
         );
@@ -442,7 +447,7 @@ class DailyData {
           servings: (lunchUBCal ~/ mealCalory),
           calory: mealCalory,
           fat: recipeJson['nutrition']['nutrients'][1]['amount'],
-          carbohydrates: recipeJson['nutrition']['nutrients'][3]['amount'],
+          carbohydrate: recipeJson['nutrition']['nutrients'][3]['amount'],
           protein: recipeJson['nutrition']['nutrients'][6]['amount'],
           servingSize: recipeJson['servings'],
         );
@@ -562,7 +567,7 @@ class DailyData {
           servings: (dinnerUBCal ~/ mealCalory),
           calory: mealCalory,
           fat: recipeJson['nutrition']['nutrients'][1]['amount'],
-          carbohydrates: recipeJson['nutrition']['nutrients'][3]['amount'],
+          carbohydrate: recipeJson['nutrition']['nutrients'][3]['amount'],
           protein: recipeJson['nutrition']['nutrients'][6]['amount'],
           servingSize: recipeJson['servings'],
         );
@@ -624,41 +629,14 @@ class DailyData {
       int servings = _threeMeals[i]._servings;
       _calory += _threeMeals[i]._calory * servings;
       _fat += _threeMeals[i]._fat * servings;
-      _carbohydrate += _threeMeals[i]._carbohydrates * servings;
+      _carbohydrate += _threeMeals[i]._carbohydrate * servings;
       _protein += _threeMeals[i]._protein * servings;
     }
+    _calory = double.parse(_calory.toStringAsFixed(2));
+    _fat = double.parse(_fat.toStringAsFixed(2));
+    _carbohydrate = double.parse(_carbohydrate.toStringAsFixed(2));
+    _protein = double.parse(_protein.toStringAsFixed(2));
     _postDailyPlan(userOnlineId);
-
-/*DataHelper dataHelper = DataHelper();
-    String idUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate?timeFrame=day&targetCalories=$wantedCalory&diet=normal&exclude=oil%252C%20fat%252C%20cheese%252C%20sugar%252C%20chocolate%252C%20cream';
-    var dailyDataJson = await dataHelper.fetchData(idUrl);
-    var dailyCalory = dailyDataJson['nutrients']['calories'];
-    var dailyProtein = dailyDataJson['nutrients']['protein'];
-    var dailyFat = dailyDataJson['nutrients']['fat'];
-    var dailyCarbohydrate = dailyDataJson['nutrients']['carbohydrates'];
-
-    setAllForDay(
-      calory: dailyCalory,
-      protein: dailyProtein,
-      fat: dailyFat,
-      carbohydrate: dailyCarbohydrate,
-    );
-
-    for (int i = 0; i < 3; i++) {
-      var mealId = dailyDataJson['meals'][i]['id'];
-      var mealTitle = dailyDataJson['meals'][i]['title'];
-      var mealImageUrl =
-          'https://spoonacular.com/recipeImages/$mealId-556x370.jpg';
-      var mealServings = dailyDataJson['meals'][i]['servings'];
-      _threeMeals[i].setAllForMeal(
-        id: mealId,
-        title: mealTitle,
-        mealType: i,
-        imageUrl: mealImageUrl,
-        servings: mealServings,
-      );
-    }*/
   }
 
 // Getters and Setters.
@@ -693,5 +671,9 @@ class DailyData {
 
   bool get isChecked {
     return _isChecked;
+  }
+
+  List<Meal> get accessMeals {
+    return _threeMeals;
   }
 }

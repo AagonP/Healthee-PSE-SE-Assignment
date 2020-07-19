@@ -45,6 +45,7 @@ class DietPlanData with ChangeNotifier {
     if (dietPlanMap != null) {
       for (int i = 0; i < 30; i++) {
         _dailyList[i] = DailyData(i);
+
         _dailyList[i].setAllForDay(
           calory: dietPlanMap['$i']['calory'],
           carbohydrate: dietPlanMap['$i']['carbohydrate'],
@@ -52,26 +53,80 @@ class DietPlanData with ChangeNotifier {
           protein: dietPlanMap['$i']['protein'],
           isChecked: dietPlanMap['$i']['isChecked'],
         );
-        _dailyList[i].threeMeals[0].setAllForMeal(
+
+        _dailyList[i].accessMeals[0].setAllForMeal(
               title: dietPlanMap['$i']['breakfast']['title'],
               imageUrl: dietPlanMap['$i']['breakfast']['imageUrl'],
               servings: dietPlanMap['$i']['breakfast']['servings'],
               mealType: 0,
+              calory: dietPlanMap['$i']['breakfast']['calory'],
+              protein: dietPlanMap['$i']['breakfast']['protein'],
+              fat: dietPlanMap['$i']['breakfast']['fat'],
+              carbohydrate: dietPlanMap['$i']['breakfast']['carbohydrate'],
             );
+        for (int j = 0;; j++) {
+          if (dietPlanMap['$i']['breakfast']['ingredients']['$j'] == null)
+            break;
+          else {
+            Ingredient tempIngre = Ingredient();
+            tempIngre.setAllForIngredient(
+              name: dietPlanMap['$i']['breakfast']['ingredients']['$j']['name'],
+              amount: dietPlanMap['$i']['breakfast']['ingredients']['$j']
+                  ['amount'],
+              unit: dietPlanMap['$i']['breakfast']['ingredients']['$j']['unit'],
+            );
+            _dailyList[i].accessMeals[0].accessIngredients.add(tempIngre);
+          }
+        }
 
-        _dailyList[i].threeMeals[1].setAllForMeal(
+        _dailyList[i].accessMeals[1].setAllForMeal(
               title: dietPlanMap['$i']['lunch']['title'],
               imageUrl: dietPlanMap['$i']['lunch']['imageUrl'],
               servings: dietPlanMap['$i']['lunch']['servings'],
               mealType: 1,
+              calory: dietPlanMap['$i']['lunch']['calory'],
+              protein: dietPlanMap['$i']['lunch']['protein'],
+              fat: dietPlanMap['$i']['lunch']['fat'],
+              carbohydrate: dietPlanMap['$i']['lunch']['carbohydrate'],
             );
+        for (int j = 0;; j++) {
+          if (dietPlanMap['$i']['lunch']['ingredients']['$j'] == null)
+            break;
+          else {
+            Ingredient tempIngre = Ingredient();
+            tempIngre.setAllForIngredient(
+              name: dietPlanMap['$i']['lunch']['ingredients']['$j']['name'],
+              amount: dietPlanMap['$i']['lunch']['ingredients']['$j']['amount'],
+              unit: dietPlanMap['$i']['lunch']['ingredients']['$j']['unit'],
+            );
+            _dailyList[i].accessMeals[1].accessIngredients.add(tempIngre);
+          }
+        }
 
-        _dailyList[i].threeMeals[2].setAllForMeal(
+        _dailyList[i].accessMeals[2].setAllForMeal(
               title: dietPlanMap['$i']['dinner']['title'],
               imageUrl: dietPlanMap['$i']['dinner']['imageUrl'],
               servings: dietPlanMap['$i']['dinner']['servings'],
               mealType: 2,
+              calory: dietPlanMap['$i']['dinner']['calory'],
+              protein: dietPlanMap['$i']['dinner']['protein'],
+              fat: dietPlanMap['$i']['dinner']['fat'],
+              carbohydrate: dietPlanMap['$i']['dinner']['carbohydrate'],
             );
+        for (int j = 0;; j++) {
+          if (dietPlanMap['$i']['dinner']['ingredients']['$j'] == null)
+            break;
+          else {
+            Ingredient tempIngre = Ingredient();
+            tempIngre.setAllForIngredient(
+              name: dietPlanMap['$i']['dinner']['ingredients']['$j']['name'],
+              amount: dietPlanMap['$i']['dinner']['ingredients']['$j']
+                  ['amount'],
+              unit: dietPlanMap['$i']['dinner']['ingredients']['$j']['unit'],
+            );
+            _dailyList[i].accessMeals[2].accessIngredients.add(tempIngre);
+          }
+        }
       }
       return false;
     } else {
