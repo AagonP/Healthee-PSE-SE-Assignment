@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
-import '../models/product.dart';
+
 
 class RoundTypeButton extends StatefulWidget {
   final Color color;

@@ -47,7 +47,7 @@ class FoodData {
     return foodIdJson;
   }
 
-  Future<Product> decodeProduct(dynamic jsonRecipe) async {
+  Product decodeProduct(dynamic jsonRecipe) {
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
     bool dairyFree = jsonRecipe['dairyFree'];
@@ -97,15 +97,15 @@ class FoodData {
     Random random = Random();
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection('data').getDocuments();
+    Provider.of<Products>(context).clearProduct();
     for (int i = 0; i < 10; i++) {
       DocumentSnapshot documentSnapshot = querySnapshot
           .documents[random.nextInt(querySnapshot.documents.length)];
       randomJson.add(documentSnapshot.data['Recipe']
           [random.nextInt(documentSnapshot.data['Recipe'].length)]);
     }
-    Provider.of<Products>(context).clearProduct();
     for (int i = 0; i < 10; i++) {
-      Product product = await decodeProduct(randomJson[i]);
+      Product product = decodeProduct(randomJson[i]);
       Provider.of<Products>(context).addProduct(product);
     }
     Provider.of<Products>(context).updateDisplayProduct('all');
@@ -124,9 +124,22 @@ class FoodData {
     });
   }
 
-  Map trimJson(Map json) {
-    json.removeWhere((key, value) => removeEntry.contains(key));
-    return json;
+  Future<void> getRecipe(BuildContext context, String name) async {
+    Provider.of<Products>(context).clearProduct();
+    DocumentSnapshot documentSnapshot = await getEntry(name);
+    List<dynamic> recipe = documentSnapshot.data['Recipe'];
+    for (int i = 0; i < 10; i++) {
+      Product product = decodeProduct(recipe[i]);
+      if (product.name != null)
+        Provider.of<Products>(context).addProduct(product);
+    }
+    Provider.of<Products>(context).updateDisplayProduct('all');
+  }
+
+  Future<QuerySnapshot> getQuery() async {
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('data').getDocuments();
+    return querySnapshot;
   }
 
   Future<DocumentSnapshot> getEntry(String name) async {

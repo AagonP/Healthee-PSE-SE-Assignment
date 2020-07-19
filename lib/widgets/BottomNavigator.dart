@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pse_assignment/providers/data_helper.dart';
+import 'package:provider/provider.dart';
+import '../providers/products.dart';
 
 int selectedIndex = -1;
 
@@ -13,6 +15,7 @@ class _BottomBarState extends State<BottomBar> {
   FoodData foodData = FoodData();
 
   void displayRandom() async {
+    Provider.of<Products>(context).clearProduct();
     await foodData.getRandomProduct(context);
   }
 
