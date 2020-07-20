@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../providers/data_helper.dart';
 import '../providers/list_of_entry.dart';
+String searchKey;
 
 class SearchInput extends SearchDelegate<String> {
   @override
@@ -52,6 +53,7 @@ class SearchInput extends SearchDelegate<String> {
             itemBuilder: (context, index) => ListTile(
               onTap: () async {
                 await foodData.getRecipe(context, suggestionList[index]);
+                searchKey = suggestionList[index];
                 Navigator.pop(context);
               },
               leading: Icon(Icons.fastfood),

@@ -13,6 +13,7 @@ import 'package:pse_assignment/widgets/BottomNavigator.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../widgets/delegate_search.dart';
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseUser user;
+
   String name = '';
 
   String res = "Sample code";

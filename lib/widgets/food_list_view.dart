@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
+import '../providers/saved_products.dart';
+import '../providers/data_helper.dart';
 
-class FoodListView extends StatelessWidget {
+class FoodListView extends StatelessWidget with FilterScreenController {
   @override
   Widget build(BuildContext context) {
-    final addProductToFilteringListSnackBar = SnackBar(
-      content: Text('You have added a product to filtering list!'),
+    final addProductSnackBar = SnackBar(
+      content: Text('You have added a product!'),
       duration: Duration(milliseconds: 500),
     );
     List<Product> _list = Provider.of<Products>(context).displayProducts;
@@ -78,8 +80,16 @@ class FoodListView extends StatelessWidget {
                     Expanded(child: Container()),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           //Function goes here,
+                          Scaffold.of(context).showSnackBar(addProductSnackBar);
+                          Provider.of<SavedProducts>(context)
+                              .saveProduct(_list.elementAt(index));
+
+                          updateUserSavedProductsToFirebase(
+                              await UserSavedProductsDataHelper
+                                  .getCurrentUser(),
+                              context);
                         },
                         child: Container(
                           alignment: Alignment.center,
