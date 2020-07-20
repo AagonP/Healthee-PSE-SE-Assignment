@@ -130,8 +130,7 @@ class FoodData {
     List<dynamic> recipe = documentSnapshot.data['Recipe'];
     for (int i = 0; i < 10; i++) {
       Product product = decodeProduct(recipe[i]);
-      if (product.name != null)
-        Provider.of<Products>(context).addProduct(product);
+      Provider.of<Products>(context).addProduct(product);
     }
     Provider.of<Products>(context).updateDisplayProduct('all');
   }
@@ -143,17 +142,9 @@ class FoodData {
   }
 
   Future<DocumentSnapshot> getEntry(String name) async {
-    QuerySnapshot querySnapshot =
-        await Firestore.instance.collection('data').getDocuments();
-    List<DocumentSnapshot> result = querySnapshot.documents;
-    for (int i = 0; i < querySnapshot.documents.length; i++) {
-      var a = querySnapshot.documents[i];
-      //print(a.documentID);
-      if (name == a.documentID) {
-        print('match : ${a.documentID}');
-        return a;
-      }
-    }
+    DocumentSnapshot documentSnapshot =
+        await Firestore.instance.collection('data').document(name).get();
+    return documentSnapshot;
   }
 
   void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {

@@ -7,6 +7,8 @@ import '../providers/products.dart';
 int selectedIndex = -1;
 
 class BottomBar extends StatefulWidget {
+  final Function callback;
+  BottomBar({this.callback});
   @override
   _BottomBarState createState() => _BottomBarState();
 }
@@ -86,10 +88,8 @@ class _BottomBarState extends State<BottomBar> {
               svgScr: 'image/dice.svg',
               index: 4,
               press: () {
-                setState(() {
-                  selectedIndex = 4;
-                });
-                displayRandom();
+                widget.callback();
+                selectedIndex = 4;
               },
             ),
           ),
