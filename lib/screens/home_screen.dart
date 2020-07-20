@@ -101,17 +101,17 @@ class _NavigatePageState extends State<NavigatePage> {
                       image: AssetImage('image/recipe.png'),
                     ),
                   ),
-                  NavigateTab(
-                    color: Colors.red[50],
-                    title: 'Filter by Illness',
-                    description: 'Know what suits your health',
-                    navigatePage: 'FilterScreen',
-                    image: Image(
-                      width: 60.0,
-                      height: 60.0,
-                      image: AssetImage('image/filter.png'),
-                    ),
-                  ),
+                  // NavigateTab(
+                  //   color: Colors.red[50],
+                  //   title: 'Filter by Illness',
+                  //   description: 'Know what suits your health',
+                  //   navigatePage: 'FilterScreen',
+                  //   image: Image(
+                  //     width: 60.0,
+                  //     height: 60.0,
+                  //     image: AssetImage('image/filter.png'),
+                  //   ),
+                  // ),
                   NavigateTab(
                     color: Color(0xFFE9F4FE),
                     title: 'Plan a diet',
