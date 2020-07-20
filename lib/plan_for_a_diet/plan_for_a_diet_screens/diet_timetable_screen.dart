@@ -69,26 +69,27 @@ class DietTimetableScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
+              alignment: Alignment.center,
               child: Text(
-                '30 Days Diet Plan',
+                '30-Day Diet Plan',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 33.0,
-                  //decoration: TextDecoration.underline,
+                  fontFamily: 'Pacifico',
+                  letterSpacing: 2.0,
+                  fontSize: 30.0,
                 ),
                 textAlign: TextAlign.left,
               ),
             ),
-            Row(
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 15.0),
+              height: 20.0,
+              width: double.infinity,
+              child: Divider(
+                color: Colors.teal.shade200,
+              ),
+            ),
+            /*Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Card(
@@ -103,7 +104,7 @@ class DietTimetableScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ),*/
             Expanded(
               child: GridView(
                 shrinkWrap: true,

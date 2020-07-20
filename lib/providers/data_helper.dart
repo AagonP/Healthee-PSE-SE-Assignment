@@ -10,6 +10,9 @@ import '../models/product.dart';
 import 'dart:math';
 import 'user_health_data.dart';
 import 'list_of_entry.dart';
+import 'package:pse_assignment/models/product.dart';
+import 'package:provider/provider.dart';
+import '../providers/products.dart';
 
 const int numberOfRecipe = 1;
 
@@ -35,7 +38,6 @@ class FoodData {
   List<int> id = List(numberOfRecipe);
   List<dynamic> foodRecipeJson = List(numberOfRecipe);
   List<Product> foodData = List(numberOfRecipe);
-  Random random = Random();
   Future<Map> getFoodData(String name, int num, int off) async {
     DataHelper dataHelper = DataHelper();
     //int offset = random.nextInt(1);
@@ -45,7 +47,7 @@ class FoodData {
     return foodIdJson;
   }
 
-  Future<Product> decodeProduct(dynamic jsonRecipe) async {
+  Product decodeProduct(dynamic jsonRecipe) {
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
     bool dairyFree = jsonRecipe['dairyFree'];
@@ -90,6 +92,25 @@ class FoodData {
     return product;
   }
 
+  Future<void> getRandomProduct(BuildContext context) async {
+    List<dynamic> randomJson = [];
+    Random random = Random();
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('data').getDocuments();
+    Provider.of<Products>(context).clearProduct();
+    for (int i = 0; i < 10; i++) {
+      DocumentSnapshot documentSnapshot = querySnapshot
+          .documents[random.nextInt(querySnapshot.documents.length)];
+      randomJson.add(documentSnapshot.data['Recipe']
+          [random.nextInt(documentSnapshot.data['Recipe'].length)]);
+    }
+    for (int i = 0; i < 10; i++) {
+      Product product = decodeProduct(randomJson[i]);
+      Provider.of<Products>(context).addProduct(product);
+    }
+    Provider.of<Products>(context).updateDisplayProduct('all');
+  }
+
   Future<void> uploadProduct(Map<String, dynamic> json) async {
     await Firestore.instance
         .collection('data')
@@ -103,9 +124,22 @@ class FoodData {
     });
   }
 
-  Map trimJson(Map json) {
-    json.removeWhere((key, value) => removeEntry.contains(key));
-    return json;
+  Future<void> getRecipe(BuildContext context, String name) async {
+    Provider.of<Products>(context).clearProduct();
+    DocumentSnapshot documentSnapshot = await getEntry(name);
+    List<dynamic> recipe = documentSnapshot.data['Recipe'];
+    for (int i = 0; i < 10; i++) {
+      Product product = decodeProduct(recipe[i]);
+      if (product.name != null)
+        Provider.of<Products>(context).addProduct(product);
+    }
+    Provider.of<Products>(context).updateDisplayProduct('all');
+  }
+
+  Future<QuerySnapshot> getQuery() async {
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('data').getDocuments();
+    return querySnapshot;
   }
 
   Future<DocumentSnapshot> getEntry(String name) async {
@@ -114,7 +148,7 @@ class FoodData {
     List<DocumentSnapshot> result = querySnapshot.documents;
     for (int i = 0; i < querySnapshot.documents.length; i++) {
       var a = querySnapshot.documents[i];
-      print(a.documentID);
+      //print(a.documentID);
       if (name == a.documentID) {
         print('match : ${a.documentID}');
         return a;

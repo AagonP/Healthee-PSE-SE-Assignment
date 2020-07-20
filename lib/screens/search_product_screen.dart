@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import '../widgets/food_list_view.dart';
@@ -10,7 +9,9 @@ import '../widgets/category.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'scan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pse_assignment/widgets/BottomNavigator.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../widgets/delegate_search.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,10 +19,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _auth = FirebaseAuth.instance;
   FirebaseUser user;
   String name = '';
+
+  String res = "Sample code";
+
+//Text input controller
+  var _controller = TextEditingController();
+  var input;
+  FoodData foodData = FoodData();
   @override
+  void initState() {
+    firstLoad();
+    super.initState();
+  }
+
+//  void getListFromFireBase() async {
+//    suggestion.clear();
+//    QuerySnapshot querySnapshot =
+//        await Firestore.instance.collection('data').getDocuments();
+//    for (int i = 0; i < querySnapshot.documents.length; i++) {
+//      var a = querySnapshot.documents[i];
+//      suggestion.add(a.documentID);
+//      print(suggestion[i]);
+//    }
+//  }
+
+  void firstLoad() async {
+    await foodData.getRandomProduct(context);
+  }
+
   void updateAfterScan(var key) {
     setState(() {
       res = key.toString();
@@ -40,64 +67,39 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  String res = "Sample code";
-
-//Text input controller
-  var _controller = TextEditingController();
-  //List<String> id = List(20);
-  var input;
-  FoodData foodData = FoodData();
-
   //this function is for uploading data to firebase
-  void uploadData(String name) async {
-    var data = await foodData.getFoodData(name, 10, 0);
-    print(data);
-    foodData.uploadDataFromApiToFireBase(data, 10, name);
-  }
-
-  //Update UI when loading product list
-  void updateUI(String name) async {
-    Provider.of<Products>(context).clearProduct();
-    DocumentSnapshot documentSnapshot = await foodData.getEntry(name);
-    List<dynamic> recipe = documentSnapshot.data['Recipe'];
-
-    for (int i = 0; i < 10; i++) {
-      Product product = await foodData.decodeProduct(recipe[i]);
-      if (product.name != null)
-        Provider.of<Products>(context).addProduct(product);
-    }
-    Provider.of<Products>(context).updateDisplayProduct('all');
-  }
+//  void updateUI(String name) async {
+//    var data = await foodData.getFoodData(name, 10, 10);
+//    print(data);
+//    foodData.uploadDataFromApiToFireBase(data, 10, name);
+//  }
 
   void navigateToFilterScreen(BuildContext context) {
     //NavigateToFilterScreen()
     Navigator.pushNamed(context, 'FilterScreen');
   }
 
-  void searchOnSubmitted(String context) {
-    //onSubmittedChange(String key)
-    print(context);
-    input = context;
-    updateUI(input);
+  void searchOnSubmitted(String name) {
+    print(name);
+    foodData.getRecipe(context, name);
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFFF8F8F8),
       bottomNavigationBar: BottomBar(),
       body: Column(
         children: <Widget>[
-          //Title "Healthee"
           SafeArea(
             child: Container(
-              //height: size.height * 0.4,
+              //height: size.height * 0.35,
               decoration: BoxDecoration(
-                color: Color(0xFFFDF4DE),
+                color: Color(0xFFFCECC5),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: <Widget>[
                     Text(
@@ -105,40 +107,47 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF07084B),
-                        fontSize: 30,
+                        fontSize: 33,
                         fontFamily: 'Pacifico',
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 7,
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(29.5),
-                      ),
-                      child: TextField(
-                        controller: _controller,
-                        autofocus: false,
-                        onSubmitted: (context) {
-                          searchOnSubmitted(context);
-                        },
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () => _controller.clear(),
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        showSearch(context: context, delegate: SearchInput());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 25,
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(29.5),
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                        child: Stack(
+                          children: <Widget>[
+                            Align(
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              ),
+                              alignment: Alignment.centerLeft,
                             ),
-                          ),
-                          hintText: "Search",
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
-                          icon: Icon(Icons.search),
-                          border: InputBorder.none,
+                            Center(
+                              child: Text(
+                                'Search...',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -146,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         RoundTypeButton(
-                          color: Color(0xFFF7F6C5),
+                          color: Color(0xFFFEC2C2),
                           image: 'image/food.png',
                           title: 'Vegan',
                         ),
