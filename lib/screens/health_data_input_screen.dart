@@ -27,10 +27,9 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
   }
 
   void _handleFulfilledInput(
-      BuildContext context,
-      UserHealthData userHealthData,
-      DietPlanData dietPlanData,
-      ProgressDialog pr) async {
+    BuildContext context,
+    UserHealthData userHealthData,
+  ) async {
     userHealthData.updateHealthData(
       _userHeight,
       _userWeight,
@@ -38,38 +37,52 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
     );
 
     _clickSubmit(context);
-    /*pr.show();
-
-    try {
-      await dietPlanData.setWholePlan(userHealthData.userDailyCalory);
-      pr.hide().whenComplete(() => _clickSubmit(context));
-    } catch (e) {
-      print(e);
-    }*/
   }
 
   void _handleMissingInput(BuildContext context) {
     showDialog(
       context: context,
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.all(30),
-          child: Card(
-            elevation: 15.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+      builder: (bCtx) => AlertDialog(
+        title: Row(
+          children: <Widget>[
+            Icon(
+              Icons.warning,
+              color: Colors.orange,
             ),
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'Please enter your health data!',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              'Missing Data Input',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          'Please fulfill all fields of your health data!',
+          textAlign: TextAlign.center,
+        ),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.of(bCtx).pop(),
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: Colors.orange,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
+        ],
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
       ),
+      barrierDismissible: true,
     );
   }
 
@@ -77,22 +90,6 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     final userHealthData = Provider.of<UserHealthData>(context);
-    final dietPlanData = Provider.of<DietPlanData>(context);
-
-    ProgressDialog _pr = ProgressDialog(
-      context,
-      type: ProgressDialogType.Normal,
-      isDismissible: true,
-    );
-    _pr.style(
-      message: 'Generating Plan...',
-      elevation: 5.0,
-      backgroundColor: Colors.white,
-      messageTextStyle: TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.bold,
-      ),
-    );
 
     // TODO: implement build
     return Scaffold(
@@ -111,19 +108,32 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
         children: <Widget>[
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(15.0),
-            child:
-                Text('This is your first login, please input your health data'),
+            padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 0.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(
+                  Icons.notification_important,
+                  color: Colors.red,
+                ),
+                Expanded(
+                  child: Text(
+                    'This is your first login, please input your health data!',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
           ),
           Card(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
             child: TextField(
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               onChanged: (heightValue) =>
                   this._userHeight = double.parse(heightValue),
               decoration: InputDecoration(
                   hintText: 'Your height here!',
-                  labelText: 'Please input your height:'),
+                  labelText: 'Please input your height (cm):'),
             ),
           ),
           Card(
@@ -134,7 +144,7 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
                   this._userWeight = double.parse(weightValue),
               decoration: InputDecoration(
                   hintText: 'Your weight here!',
-                  labelText: 'Please input your weight:'),
+                  labelText: 'Please input your weight (kg):'),
             ),
           ),
           Card(
@@ -146,7 +156,7 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
               },
               decoration: InputDecoration(
                   hintText: 'Your age here!',
-                  labelText: 'Please input your age:'),
+                  labelText: 'Please input your age (years):'),
             ),
           ),
           UserExerciseCheckbox(),
@@ -166,27 +176,23 @@ class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
             ),
           ),
           Center(
-            child: GestureDetector(
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              onTap: () {
-                if (_userHeight == 0 || _userWeight == 0 || _userAge == 0) {
+            child: RaisedButton.icon(
+              onPressed: () {
+                if (_userHeight <= 0 || _userWeight <= 0 || _userAge <= 0) {
                   _handleMissingInput(context);
                 } else {
                   _handleFulfilledInput(
-                      context, userHealthData, dietPlanData, _pr);
+                    context,
+                    userHealthData,
+                  );
                 }
               },
+              icon: Icon(Icons.file_upload),
+              label: Text('Save Data'),
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
             ),
           ),
         ],

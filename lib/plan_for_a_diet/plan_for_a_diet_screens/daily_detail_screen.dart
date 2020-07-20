@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import 'package:provider/provider.dart';
-
 import '../plan_for_a_diet_widgets/meal_food_list.dart';
 
 class DailyDetailScreen extends StatelessWidget {
@@ -9,7 +8,6 @@ class DailyDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    var screenWidth = MediaQuery.of(context).size.width;
     final index = routeArgs['index'];
     final dietPlanData = Provider.of<DietPlanData>(context);
 

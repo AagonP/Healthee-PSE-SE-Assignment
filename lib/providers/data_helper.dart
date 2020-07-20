@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pse_assignment/models/product.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/product.dart';
 import 'dart:math';
 import 'user_health_data.dart';
+import 'list_of_entry.dart';
 
 const int numberOfRecipe = 1;
 
@@ -34,19 +36,16 @@ class FoodData {
   List<dynamic> foodRecipeJson = List(numberOfRecipe);
   List<Product> foodData = List(numberOfRecipe);
   Random random = Random();
-  Future<dynamic> getFoodData(String name) async {
+  Future<Map> getFoodData(String name, int num, int off) async {
     DataHelper dataHelper = DataHelper();
-    int offset = random.nextInt(1);
+    //int offset = random.nextInt(1);
     String idUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=${numberOfRecipe.toString()}&offset=${offset.toString()}&query=$name';
-    var foodIdJson = await dataHelper.fetchData(idUrl);
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=${num.toString()}&offset=${off.toString()}&query=$name';
+    Map foodIdJson = await dataHelper.fetchData(idUrl);
     return foodIdJson;
   }
 
-  Future<Product> decodeProduct(String id) async {
-    String recipeUrl =
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$id/information';
-    dynamic jsonRecipe = await dataHelper.fetchData(recipeUrl);
+  Future<Product> decodeProduct(dynamic jsonRecipe) async {
     bool vegetarian = jsonRecipe['vegetarian'];
     bool glutenFree = jsonRecipe['glutenFree'];
     bool dairyFree = jsonRecipe['dairyFree'];
@@ -96,6 +95,52 @@ class FoodData {
         .collection('data')
         .document('Product')
         .setData(json, merge: true);
+  }
+
+  void addRecipeToList(Map json, String entry) {
+    Firestore.instance.collection('data').document(entry).updateData({
+      "Recipe": FieldValue.arrayUnion([json])
+    });
+  }
+
+  Map trimJson(Map json) {
+    json.removeWhere((key, value) => removeEntry.contains(key));
+    return json;
+  }
+
+  Future<DocumentSnapshot> getEntry(String name) async {
+    QuerySnapshot querySnapshot =
+        await Firestore.instance.collection('data').getDocuments();
+    List<DocumentSnapshot> result = querySnapshot.documents;
+    for (int i = 0; i < querySnapshot.documents.length; i++) {
+      var a = querySnapshot.documents[i];
+      print(a.documentID);
+      if (name == a.documentID) {
+        print('match : ${a.documentID}');
+        return a;
+      }
+    }
+  }
+
+  void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {
+    List<String> id = List(num);
+    id.forEach((element) {});
+    DataHelper dataHelper = DataHelper();
+    for (int i = 0; i < num; i++) {
+      var foodId = data['results'][i]['id'];
+      id[i] = foodId.toString();
+      String recipeUrl =
+          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information?includeNutrition=true';
+      Map jsonRecipe = await dataHelper.fetchData(recipeUrl);
+      jsonRecipe.removeWhere((key, value) => removeEntry.contains(key));
+      jsonRecipe['nutrition'].remove('ingredients');
+      jsonRecipe['nutrition']['nutrients']
+          .removeWhere((value) => !keepNutrient.contains(value['title']));
+      jsonRecipe['extendedIngredients'].forEach((element) {
+        element.removeWhere((key, value) => !keepIngredientValue.contains(key));
+      });
+      addRecipeToList(jsonRecipe, name);
+    }
   }
 }
 

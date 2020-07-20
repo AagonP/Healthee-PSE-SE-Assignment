@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/drawer.dart';
+import '../plan_for_a_diet/plan_for_a_diet_logic_handler/plan_a_diet_click_handler.dart';
 
 class NavigatePage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _NavigatePageState extends State<NavigatePage> {
   final _auth = FirebaseAuth.instance;
 
   FirebaseUser loginUser;
+
   @override
   void initState() {
     super.initState();
@@ -116,7 +118,7 @@ class _NavigatePageState extends State<NavigatePage> {
                     color: Color(0xFFE9F4FE),
                     title: 'Plan a diet',
                     description: 'Make your own diet',
-                    navigatePage: '/planning-option-screen',
+                    navigatePage: '/plan-a-diet',
                     image: Image(
                       width: 60.0,
                       height: 60.0,
@@ -157,11 +159,17 @@ class NavigateTab extends StatelessWidget {
       @required this.navigatePage,
       this.image,
       this.description});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, navigatePage);
+        // Condition before moving into Plan A Diet
+        if (navigatePage == '/plan-a-diet') {
+          PADClickHandler().clickFAP(context);
+        } else {
+          Navigator.pushNamed(context, navigatePage);
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(

@@ -33,7 +33,6 @@ class MealFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget mealIcon = identifyMealIcon();
-    var screenWidth = MediaQuery.of(context).size.width;
 
     // TODO: implement build
     return Card(
