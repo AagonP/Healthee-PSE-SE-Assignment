@@ -32,7 +32,7 @@ class MealViewItem extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/meal-info-screen',
+                    Navigator.pushNamed(context, '/searched-meal-info-screen',
                         arguments: mealSearchList.list.elementAt(index));
                   },
                   child: Padding(

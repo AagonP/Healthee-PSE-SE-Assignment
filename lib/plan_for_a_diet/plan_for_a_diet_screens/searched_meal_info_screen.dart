@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import '../plan_for_a_diet_providers/daily_data.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-class MealInfoScreen extends StatelessWidget {
+class SearchedMealInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Meal meal = ModalRoute.of(context).settings.arguments;
+    final Meal meal = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -78,7 +81,7 @@ class MealInfoScreen extends StatelessWidget {
                   return Container(
                     height: 100.0,
                     margin:
-                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                    EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
                     child: Wrap(
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -91,7 +94,9 @@ class MealInfoScreen extends StatelessWidget {
                           width: 5.0,
                         ),
                         AutoSizeText(
-                          meal.ingredients.elementAt(index).name,
+                          meal.ingredients
+                              .elementAt(index)
+                              .name,
                           style: TextStyle(fontSize: 18.0),
                           maxLines: 2,
                         ),
@@ -114,7 +119,9 @@ class MealInfoScreen extends StatelessWidget {
                           width: 3.0,
                         ),
                         AutoSizeText(
-                          meal.ingredients.elementAt(index).unit,
+                          meal.ingredients
+                              .elementAt(index)
+                              .unit,
                           style: TextStyle(fontSize: 18.0),
                           maxLines: 2,
                         ),
@@ -191,25 +198,7 @@ class MealInfoScreen extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(
-                      Icons.star,
-                      color: Colors.yellow,
-                      size: 20.0,
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Number of servings: ${meal.servings}',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ),
-                  ],
-                ),
+                child: _ServingDisplay(meal.servings),
               ),
             ],
           ),
@@ -253,3 +242,226 @@ class _ContainerRefactor extends StatelessWidget {
     );
   }
 }
+
+class _ServingDisplay extends StatefulWidget {
+  int _servings;
+  int _tempServings;
+
+  _ServingDisplay(this._servings) {
+    _tempServings = _servings;
+  }
+
+  @override
+  _ServingDisplayState createState() => _ServingDisplayState();
+}
+
+class _ServingDisplayState extends State<_ServingDisplay> {
+  @override
+  Widget build(BuildContext context) {
+    if (widget._servings == 0) {
+      return Column(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.star,
+                color: Colors.yellow,
+                size: 20.0,
+              ),
+              SizedBox(
+                width: 5.0,
+              ),
+              Expanded(
+                child: Text(
+                  'Number of servings: ',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(0.0, 5.0, 8.0, 0.0),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(
+                    Icons.arrow_downward,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget._tempServings > 0
+                          ? widget._tempServings--
+                          : widget._tempServings = widget._tempServings;
+                    });
+                  },
+                  iconSize: 25.0,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                child: Text(
+                  '${widget._tempServings}',
+                  style: TextStyle(fontSize: 18.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(8.0, 5.0, 0.0, 0.0),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(
+                    Icons.arrow_upward,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget._tempServings++;
+                    });
+                  },
+                  iconSize: 25.0,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.star,
+                color: Colors.yellow,
+                size: 20.0,
+              ),
+              SizedBox(
+                width: 5.0,
+              ),
+              Expanded(
+                child: Text(
+                  'Number of servings: ',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                child: Text(
+                  '${widget._tempServings}',
+                  style: TextStyle(fontSize: 18.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Icon(
+                Icons.star,
+                color: Colors.yellow,
+                size: 20.0,
+              ),
+              SizedBox(
+                width: 5.0,
+              ),
+              Expanded(
+                child: Text(
+                  'Number of servings: ',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(0.0, 5.0, 8.0, 0.0),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(
+                    Icons.arrow_downward,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget._tempServings > 0
+                          ? widget._tempServings--
+                          : widget._tempServings = widget._tempServings;
+                    });
+                  },
+                  iconSize: 25.0,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                ),
+                child: Text(
+                  '${widget._tempServings}',
+                  style: TextStyle(fontSize: 18.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(8.0, 5.0, 0.0, 0.0),
+                child: IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Icon(
+                    Icons.arrow_upward,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget._tempServings++;
+                    });
+                  },
+                  iconSize: 25.0,
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
+  }
+}
+
