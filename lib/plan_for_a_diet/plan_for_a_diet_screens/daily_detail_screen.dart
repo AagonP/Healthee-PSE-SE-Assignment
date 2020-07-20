@@ -94,7 +94,7 @@ class DailyDetailScreen extends StatelessWidget {
                               ),
                               TextSpan(
                                 text:
-                                '${dietPlanData.dailyList[index - 1].calory} (calories)',
+                                    '${dietPlanData.dailyList[index - 1].calory} (calories)',
                               ),
                             ],
                           ),
@@ -136,7 +136,7 @@ class DailyDetailScreen extends StatelessWidget {
                               ),
                               TextSpan(
                                 text:
-                                '${dietPlanData.dailyList[index - 1].protein} (g)',
+                                    '${dietPlanData.dailyList[index - 1].protein} (g)',
                               ),
                             ],
                           ),
@@ -178,7 +178,7 @@ class DailyDetailScreen extends StatelessWidget {
                               ),
                               TextSpan(
                                 text:
-                                '${dietPlanData.dailyList[index - 1].fat} (g)',
+                                    '${dietPlanData.dailyList[index - 1].fat} (g)',
                               ),
                             ],
                           ),
@@ -220,7 +220,7 @@ class DailyDetailScreen extends StatelessWidget {
                               ),
                               TextSpan(
                                 text:
-                                '${dietPlanData.dailyList[index - 1].carbohydrate} (g)',
+                                    '${dietPlanData.dailyList[index - 1].carbohydrate} (g)',
                               ),
                             ],
                           ),
