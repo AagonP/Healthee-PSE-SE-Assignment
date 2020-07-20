@@ -1,196 +1,379 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:pse_assignment/plan_for_a_diet/plan_for_a_diet_widgets/meal_view_item.dart';
 import 'package:provider/provider.dart';
+import '../plan_for_a_diet_providers/meal_search_list.dart';
+/*import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-
+import '../models/product.dart';
+import '../providers/products.dart';
+import '../widgets/food_list_view.dart';
+import '../providers/data_helper.dart';
+import '../widgets/category.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pse_assignment/widgets/BottomNavigator.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import '../widgets/delegate_search.dart';*/
 
-class SearchFoodForPlan extends StatefulWidget {
+class SearchFoodForPlanScreen extends StatefulWidget {
   @override
-  _SearchFoodForPlanState createState() => _SearchFoodForPlanState();
+  _SearchFoodForPlanScreenState createState() =>
+      _SearchFoodForPlanScreenState();
 }
 
-class _SearchFoodForPlanState extends State<SearchFoodForPlan> {
-  final _auth = FirebaseAuth.instance;
-  FirebaseUser user;
-  String name = '';
+class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
+  String _chosenSearchTag;
+  int _mealType;
+  int _index;
+  bool _isInit = true;
+  bool _isLoading = false;
+  MealSearchList _mealSearchList = MealSearchList();
+
   @override
   void initState() {
     super.initState();
-
-    getUser();
   }
 
-  void getUser() async {
-    user = await _auth.currentUser();
-    setState(() {
-      if (user != null) {
-        name = user.displayName;
-      } else
-        name = '';
-    });
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final routeArgs =
+      ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+      _index = routeArgs['index'];
+      _mealType = routeArgs['mealType'];
+      _chosenSearchTag =
+      _mealType == 0 ? 'apple' : _mealType == 1 ? 'beef' : 'cucumber';
+    }
+    _mealSearchList = Provider.of<MealSearchList>(context);
+    _isInit = false;
+
+    super.didChangeDependencies();
   }
+
+/* FirebaseUser user;
+  String name = '';
 
   String res = "Sample code";
 
 //Text input controller
   var _controller = TextEditingController();
-  List<String> id = List(20);
   var input;
-  //FoodData foodData = FoodData();
+  FoodData foodData = FoodData();
 
-//Update UI when loading product list
-  /*void updateUI(String name) async {
-    Provider.of<Products>(context).clearProduct();
-    var data = await foodData.getFoodData(name);
-    for (int i = 0; i < 20; i++) {
-      var foodId = data['results'][i]['id'];
-      id[i] = foodId.toString();
-    }
-    for (int i = 0; i < 20; i++) {
-      Product product = await foodData.decodeProduct(id[i]);
-      if (product.name != null)
-        Provider.of<Products>(context).addProduct(product);
-    }
-    Provider.of<Products>(context).updateDisplayProduct('all');
-  }*/
+  @override
+  void initState() {
+    firstLoad();
+    super.initState();
+  }
+
+//  void getListFromFireBase() async {
+//    suggestion.clear();
+//    QuerySnapshot querySnapshot =
+//        await Firestore.instance.collection('data').getDocuments();
+//    for (int i = 0; i < querySnapshot.documents.length; i++) {
+//      var a = querySnapshot.documents[i];
+//      suggestion.add(a.documentID);
+//      print(suggestion[i]);
+//    }
+//  }
+
+  void firstLoad() async {
+    await foodData.getRandomProduct(context);
+  }
+
+  void updateAfterScan(var key) {
+    setState(() {
+      res = key.toString();
+    });
+  }
+
+  void doScanning() {
+    // Navigator.pushNamed(context, "ScanScreen");
+    updateAfterScan(Scan.scanner());
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(Scan.key.toString()),
+          );
+        });
+  }
+
+  //this function is for uploading data to firebase
+//  void updateUI(String name) async {
+//    var data = await foodData.getFoodData(name, 10, 10);
+//    print(data);
+//    foodData.uploadDataFromApiToFireBase(data, 10, name);
+//  }
 
   void navigateToFilterScreen(BuildContext context) {
     //NavigateToFilterScreen()
     Navigator.pushNamed(context, 'FilterScreen');
   }
 
-  void searchOnSubmitted(String context) {
-    //onSubmittedChange(String key)
-    print(context);
-    input = context;
-    //updateUI(input);
-  }
+  void searchOnSubmitted(String name) {
+    print(name);
+    foodData.getRecipe(context, name);
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    //List<Product> displayList = Provider.of<Products>(context).products;
+    final List<String> tagList = _mealType == 0
+        ? [
+            'apple',
+            'avocado',
+            'banana',
+            'bread',
+            'cheese',
+            'egg',
+            'juice',
+            'potato',
+          ]
+        : _mealType == 1
+            ? [
+                'beef',
+                'chicken',
+                'crab',
+                'meat',
+                'pasta',
+                'pork',
+                'shrimp',
+                'steak',
+              ]
+            : [
+                'cucumber',
+                'fish',
+                'mushroom',
+                'salad',
+                'salmon',
+                'sauce',
+                'soup',
+                'spinach',
+                'tomato',
+                'tuna',
+                'vegetable',
+              ];
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0.0,
-      ),
-      //Drawer here
-
-      body: Column(
-        children: <Widget>[
-          //Title "Healthee"
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Breakfast',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'Pacifico',
-                ),
-              ),
-            ),
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Card(
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  //Search input field
-                  child: Container(
-                    height: 45.0,
-                    child: TextField(
-                      autofocus: false,
-                      onSubmitted: (context) {
-                        searchOnSubmitted(context);
-                      },
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () => _controller.clear(),
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.grey,
+    return ModalProgressHUD(
+      inAsyncCall: _isLoading,
+      child: Scaffold(
+        backgroundColor: Color(0xFFF6F7F8),
+        body: Column(
+          children: <Widget>[
+            SafeArea(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    //height: size.height * 0.35,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFCECC5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'Day ${_index + 1}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF07084B),
+                              fontSize: 33,
+                              fontFamily: 'Pacifico',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: 'Search meal...',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                        prefixIcon: Icon(Icons.search),
+                          Text(
+                            'Meals For ${_mealType == 0 ? 'Breakfast' : _mealType == 1 ? 'Lunch' : 'Dinner'}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF07084B),
+                              fontSize: 33,
+                              fontFamily: 'Pacifico',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 25,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(29.5),
+                            ),
+                            height: 50,
+                            alignment: Alignment.centerRight,
+                            width: double.infinity,
+                            child: DropdownButton<String>(
+                              value: _chosenSearchTag,
+                              icon: Icon(Icons.arrow_drop_down),
+                              iconSize: 25,
+                              elevation: 15,
+                              isExpanded: true,
+                              onChanged: (String chosenOption) async {
+                                setState(() {
+                                  _chosenSearchTag = chosenOption;
+                                  _isLoading = true;
+                                });
+
+                                await _mealSearchList
+                                    .getMealsFromTag(_chosenSearchTag);
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              },
+                              items: tagList.map<DropdownMenuItem<String>>(
+                                  (String option) {
+                                return DropdownMenuItem<String>(
+                                    value: option, child: Text(option));
+                              }).toList(),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment(-1.15, -1.0),
+                    child: FlatButton(
+                      onPressed: () {
+                        _mealSearchList.accessList.clear();
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 30.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              // Filter search
-              /*Card(
-                child: IconButton(
-                  onPressed: () {
-                    navigateToFilterScreen(context);
-                  },
-                  icon: Badge(
-                      badgeColor: Colors.white,
-                      animationType: BadgeAnimationType.scale,
-                      badgeContent: Text((Provider.of<Products>(context)
-                              .filteringProducts
-                              .length)
-                          .toString()),
-                      child: Icon(Icons.shopping_cart)), //filter
-                ),
-              ),*/
-              //Scan screen
-              /*Card(
-                child: IconButton(
-                  onPressed: () {
-                  },
-                  icon: Icon(Icons.camera_alt),
-                ),
-              ),*/
-            ],
-          ),
-          //Food filter
-          /*Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RoundTypeButton(
-                color: Color(0xFFF7F6C5),
-                image: 'image/food.png',
-                title: 'Vegan',
-              ),
-              RoundTypeButton(
-                color: Color(0xFFCEFFC0),
-                image: 'image/dairy.png',
-                title: 'DairyFree',
-              ),
-              RoundTypeButton(
-                color: Color(0xFFFEE1C7),
-                image: 'image/fruit.png',
-                title: 'LowFodMap',
-              ),
-              RoundTypeButton(
-                color: Color(0xFFFDDFFA),
-                image: 'image/coin.png',
-                title: 'Cheap',
-              ),
-            ],
-          ),*/
-          Padding(
-            padding: EdgeInsets.all(10),
-          ),
-          /*Expanded(
-            child: FoodListView(),
-          ),*/
-        ],
+            ),
+            Expanded(
+              child: MealViewItem(_mealSearchList),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+/*Scaffold(
+      backgroundColor: Color(0xFFF6F7F8),
+      body: FutureBuilder(
+          future: _mealSearchList.getMealsFromTag(_chosenSearchTag),
+          builder: (bCtx, snapshop) {
+            if (snapshop.connectionState == ConnectionState.done) {
+              return Column(
+                children: <Widget>[
+                  SafeArea(
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFCECC5),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Day ${_index + 1}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xFF07084B),
+                                    fontSize: 33,
+                                    fontFamily: 'Pacifico',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  'Meals For ${_mealType == 0 ? 'Breakfast' : _mealType == 1 ? 'Lunch' : 'Dinner'}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xFF07084B),
+                                    fontSize: 33,
+                                    fontFamily: 'Pacifico',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 25,
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(29.5),
+                                  ),
+                                  height: 50,
+                                  alignment: Alignment.centerRight,
+                                  width: double.infinity,
+                                  child: DropdownButton<String>(
+                                    value: _chosenSearchTag,
+                                    icon: Icon(Icons.arrow_drop_down),
+                                    iconSize: 25,
+                                    elevation: 15,
+                                    isExpanded: true,
+                                    onChanged: (String chosenOption) async {
+                                      setState(() {
+                                        _chosenSearchTag = chosenOption;
+                                      });
+                                      await _mealSearchList
+                                          .getMealsFromTag(_chosenSearchTag);
+                                      setState(() {
+                                      });
+                                    },
+                                    items: tagList
+                                        .map<DropdownMenuItem<String>>(
+                                            (String option) {
+                                      return DropdownMenuItem<String>(
+                                          value: option, child: Text(option));
+                                    }).toList(),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment(-1.15, -1.0),
+                          child: FlatButton(
+                            onPressed: () {
+                              _mealSearchList.accessList.clear();
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              size: 30.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: MealViewItem(_mealSearchList),
+                  ),
+                ],
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }),*/

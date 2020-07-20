@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
-
 import '../../providers/user_health_data.dart';
 
 class PADClickHandler {
@@ -17,11 +16,16 @@ class PADClickHandler {
     ProgressDialog pr = ProgressDialog(
       context,
       type: ProgressDialogType.Normal,
-      isDismissible: true,
+      isDismissible: false,
     );
     pr.style(
-      message: 'Generating Plan...',
+      message: 'Generating plan...',
+      borderRadius: 50.0,
       elevation: 5.0,
+      progressWidget: SpinKitDualRing(
+        color: Color(0xFFFCECC5),
+        size: 40.0,
+      ),
       backgroundColor: Colors.white,
       messageTextStyle: TextStyle(
         fontFamily: 'Montserrat',

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:progress_dialog/progress_dialog.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/meal_search_list.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MealFoodList extends StatelessWidget {
   final String _mealType;
@@ -36,6 +39,27 @@ class MealFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget mealIcon = identifyMealIcon();
+
+    final mealSearchList = Provider.of<MealSearchList>(context, listen: false);
+    ProgressDialog pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      isDismissible: false,
+    );
+    pr.style(
+      message: 'Initializing screen...',
+      borderRadius: 50.0,
+      elevation: 5.0,
+      progressWidget: SpinKitDualRing(
+        color: Color(0xFFFCECC5),
+        size: 40.0,
+      ),
+      backgroundColor: Colors.white,
+      messageTextStyle: TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+      ),
+    );
 
     // TODO: implement build
     return Card(
@@ -80,9 +104,24 @@ class MealFoodList extends StatelessWidget {
                       Icons.mode_edit,
                       size: 20.0,
                     ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed('/search-food-for-plan-screen');
+                    onPressed: () async {
+                      pr.show();
+                      try {
+                        await mealSearchList.getMealsFromTag(_mealTypeIndex == 0
+                            ? 'apple'
+                            : _mealTypeIndex == 1 ? 'beef' : 'cucumber');
+                        pr
+                            .hide()
+                            .whenComplete(() => Navigator.of(context).pushNamed(
+                                  '/search-food-for-plan-screen',
+                                  arguments: {
+                                    'index': _index - 1,
+                                    'mealType': _mealTypeIndex,
+                                  },
+                                ));
+                      } catch (e) {
+                        print(e);
+                      }
                     },
                   ),
                 ),

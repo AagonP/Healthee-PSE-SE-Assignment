@@ -143,7 +143,7 @@ class DietPlanData with ChangeNotifier {
 
     var documents = queryValue.documents;
 
-    //TODO: Breakfasts should have: apple, banana, egg, cheese, potato, bread, avocado.
+    //TODO: Breakfasts should have: apple, juice, banana, egg, cheese, potato, bread, avocado.
     List<int> breakfastTagSizeList = [
       documents[Tag.apple.index].data['Recipe'].length,
       documents[Tag.avocado.index].data['Recipe'].length,

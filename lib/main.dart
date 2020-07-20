@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pse_assignment/plan_for_a_diet/plan_for_a_diet_providers/meal_search_list.dart';
 
 import 'screens/search_product_screen.dart';
 import './screens/food_info.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'screens/health_data_input_screen.dart';
 import 'screens/health_data_view_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
+import './plan_for_a_diet/plan_for_a_diet_providers/meal_search_list.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/search_food_for_plan_screen.dart';
@@ -47,6 +49,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<DietPlanData>(
           builder: (context) => DietPlanData(),
         ),
+        ChangeNotifierProvider<MealSearchList>(
+          builder: (context) => MealSearchList(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -71,9 +76,9 @@ class MyApp extends StatelessWidget {
           '/health-data-input-screen': (context) => HealthDataInputScreen(),
           '/diet-timetable-screen': (context) => DietTimetableScreen(),
           '/daily-detail-screen': (context) => DailyDetailScreen(),
-          '/search-food-for-plan-screen': (context) => SearchFoodForPlan(),
           '/health-data-view-screen': (context) => HealthDataViewScreen(),
           '/meal-info-screen': (context) => MealInfoScreen(),
+          '/search-food-for-plan-screen': (context) => SearchFoodForPlanScreen(),
           'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },
