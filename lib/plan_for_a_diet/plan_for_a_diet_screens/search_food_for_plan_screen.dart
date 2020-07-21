@@ -92,7 +92,6 @@ class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
               child: Stack(
                 children: <Widget>[
                   Container(
-                    //height: size.height * 0.35,
                     decoration: BoxDecoration(
                       color: Color(0xFFFCECC5),
                     ),
