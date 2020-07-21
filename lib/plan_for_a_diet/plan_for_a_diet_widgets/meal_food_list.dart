@@ -40,9 +40,6 @@ class MealFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget mealIcon = identifyMealIcon();
-
-    final mealSearchList = Provider.of<MealSearchList>(context, listen: false);
-    final userHealthData = Provider.of<UserHealthData>(context, listen: false);
     ProgressDialog pr = ProgressDialog(
       context,
       type: ProgressDialogType.Normal,
@@ -62,6 +59,8 @@ class MealFoodList extends StatelessWidget {
         fontWeight: FontWeight.bold,
       ),
     );
+    final mealSearchList = Provider.of<MealSearchList>(context, listen: false);
+    final userHealthData = Provider.of<UserHealthData>(context, listen: false);
 
     // TODO: implement build
     return Container(

@@ -10,6 +10,15 @@ class DietPlanData with ChangeNotifier {
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  Future<void> resetPlan(UserHealthData userHealthData) async {
+    var firebaseUser = await _auth.currentUser();
+    await Firestore.instance
+        .collection('users')
+        .document(firebaseUser.uid)
+        .updateData({'dietPlan': FieldValue.delete()});
+    await setWholePlan(userHealthData);
+  }
+
   void checkDay(int index) async {
     _dailyList[index].setChecked(true);
     var firebaseUser = await _auth.currentUser();
@@ -247,13 +256,13 @@ class DietPlanData with ChangeNotifier {
 
     servingIndex = _dailyList[index].accessMeals[mealType].servings;
     _dailyList[index].setCalory =
-    (_dailyList[index].accessMeals[mealType].calory * servingIndex);
+        (_dailyList[index].accessMeals[mealType].calory * servingIndex);
     _dailyList[index].setProtein =
-    (_dailyList[index].accessMeals[mealType].protein * servingIndex);
+        (_dailyList[index].accessMeals[mealType].protein * servingIndex);
     _dailyList[index].setFat =
-    (_dailyList[index].accessMeals[mealType].fat * servingIndex);
+        (_dailyList[index].accessMeals[mealType].fat * servingIndex);
     _dailyList[index].setCarbohydrate =
-    (_dailyList[index].accessMeals[mealType].carbohydrate * servingIndex);
+        (_dailyList[index].accessMeals[mealType].carbohydrate * servingIndex);
 
     for (int i = 0; i < meal.ingredients.length; i++) {
       Ingredient tempIngre = Ingredient();
