@@ -173,8 +173,10 @@ class HealthDataViewScreen extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          Image.network(
-              'https://hitinfrastructure.com/images/site/article_headers/_large/healthcare_content_management.jpg'),
+          Image.asset(
+            'image/health_data_picture.jpg',
+            fit: BoxFit.fitHeight,
+          ),
           Card(
             child: Column(
               children: <Widget>[

@@ -64,7 +64,19 @@ class MealFoodList extends StatelessWidget {
     );
 
     // TODO: implement build
-    return Card(
+    return Container(
+      margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 10),
+            blurRadius: 33,
+            color: Color(0xFFD3D3D3).withOpacity(.84),
+          ),
+        ],
+      ),
       child: Column(
         children: <Widget>[
           Padding(
@@ -423,18 +435,18 @@ class MealFoodList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 15.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Image.network(
-                _dietPlanData
-                    .dailyList[_index - 1].threeMeals[_mealTypeIndex].imageUrl,
-              ),
+              borderRadius: BorderRadius.circular(20.0),
+              child: _dietPlanData.dailyList[_index - 1]
+                          .threeMeals[_mealTypeIndex].imageUrl ==
+                      null
+                  ? Image.asset('image/wp-header-logo-21.png')
+                  : Image.network(
+                      _dietPlanData.dailyList[_index - 1]
+                          .threeMeals[_mealTypeIndex].imageUrl,
+                    ),
             ),
           ),
         ],
-      ),
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
       ),
     );
   }

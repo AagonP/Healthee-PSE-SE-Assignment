@@ -71,10 +71,7 @@ class MealViewItem extends StatelessWidget {
                           ? Image.network(
                               mealSearchList.list.elementAt(index).imageUrl,
                             )
-                          : Container(
-                              height: 90.0,
-                              color: Colors.white,
-                            ),
+                          : Image.asset('image/wp-header-logo-21.png'),
                     ),
                   ),
                 ),

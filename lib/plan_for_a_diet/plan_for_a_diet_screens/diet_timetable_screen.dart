@@ -43,17 +43,17 @@ class DietTimetableScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     final dietPlanData = Provider.of<DietPlanData>(context);
 
-
     // TODO: implement build of DietTimetableScreen
     return Scaffold(
+      backgroundColor: Color(0xFFD3D3D3).withOpacity(.84),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight / 3.1),
         child: Stack(
           children: <Widget>[
             Container(
               height: screenHeight / 2.8,
-              child: Image.network(
-                'https://resources.healthydirections.com/resources/web/articles/hd/hd-what-is-the-best-heart-healthy-diet-plan-hd-cover.jpg',
+              child: Image.asset(
+                'image/30_day_picture.jpg',
                 fit: BoxFit.fitHeight,
               ),
             ),
@@ -70,53 +70,39 @@ class DietTimetableScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Color(0xFFFCECC5),
+              ),
               child: Text(
                 '30-Day Diet Plan',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   fontFamily: 'Pacifico',
                   letterSpacing: 2.0,
-                  fontSize: 30.0,
+                  fontSize: 33.0,
+                  color: Color(0xFF07084B),
                 ),
                 textAlign: TextAlign.left,
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0),
-              height: 20.0,
-              width: double.infinity,
-              child: Divider(
-                color: Colors.teal.shade200,
-              ),
-            ),
-            /*Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Card(
-                  child: IconButton(
-                    icon: Icon(Icons.timer),
-                    onPressed: () {},
-                  ),
-                  color: Colors.white60,
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-              ],
-            ),*/
             Expanded(
-              child: GridView(
-                shrinkWrap: true,
-                children: _oneMonthList
-                    .map(
-                      (index) => DailyDietItem(index, dietPlanData),
-                    )
-                    .toList(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Color(0xFFD3D3D3).withOpacity(.84),
+                ),
+                child: GridView(
+                  shrinkWrap: true,
+                  children: _oneMonthList
+                      .map(
+                        (index) => DailyDietItem(index, dietPlanData),
+                      )
+                      .toList(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
                 ),
               ),
             ),
