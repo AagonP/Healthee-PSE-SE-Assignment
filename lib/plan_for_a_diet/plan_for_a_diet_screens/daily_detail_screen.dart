@@ -9,7 +9,9 @@ class DailyDetailScreen extends StatelessWidget {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     final index = routeArgs['index'];
-    final dietPlanData = Provider.of<DietPlanData>(context);
+    final dietPlanData = Provider.of<DietPlanData>(
+      context,
+    );
 
     // TODO: implement DailyDetailScreen build
     return Scaffold(

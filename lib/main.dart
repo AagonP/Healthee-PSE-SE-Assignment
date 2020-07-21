@@ -25,6 +25,7 @@ import './plan_for_a_diet/plan_for_a_diet_providers/meal_search_list.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/search_food_for_plan_screen.dart';
+import './plan_for_a_diet/plan_for_a_diet_screens/searched_meal_info_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/meal_info_screen.dart';
 import 'providers/user_health_data.dart';
 
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
           '/health-data-view-screen': (context) => HealthDataViewScreen(),
           '/meal-info-screen': (context) => MealInfoScreen(),
           '/search-food-for-plan-screen': (context) => SearchFoodForPlanScreen(),
+          '/searched-meal-info-screen': (context) => SearchedMealInfoScreen(),
           'ScanScreen': (context) => ScanScreen(),
           // 'HealthInput': (context) => InputText().
         },

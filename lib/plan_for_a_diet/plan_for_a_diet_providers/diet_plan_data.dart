@@ -217,6 +217,59 @@ class DietPlanData with ChangeNotifier {
     notifyListeners();
   }
 
+  void setDailyMeal(
+    int index,
+    int mealType,
+    Meal meal,
+  ) async {
+    int servingIndex = _dailyList[index].accessMeals[mealType].servings;
+    _dailyList[index].setCalory =
+        -(_dailyList[index].accessMeals[mealType].calory * servingIndex);
+    _dailyList[index].setProtein =
+        -(_dailyList[index].accessMeals[mealType].protein * servingIndex);
+    _dailyList[index].setFat =
+        -(_dailyList[index].accessMeals[mealType].fat * servingIndex);
+    _dailyList[index].setCarbohydrate =
+        -(_dailyList[index].accessMeals[mealType].carbohydrate * servingIndex);
+
+    _dailyList[index].accessMeals[mealType].accessIngredients.clear();
+    _dailyList[index].accessMeals[mealType].setAllForMeal(
+          title: meal.title,
+          imageUrl: meal.imageUrl,
+          servings: meal.servings,
+          mealType: mealType,
+          calory: meal.calory,
+          protein: meal.protein,
+          fat: meal.fat,
+          carbohydrate: meal.carbohydrate,
+          servingSize: meal.servingSize,
+        );
+
+    servingIndex = _dailyList[index].accessMeals[mealType].servings;
+    _dailyList[index].setCalory =
+    (_dailyList[index].accessMeals[mealType].calory * servingIndex);
+    _dailyList[index].setProtein =
+    (_dailyList[index].accessMeals[mealType].protein * servingIndex);
+    _dailyList[index].setFat =
+    (_dailyList[index].accessMeals[mealType].fat * servingIndex);
+    _dailyList[index].setCarbohydrate =
+    (_dailyList[index].accessMeals[mealType].carbohydrate * servingIndex);
+
+    for (int i = 0; i < meal.ingredients.length; i++) {
+      Ingredient tempIngre = Ingredient();
+      tempIngre.setAllForIngredient(
+        name: meal.ingredients[i].name,
+        amount: meal.ingredients[i].amount,
+        unit: meal.ingredients[i].unit,
+      );
+      _dailyList[index].accessMeals[mealType].accessIngredients.add(tempIngre);
+    }
+
+    var firebaseUser = await _auth.currentUser();
+    _dailyList[index].postDailyMeal(firebaseUser.uid, mealType);
+    notifyListeners();
+  }
+
   List<DailyData> get dailyList {
     return [..._dailyList];
   }

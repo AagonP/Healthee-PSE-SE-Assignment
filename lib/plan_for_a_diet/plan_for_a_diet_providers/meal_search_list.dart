@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../../providers/user_health_data.dart';
 import 'daily_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 
 class MealSearchList with ChangeNotifier {
   List<Meal> _mealSearchList = List();
+  List<int> _recommendations = List();
 
   List<Meal> get list {
     return [..._mealSearchList];
@@ -16,8 +18,21 @@ class MealSearchList with ChangeNotifier {
     return _mealSearchList;
   }
 
-  Future<void> getMealsFromTag(String tag) async {
+  List<int> get recommendations {
+    return [..._recommendations];
+  }
+
+  List<int> get accessRecommendations {
+    return _recommendations;
+  }
+
+  Future<void> getMealsFromTag(
+    UserHealthData userHealthData,
+    int mealType,
+    String tag,
+  ) async {
     _mealSearchList.clear();
+    _recommendations.clear();
     var queryValue =
         await Firestore.instance.collection('data').document(tag).get();
     var mealListJson = queryValue.data['Recipe'];
@@ -45,6 +60,18 @@ class MealSearchList with ChangeNotifier {
           unit: mealJson['extendedIngredients'][j]['unit'],
         );
         _mealSearchList[i].accessIngredients.add(tempIngre);
+      }
+      int mealIndex = mealType == 0 ? 35 : mealType == 1 ? 35 : 30;
+      int servingsIndex = (userHealthData.userUBCalory * mealIndex / 100) ~/
+          _mealSearchList[i].calory;
+      if ((userHealthData.userLBCalory * mealIndex / 100) <=
+          _mealSearchList[i].calory *
+              (servingsIndex)) {
+        _recommendations.add(servingsIndex);
+        _mealSearchList[i].setServings(servingsIndex);
+      }
+      else {
+        _recommendations.add(0);
       }
     }
     notifyListeners();
