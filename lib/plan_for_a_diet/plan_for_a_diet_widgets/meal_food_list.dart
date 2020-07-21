@@ -95,54 +95,117 @@ class MealFoodList extends StatelessWidget {
                     fontSize: 18.0,
                   ),
                 ),
+                SizedBox(
+                  width: 10.0,
+                ),
                 Expanded(
-                  child: IconButton(
-                    alignment: Alignment.centerLeft,
-                    icon: Icon(
-                      Icons.search,
-                      size: 20.0,
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        RawMaterialButton(
+                          constraints: BoxConstraints.tightFor(
+                            width: 30.0,
+                            height: 30.0,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              '/meal-info-screen',
+                              arguments: _dietPlanData.dailyList[_index - 1]
+                                  .threeMeals[_mealTypeIndex],
+                            );
+                          },
+                          elevation: 1.0,
+                          fillColor: Colors.white,
+                          child: Image.asset(
+                            'image/search.png',
+                            fit: BoxFit.cover,
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                          shape: CircleBorder(
+                            side: BorderSide(
+                              color: Color(0xFFFCECC5),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'View detail',
+                          style: TextStyle(fontSize: 11.0),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        '/meal-info-screen',
-                        arguments: _dietPlanData
-                            .dailyList[_index - 1].threeMeals[_mealTypeIndex],
-                      );
-                    },
                   ),
                 ),
                 Expanded(
-                  child: IconButton(
+                  child: Container(
                     alignment: Alignment.centerRight,
-                    icon: Icon(
-                      Icons.mode_edit,
-                      size: 20.0,
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        RawMaterialButton(
+                          constraints: BoxConstraints.tightFor(
+                            width: 30.0,
+                            height: 30.0,
+                          ),
+                          onPressed: () async {
+                            pr.show();
+                            try {
+                              await mealSearchList.getMealsFromTag(
+                                  userHealthData,
+                                  _mealTypeIndex,
+                                  _mealTypeIndex == 0
+                                      ? 'apple'
+                                      : _mealTypeIndex == 1
+                                          ? 'beef'
+                                          : 'cucumber');
+                              pr.hide().whenComplete(
+                                  () => Navigator.of(context).pushNamed(
+                                        '/search-food-for-plan-screen',
+                                        arguments: {
+                                          'index': _index - 1,
+                                          'mealType': _mealTypeIndex,
+                                        },
+                                      ));
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          elevation: 1.0,
+                          fillColor: Colors.white,
+                          child: Image.asset(
+                            'image/edit.png',
+                            fit: BoxFit.cover,
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                          shape: CircleBorder(
+                            side: BorderSide(
+                              color: Color(0xFFFCECC5),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Edit',
+                          style: TextStyle(fontSize: 11.0),
+                        ),
+                      ],
                     ),
-                    onPressed: () async {
-                      pr.show();
-                      try {
-                        await mealSearchList.getMealsFromTag(
-                            userHealthData,
-                            _mealTypeIndex,
-                            _mealTypeIndex == 0
-                                ? 'apple'
-                                : _mealTypeIndex == 1 ? 'beef' : 'cucumber');
-                        pr
-                            .hide()
-                            .whenComplete(() => Navigator.of(context).pushNamed(
-                                  '/search-food-for-plan-screen',
-                                  arguments: {
-                                    'index': _index - 1,
-                                    'mealType': _mealTypeIndex,
-                                  },
-                                ));
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
                   ),
                 ),
               ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15.0),
+            height: 20.0,
+            width: double.infinity,
+            child: Divider(
+              thickness: 1.0,
+              color: Colors.teal.shade200,
             ),
           ),
           Row(

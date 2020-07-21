@@ -18,37 +18,39 @@ class DailyDetailScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           SafeArea(
-            child: Stack(children: <Widget>[
-              Container(
-                alignment: Alignment.topCenter,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFCECC5),
-                ),
-                child: Text(
-                  'Day $index',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Pacifico',
-                    letterSpacing: 2.0,
-                    fontSize: 33.0,
-                    color: Color(0xFF07084B),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFCECC5),
+                  ),
+                  child: Text(
+                    'Day $index',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Pacifico',
+                      letterSpacing: 2.0,
+                      fontSize: 33.0,
+                      color: Color(0xFF07084B),
+                    ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(-1.15, -1.0),
-                child: FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back,
-                    size: 30.0,
-                    color: Color(0xFF07084B),
+                Align(
+                  alignment: Alignment(-1.15, -1.0),
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: 30.0,
+                      color: Color(0xFF07084B),
+                    ),
                   ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ),
           Expanded(
             child: ListView(
@@ -73,7 +75,8 @@ class DailyDetailScreen extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
                         child: Row(
                           children: <Widget>[
                             Icon(
@@ -83,8 +86,8 @@ class DailyDetailScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 0.0),
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 0.0, 4.0, 0.0),
                                 child: Text(
                                   'Daily nutrients',
                                   style: TextStyle(
