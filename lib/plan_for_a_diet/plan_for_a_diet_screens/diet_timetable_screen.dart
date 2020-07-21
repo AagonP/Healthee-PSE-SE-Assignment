@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../../providers/user_health_data.dart';
 import 'package:provider/provider.dart';
 import '../plan_for_a_diet_widgets/daily_diet_item.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class DietTimetableScreen extends StatelessWidget {
   final _oneMonthList = [
@@ -41,7 +45,27 @@ class DietTimetableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
+    ProgressDialog pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      isDismissible: false,
+    );
+    pr.style(
+      message: 'Generating new plan...',
+      borderRadius: 50.0,
+      elevation: 5.0,
+      progressWidget: SpinKitDualRing(
+        color: Color(0xFFFCECC5),
+        size: 40.0,
+      ),
+      backgroundColor: Colors.white,
+      messageTextStyle: TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+      ),
+    );
     final dietPlanData = Provider.of<DietPlanData>(context);
+    final userHealthData = Provider.of<UserHealthData>(context);
 
     // TODO: implement build of DietTimetableScreen
     return Scaffold(
@@ -84,10 +108,11 @@ class DietTimetableScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFFCECC5),
               ),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
-                    '30-Day Diet Plan',
+                  AutoSizeText(
+                    '30-day Diet Plan',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Pacifico',
@@ -95,88 +120,55 @@ class DietTimetableScreen extends StatelessWidget {
                       fontSize: 33.0,
                       color: Color(0xFF07084B),
                     ),
-                    textAlign: TextAlign.left,
+                    minFontSize: 25.0,
+                    maxLines: 2,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
-                        child: Column(
-                          children: <Widget>[
-                            RawMaterialButton(
-                              constraints: BoxConstraints.tightFor(
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                              onPressed: () async {},
-                              elevation: 1.0,
-                              fillColor: Colors.white,
-                              child: Image.asset(
-                                'image/reset.png',
-                                fit: BoxFit.cover,
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                              shape: CircleBorder(
-                                side: BorderSide(
-                                  color: Colors.white,
-                                  width: 2.0,
-                                ),
-                              ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        RawMaterialButton(
+                          constraints: BoxConstraints.tightFor(
+                            width: 40.0,
+                            height: 40.0,
+                          ),
+                          onPressed: () async {
+                            pr.show();
+                            try {
+                              await dietPlanData.resetPlan(userHealthData);
+                              pr.hide().whenComplete(() {});
+                            } catch (e) {
+                              throw e;
+                            }
+                          },
+                          elevation: 1.0,
+                          fillColor: Colors.white,
+                          child: Image.asset(
+                            'image/reset.png',
+                            fit: BoxFit.cover,
+                            width: 40.0,
+                            height: 40.0,
+                          ),
+                          shape: CircleBorder(
+                            side: BorderSide(
+                              color: Colors.white,
+                              width: 2.0,
                             ),
-                            Text(
-                              'Reset',
-                              style: TextStyle(fontSize: 14.0),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 30.0,
-                      ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
-                        child: Column(
-                          children: <Widget>[
-                            RawMaterialButton(
-                              constraints: BoxConstraints.tightFor(
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                              onPressed: () async {},
-                              elevation: 1.0,
-                              fillColor: Colors.white,
-                              child: Image.asset(
-                                'image/alarm_clock.png',
-                                fit: BoxFit.cover,
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                              shape: CircleBorder(
-                                side: BorderSide(
-                                  color: Colors.white,
-                                  width: 2.0,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'Remind',
-                              style: TextStyle(fontSize: 14.0),
-                            ),
-                          ],
+                        Text(
+                          'Reset',
+                          style: TextStyle(fontSize: 14.0),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
                 decoration: BoxDecoration(
                   color: Color(0xFFD3D3D3).withOpacity(.84),
                 ),

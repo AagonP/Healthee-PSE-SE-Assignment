@@ -33,7 +33,6 @@ class _DailyDietItemState extends State<DailyDietItem> {
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: implement DailyDietItem build
     return Container(
       decoration: BoxDecoration(
@@ -70,30 +69,93 @@ class _DailyDietItemState extends State<DailyDietItem> {
             ),
             Row(
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.search),
-                  color: widget._itemColor,
-                  onPressed: () => _clickDailyItem(context),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      RawMaterialButton(
+                        constraints: BoxConstraints.tightFor(
+                          width: 28.0,
+                          height: 28.0,
+                        ),
+                        onPressed: () {
+                          _clickDailyItem(context);
+                        },
+                        elevation: 1.0,
+                        fillColor: widget._backgroundColor,
+                        child: Image.asset(
+                          'image/search.png',
+                          color: widget._itemColor,
+                          fit: BoxFit.cover,
+                          width: 17.0,
+                          height: 17.0,
+                        ),
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: widget._itemColor,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'View',
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          color: widget._itemColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.check_circle),
-                  color: widget._itemColor,
-                  onPressed: () {
-                    setState(() {
-                      if (widget._backgroundColor == Colors.white) {
-                        widget._backgroundColor = Colors.green[100];
-                        widget._itemColor = Colors.green[600];
-                        widget._dietPlanData.checkDay(widget._index - 1);
-                      } else {
-                        widget._backgroundColor = Colors.white;
-                        widget._itemColor = Colors.black;
-                        widget._dietPlanData.uncheckDay(widget._index - 1);
-                      }
-                    });
-                  },
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      RawMaterialButton(
+                        constraints: BoxConstraints.tightFor(
+                          width: 28.0,
+                          height: 28.0,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (widget._backgroundColor == Colors.white) {
+                              widget._backgroundColor = Colors.green[100];
+                              widget._itemColor = Colors.green[600];
+                              widget._dietPlanData.checkDay(widget._index - 1);
+                            } else {
+                              widget._backgroundColor = Colors.white;
+                              widget._itemColor = Colors.black;
+                              widget._dietPlanData
+                                  .uncheckDay(widget._index - 1);
+                            }
+                          });
+                        },
+                        elevation: 1.0,
+                        fillColor: widget._backgroundColor,
+                        child: Image.asset(
+                          'image/correct.png',
+                          color: widget._itemColor,
+                          fit: BoxFit.cover,
+                          width: 17.0,
+                          height: 17.0,
+                        ),
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: widget._itemColor,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Check',
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          color: widget._itemColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             ),
           ],
         ),
