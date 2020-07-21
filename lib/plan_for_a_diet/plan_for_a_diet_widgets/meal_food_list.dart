@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import '../../providers/user_health_data.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,7 @@ class MealFoodList extends StatelessWidget {
     final Widget mealIcon = identifyMealIcon();
 
     final mealSearchList = Provider.of<MealSearchList>(context, listen: false);
+    final userHealthData = Provider.of<UserHealthData>(context, listen: false);
     ProgressDialog pr = ProgressDialog(
       context,
       type: ProgressDialogType.Normal,
@@ -107,9 +109,12 @@ class MealFoodList extends StatelessWidget {
                     onPressed: () async {
                       pr.show();
                       try {
-                        await mealSearchList.getMealsFromTag(_mealTypeIndex == 0
-                            ? 'apple'
-                            : _mealTypeIndex == 1 ? 'beef' : 'cucumber');
+                        await mealSearchList.getMealsFromTag(
+                            userHealthData,
+                            _mealTypeIndex,
+                            _mealTypeIndex == 0
+                                ? 'apple'
+                                : _mealTypeIndex == 1 ? 'beef' : 'cucumber');
                         pr
                             .hide()
                             .whenComplete(() => Navigator.of(context).pushNamed(

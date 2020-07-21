@@ -61,7 +61,7 @@ class MealInfoScreen extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Ingredients per serving',
+                    'Ingredients for ${meal.servingSize} servings',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
