@@ -12,7 +12,9 @@ class MealInfoScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Stack(children: <Widget>[
-                Image.network(meal.imageUrl),
+                meal.imageUrl == null
+                    ? Image.asset('image/wp-header-logo-21.png')
+                    : Image.network(meal.imageUrl),
                 Align(
                   alignment: Alignment(-1.15, -1.0),
                   child: FlatButton(
