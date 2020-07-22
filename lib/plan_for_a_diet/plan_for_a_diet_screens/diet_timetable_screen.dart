@@ -63,7 +63,7 @@ class _DietTimetableScreenState extends State<DietTimetableScreen> {
       ),
       inAsyncCall: _isLoading,
       child: Scaffold(
-        backgroundColor: Color(0xFFD3D3D3).withOpacity(.84),
+        backgroundColor: Color(0xFFF6F7F8),
         body: Container(
           child: Column(
             children: <Widget>[
@@ -166,7 +166,7 @@ class _DietTimetableScreenState extends State<DietTimetableScreen> {
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
                   decoration: BoxDecoration(
-                    color: Color(0xFFD3D3D3).withOpacity(.84),
+                    color: Color(0xFFF6F7F8),
                   ),
                   child: GridView(
                     shrinkWrap: true,

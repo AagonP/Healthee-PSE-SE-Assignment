@@ -2,9 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// Packages for fetching user's health data
+import 'package:provider/provider.dart';
+import '../providers/user_health_data.dart';
+
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // This is for fetching User's Health Data.
+    final userHealthData = Provider.of<UserHealthData>(context);
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -52,6 +59,7 @@ class WelcomePage extends StatelessWidget {
                 if (await FirebaseAuth.instance.currentUser() == null) {
                   Navigator.pushNamed(context, 'LoginRegisterPage');
                 } else {
+                  await userHealthData.getUserHealthData();
                   Navigator.pushNamed(context, 'NavigatePage');
                 }
               },
