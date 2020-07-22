@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../plan_for_a_diet_providers/daily_data.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../providers/user_health_data.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import 'package:provider/provider.dart';
 
