@@ -7,12 +7,7 @@ import '../providers/user_health_data.dart';
 import '../plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
 import '../widgets/checkbox_list_widget.dart';
 
-class HealthDataInputScreen extends StatefulWidget {
-  @override
-  _HealthDataInputScreenState createState() => _HealthDataInputScreenState();
-}
-
-class _HealthDataInputScreenState extends State<HealthDataInputScreen> {
+class HealthDataInputScreen extends StatelessWidget {
   double _userHeight = 0;
 
   double _userWeight = 0;

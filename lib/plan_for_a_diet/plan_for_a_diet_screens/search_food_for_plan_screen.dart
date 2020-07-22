@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import '../../providers/user_health_data.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SearchFoodForPlanScreen extends StatefulWidget {
   @override
@@ -83,6 +84,10 @@ class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
               ];
 
     return ModalProgressHUD(
+      progressIndicator: SpinKitDualRing(
+        color: Color(0xFFFCECC5),
+        size: 40.0,
+      ),
       inAsyncCall: _isLoading,
       child: Scaffold(
         backgroundColor: Color(0xFFF6F7F8),
