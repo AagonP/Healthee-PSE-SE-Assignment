@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+=======
+//import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'scan.dart';
+>>>>>>> Stashed changes
 
-class ScanScreen extends StatefulWidget{
-  @override
-  _Scan createState() => _Scan();
-}
-
-class _Scan extends State<ScanScreen>
+class ScanView extends StatelessWidget
 {
+<<<<<<< Updated upstream
   String res ="";
   String scan="";
 
@@ -17,21 +18,12 @@ class _Scan extends State<ScanScreen>
       res = scan;
     });
   }
+=======
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("QR and Barcode Scan"),),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            FloatingActionButton(
-              child: Text("Scan"),
-              onPressed: (){scanner();},
-            ),
-            Text(res)
-          ],
-        ),
-      ),
-    );
+    // TODO: implement build
+    throw UnimplementedError();
   }
+  
 }
