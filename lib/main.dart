@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           'FilterScreen': (context) => FilterScreen(),
           'FilterHealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
-
+          'ScanView': (context) => ScanView(),
           // The following routes are for Plan For A Diet feature.
           '/health-data-input-screen': (context) => HealthDataInputScreen(),
           '/diet-timetable-screen': (context) => DietTimetableScreen(),
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
           '/meal-info-screen': (context) => MealInfoScreen(),
           '/search-food-for-plan-screen': (context) => SearchFoodForPlanScreen(),
           '/searched-meal-info-screen': (context) => SearchedMealInfoScreen(),
-          'ScanScreen': (context) => ScanScreen(),
+
           // 'HealthInput': (context) => InputText().
         },
       ),
