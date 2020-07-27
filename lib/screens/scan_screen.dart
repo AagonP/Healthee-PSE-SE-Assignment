@@ -20,60 +20,154 @@ class ScanView extends StatelessWidget {
                       : AssetImage('image/wp-header-logo-21.png'),
                 ),
                 Align(
-                  alignment: Alignment(-1.15, -1.0),
-                  child: FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 30.0,
-                      color: Colors.white,
+                    alignment: Alignment(-1.15, -1.0),
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 30.0,
+                        color: Colors.black,
+                      ),
+                    ))
+              ]),
+              SizedBox(height: 10.0),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 15.0,
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: AutoSizeText(
+                    product.name,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                ))]
-              ),
-            SizedBox(
-              height: 10.0
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 15.0,
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText(
-                  product.name,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                ),
-                  minFontSize: 15.0,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0),
-              height: 20.0,
-              width: double.infinity,
-              child: Divider(
-                color: Colors.teal.shade200,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.0),
-              child: Align(
-              alignment: Alignment.centerLeft,
-                 child: Text(
-                'Nutrition Facts',
-                style: TextStyle(fontSize: 20.0),
+                    minFontSize: 15.0,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
-            ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                height: 20.0,
+                width: double.infinity,
+                child: Divider(
+                  color: Colors.teal.shade200,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Nutrition Facts',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                child: Column(children: [
 
-        ],
-
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.star,
+                        color: Color(0xFFEFED99),
+                        size: 20.0,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Calories:",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        product.calories,
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.star,
+                        color: Color(0xFFEFED99),
+                        size: 20.0,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Cholesterol:",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        product.cholesterol,
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.star,
+                        color: Color(0xFFEFED99),
+                        size: 20.0,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Fat:",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        product.fat,
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.star,
+                        color: Color(0xFFEFED99),
+                        size: 20.0,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Protein:",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        product.protein,
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                ]),
+              )
+            ],
           ),
         ),
       ),
@@ -115,6 +209,3 @@ class ContainerRefactor extends StatelessWidget {
     );
   }
 }
-
-
-
