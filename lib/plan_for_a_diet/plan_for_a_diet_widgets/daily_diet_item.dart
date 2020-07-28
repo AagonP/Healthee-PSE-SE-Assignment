@@ -11,8 +11,7 @@ class DailyDietItem extends StatefulWidget {
     if (_dietPlanData.dailyList[_index - 1].isChecked == true) {
       _itemColor = Colors.green[600];
       _backgroundColor = Colors.green[100];
-    }
-    else {
+    } else {
       _itemColor = Colors.black;
       _backgroundColor = Colors.white;
     }
@@ -34,18 +33,26 @@ class _DailyDietItemState extends State<DailyDietItem> {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
-
     // TODO: implement DailyDietItem build
-    return Card(
-      color: widget._backgroundColor,
+    return Container(
+      decoration: BoxDecoration(
+        color: widget._backgroundColor,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 10),
+            blurRadius: 33,
+            color: Color(0xFFD3D3D3).withOpacity(.84),
+          ),
+        ],
+      ),
       child: GridTile(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
+              margin: EdgeInsets.all(5.0),
               alignment: Alignment.center,
-              height: screenHeight / 15,
               child: Text(
                 'Day ${widget._index}',
                 style: TextStyle(
@@ -54,50 +61,104 @@ class _DailyDietItemState extends State<DailyDietItem> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(2.0, 7.0, 2.0, 0.0),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: widget._itemColor,
+              width: double.infinity,
+              child: Divider(
+                thickness: 1.0,
+                color: widget._itemColor,
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      RawMaterialButton(
+                        constraints: BoxConstraints.tightFor(
+                          width: 28.0,
+                          height: 28.0,
+                        ),
+                        onPressed: () {
+                          _clickDailyItem(context);
+                        },
+                        elevation: 1.0,
+                        fillColor: widget._backgroundColor,
+                        child: Image.asset(
+                          'image/search.png',
+                          color: widget._itemColor,
+                          fit: BoxFit.cover,
+                          width: 17.0,
+                          height: 17.0,
+                        ),
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: widget._itemColor,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'View',
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          color: widget._itemColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    color: widget._itemColor,
-                    iconSize: screenWidth / 17,
-                    onPressed: () => _clickDailyItem(context),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      RawMaterialButton(
+                        constraints: BoxConstraints.tightFor(
+                          width: 28.0,
+                          height: 28.0,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (widget._backgroundColor == Colors.white) {
+                              widget._backgroundColor = Colors.green[100];
+                              widget._itemColor = Colors.green[600];
+                              widget._dietPlanData.checkDay(widget._index - 1);
+                            } else {
+                              widget._backgroundColor = Colors.white;
+                              widget._itemColor = Colors.black;
+                              widget._dietPlanData
+                                  .uncheckDay(widget._index - 1);
+                            }
+                          });
+                        },
+                        elevation: 1.0,
+                        fillColor: widget._backgroundColor,
+                        child: Image.asset(
+                          'image/correct.png',
+                          color: widget._itemColor,
+                          fit: BoxFit.cover,
+                          width: 17.0,
+                          height: 17.0,
+                        ),
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: widget._itemColor,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Check',
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          color: widget._itemColor,
+                        ),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: Icon(Icons.check_circle),
-                    color: widget._itemColor,
-                    iconSize: screenWidth / 17,
-                    onPressed: () {
-                      setState(() {
-                        if (widget._backgroundColor == Colors.white) {
-                          widget._backgroundColor = Colors.green[100];
-                          widget._itemColor = Colors.green[600];
-                          widget._dietPlanData.checkDay(widget._index - 1);
-                        } else {
-                          widget._backgroundColor = Colors.white;
-                          widget._itemColor = Colors.black;
-                          widget._dietPlanData.uncheckDay(widget._index - 1);
-                        }
-                      });
-                    },
-                  ),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             ),
           ],
         ),
-      ),
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
       ),
     );
   }

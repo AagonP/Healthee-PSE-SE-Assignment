@@ -130,6 +130,10 @@ class Meal {
     return _ingredients;
   }
 
+  void setServings(int servings) {
+    _servings = servings;
+  }
+
   void setAllForMeal({
     String title,
     int mealType,
@@ -152,8 +156,7 @@ class Meal {
     _servingSize = servingSize;
   }
 
-  void setIngredients(String name, String unit, double amount) {
-  }
+  void setIngredients(String name, String unit, double amount) {}
 }
 
 class DailyData {
@@ -166,6 +169,42 @@ class DailyData {
   bool _isChecked = false;
 
   DailyData(this._index);
+
+  void postDailyMeal(String userOnlineId, int mealType) {
+    String mealTypeName =
+        mealType == 0 ? 'breakfast' : mealType == 1 ? 'lunch' : 'dinner';
+    Map<String, dynamic> mealIngredients = Map();
+    for (int i = 0; i < _threeMeals[mealType]._ingredients.length; i++) {
+      mealIngredients['$i'] = {
+        'name': _threeMeals[mealType]._ingredients[i].name,
+        'amount': _threeMeals[mealType]._ingredients[i].amount,
+        'unit': _threeMeals[mealType]._ingredients[i].unit,
+      };
+    }
+
+    Firestore.instance.collection('users').document(userOnlineId).setData({
+      'dietPlan': {
+        '$_index': {
+          'calory': _calory,
+          'carbohydrate': _carbohydrate,
+          'fat': _fat,
+          'protein': _protein,
+          'isChecked': _isChecked,
+          mealTypeName: {
+            'title': _threeMeals[mealType]._title,
+            'imageUrl': _threeMeals[mealType]._imageUrl,
+            'servings': _threeMeals[mealType]._servings,
+            'servingSize': _threeMeals[mealType]._servingSize,
+            'calory': _threeMeals[mealType]._calory,
+            'carbohydrate': _threeMeals[mealType]._carbohydrate,
+            'fat': _threeMeals[mealType]._fat,
+            'protein': _threeMeals[mealType]._protein,
+            'ingredients': mealIngredients,
+          },
+        }
+      }
+    }, merge: true);
+  }
 
   void _postDailyPlan(String userOnlineId) {
     Map<String, dynamic> breakfastIngredients = Map();
@@ -215,7 +254,7 @@ class DailyData {
             'title': _threeMeals[1]._title,
             'imageUrl': _threeMeals[1]._imageUrl,
             'servings': _threeMeals[1]._servings,
-            'servingSize': _threeMeals[0]._servingSize,
+            'servingSize': _threeMeals[1]._servingSize,
             'calory': _threeMeals[1]._calory,
             'carbohydrate': _threeMeals[1]._carbohydrate,
             'fat': _threeMeals[1]._fat,
@@ -226,7 +265,7 @@ class DailyData {
             'title': _threeMeals[2]._title,
             'imageUrl': _threeMeals[2]._imageUrl,
             'servings': _threeMeals[2]._servings,
-            'servingSize': _threeMeals[0]._servingSize,
+            'servingSize': _threeMeals[2]._servingSize,
             'calory': _threeMeals[2]._calory,
             'carbohydrate': _threeMeals[2]._carbohydrate,
             'fat': _threeMeals[2]._fat,
@@ -653,16 +692,36 @@ class DailyData {
     return _calory;
   }
 
+  set setCalory(double value) {
+    _calory += value;
+    _calory = double.parse(_calory.toStringAsFixed(2));
+  }
+
   double get protein {
     return _protein;
+  }
+
+  set setProtein(double value) {
+    _protein += value;
+    _protein = double.parse(_protein.toStringAsFixed(2));
   }
 
   double get fat {
     return _fat;
   }
 
+  set setFat(double value) {
+    _fat += value;
+    _fat = double.parse(_fat.toStringAsFixed(2));
+  }
+
   double get carbohydrate {
     return _carbohydrate;
+  }
+
+  set setCarbohydrate(double value) {
+    _carbohydrate += value;
+    _carbohydrate = double.parse(_carbohydrate.toStringAsFixed(2));
   }
 
   List<Meal> get threeMeals {

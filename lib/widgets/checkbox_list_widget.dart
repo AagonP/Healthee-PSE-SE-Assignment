@@ -3,14 +3,11 @@ import 'package:provider/provider.dart';
 import '../providers/user_health_data.dart';
 
 class UserExerciseCheckbox extends StatefulWidget {
-
   @override
   _UserExerciseCheckboxState createState() => _UserExerciseCheckboxState();
 }
 
-
 class _UserExerciseCheckboxState extends State<UserExerciseCheckbox> {
-
   String _userExercise = 'Sedentary';
   String _userGender = 'Male';
   bool _userIsMale = true;
@@ -51,7 +48,7 @@ class _UserExerciseCheckboxState extends State<UserExerciseCheckbox> {
                   },
                   items: <String>[
                     'Male',
-                    'Female'
+                    'Female',
                   ].map<DropdownMenuItem<String>>((String option) {
                     return DropdownMenuItem<String>(
                         value: option, child: Text(option));

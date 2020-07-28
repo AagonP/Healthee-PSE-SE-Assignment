@@ -1,20 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pse_assignment/filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
 import 'package:pse_assignment/providers/data_helper.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
-import '../filter_by_illness/filter_by_illness_controllers/saved_products_screen_controller.dart';
-import '../filter_by_illness/filter_by_illness_screens/saved_products_screen.dart';
-import '../models/product.dart';
-import '../providers/user_health_data.dart';
-import '../providers/data_helper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../widgets/delegate_search.dart';
+import '../screens/scan.dart';
 
 int selectedIndex = -1;
 
 class BottomBar extends StatefulWidget {
+  final Function callback;
+  BottomBar({this.callback});
   @override
   _BottomBarState createState() => _BottomBarState();
 }
@@ -52,6 +49,19 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
     Provider.of<Products>(context).updateDisplayProduct('all');
   }
 
+  Future <void> scan() async {
+    await Scan.scanner();
+    print(Scan.key);
+    DocumentSnapshot documentSnapshot = await getEntry(Scan.key);
+    print(documentSnapshot["name"]);
+    ScanProduct product = decodeProduct(documentSnapshot);
+    print(product.name);
+    if (Scan.key != null )
+      {
+        print("-100");
+        Navigator.pushNamed(context, "ScanView",arguments: product);
+      }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -94,6 +104,7 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
               index: 2,
               press: () {
                 print('called $selectedIndex');
+                scan();
                 setState(() {
                   selectedIndex = 2;
                 });
@@ -132,10 +143,8 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
               svgScr: 'image/dice.svg',
               index: 4,
               press: () {
-                setState(() {
-                  selectedIndex = 4;
-                });
-                displayRandom();
+                widget.callback();
+                selectedIndex = 4;
               },
             ),
           ),

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:progress_dialog/progress_dialog.dart';
+import '../../providers/user_health_data.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/meal_search_list.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MealFoodList extends StatelessWidget {
   final String _mealType;
@@ -36,9 +40,42 @@ class MealFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget mealIcon = identifyMealIcon();
+    ProgressDialog pr = ProgressDialog(
+      context,
+      type: ProgressDialogType.Normal,
+      isDismissible: false,
+    );
+    pr.style(
+      message: 'Initializing screen...',
+      borderRadius: 50.0,
+      elevation: 5.0,
+      progressWidget: SpinKitDualRing(
+        color: Color(0xFFFCECC5),
+        size: 40.0,
+      ),
+      backgroundColor: Colors.white,
+      messageTextStyle: TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.bold,
+      ),
+    );
+    final mealSearchList = Provider.of<MealSearchList>(context, listen: false);
+    final userHealthData = Provider.of<UserHealthData>(context, listen: false);
 
     // TODO: implement build
-    return Card(
+    return Container(
+      margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 10),
+            blurRadius: 33,
+            color: Color(0xFFD3D3D3).withOpacity(.84),
+          ),
+        ],
+      ),
       child: Column(
         children: <Widget>[
           Padding(
@@ -57,36 +94,117 @@ class MealFoodList extends StatelessWidget {
                     fontSize: 18.0,
                   ),
                 ),
+                SizedBox(
+                  width: 10.0,
+                ),
                 Expanded(
-                  child: IconButton(
-                    alignment: Alignment.centerLeft,
-                    icon: Icon(
-                      Icons.search,
-                      size: 20.0,
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        RawMaterialButton(
+                          constraints: BoxConstraints.tightFor(
+                            width: 30.0,
+                            height: 30.0,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              '/meal-info-screen',
+                              arguments: _dietPlanData.dailyList[_index - 1]
+                                  .threeMeals[_mealTypeIndex],
+                            );
+                          },
+                          elevation: 1.0,
+                          fillColor: Colors.white,
+                          child: Image.asset(
+                            'image/search.png',
+                            fit: BoxFit.cover,
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                          shape: CircleBorder(
+                            side: BorderSide(
+                              color: Color(0xFFFCECC5),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'View detail',
+                          style: TextStyle(fontSize: 11.0),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        '/meal-info-screen',
-                        arguments: _dietPlanData
-                            .dailyList[_index - 1].threeMeals[_mealTypeIndex],
-                      );
-                    },
                   ),
                 ),
                 Expanded(
-                  child: IconButton(
+                  child: Container(
                     alignment: Alignment.centerRight,
-                    icon: Icon(
-                      Icons.mode_edit,
-                      size: 20.0,
+                    margin: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 10.0),
+                    child: Column(
+                      children: <Widget>[
+                        RawMaterialButton(
+                          constraints: BoxConstraints.tightFor(
+                            width: 30.0,
+                            height: 30.0,
+                          ),
+                          onPressed: () async {
+                            pr.show();
+                            try {
+                              await mealSearchList.getMealsFromTag(
+                                  userHealthData,
+                                  _mealTypeIndex,
+                                  _mealTypeIndex == 0
+                                      ? 'apple'
+                                      : _mealTypeIndex == 1
+                                          ? 'beef'
+                                          : 'cucumber');
+                              pr.hide().whenComplete(
+                                  () => Navigator.of(context).pushNamed(
+                                        '/search-food-for-plan-screen',
+                                        arguments: {
+                                          'index': _index - 1,
+                                          'mealType': _mealTypeIndex,
+                                        },
+                                      ));
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          elevation: 1.0,
+                          fillColor: Colors.white,
+                          child: Image.asset(
+                            'image/edit.png',
+                            fit: BoxFit.cover,
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                          shape: CircleBorder(
+                            side: BorderSide(
+                              color: Color(0xFFFCECC5),
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Edit',
+                          style: TextStyle(fontSize: 11.0),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed('/search-food-for-plan-screen');
-                    },
                   ),
                 ),
               ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15.0),
+            height: 20.0,
+            width: double.infinity,
+            child: Divider(
+              thickness: 1.0,
+              color: Colors.teal.shade200,
             ),
           ),
           Row(
@@ -379,18 +497,18 @@ class MealFoodList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 15.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Image.network(
-                _dietPlanData
-                    .dailyList[_index - 1].threeMeals[_mealTypeIndex].imageUrl,
-              ),
+              borderRadius: BorderRadius.circular(20.0),
+              child: _dietPlanData.dailyList[_index - 1]
+                          .threeMeals[_mealTypeIndex].imageUrl ==
+                      null
+                  ? Image.asset('image/wp-header-logo-21.png')
+                  : Image.network(
+                      _dietPlanData.dailyList[_index - 1]
+                          .threeMeals[_mealTypeIndex].imageUrl,
+                    ),
             ),
           ),
         ],
-      ),
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
       ),
     );
   }
