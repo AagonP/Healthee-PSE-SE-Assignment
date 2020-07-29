@@ -165,6 +165,29 @@ class ScanView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.star,
+                        color: Color(0xFFEFED99),
+                        size: 20.0,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Carbohydrate:",
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        product.carbohydrate,
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ],
+                  ),
                 ]),
               )
             ],
