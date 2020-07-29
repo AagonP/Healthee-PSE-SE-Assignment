@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import '../../providers/user_health_data.dart';
-import 'daily_data.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'daily_plan.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
 
 class MealSearchList with ChangeNotifier {
   List<Meal> _mealSearchList = List();
