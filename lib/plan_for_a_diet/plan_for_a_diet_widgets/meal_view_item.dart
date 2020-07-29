@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import '../plan_for_a_diet_providers/diet_plan_data.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
