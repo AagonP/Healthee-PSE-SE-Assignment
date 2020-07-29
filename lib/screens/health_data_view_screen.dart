@@ -406,7 +406,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userWeight} (g protein/day)',
+                          '${userHealthData.userLBProtein} - ${userHealthData.userUBProtein} (g protein/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -432,7 +432,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userAge} (g fat/day)',
+                          '${userHealthData.userLBFat} - ${userHealthData.userUBFat} (g fat/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -458,7 +458,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userAge} (g carbohydrates/day)',
+                          '${userHealthData.userLBCarbohydrate} - ${userHealthData.userUBCarbohydrate} (g carbohydrates/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
