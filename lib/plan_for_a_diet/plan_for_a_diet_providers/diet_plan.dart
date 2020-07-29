@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'daily_data.dart';
+import 'daily_plan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../providers/user_health_data.dart';
 
-class DietPlanData with ChangeNotifier {
-  List<DailyData> _dailyList = List(30);
+class DietPlan with ChangeNotifier {
+  List<DailyPlan> _dailyList = List(30);
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -53,7 +53,7 @@ class DietPlanData with ChangeNotifier {
     var dietPlanMap = tempMap['dietPlan'];
     if (dietPlanMap != null) {
       for (int i = 0; i < 30; i++) {
-        _dailyList[i] = DailyData(i);
+        _dailyList[i] = DailyPlan(i);
 
         _dailyList[i].setAllForDay(
           calory: dietPlanMap['$i']['calory'],
@@ -208,7 +208,7 @@ class DietPlanData with ChangeNotifier {
 
     String userOnlineId = firebaseUser.uid;
     for (int i = 0; i < 30; i++) {
-      _dailyList[i] = DailyData(i);
+      _dailyList[i] = DailyPlan(i);
       _dailyList[i].setDailyPlan(
         userOnlineId,
         documents,
@@ -279,7 +279,7 @@ class DietPlanData with ChangeNotifier {
     notifyListeners();
   }
 
-  List<DailyData> get dailyList {
+  List<DailyPlan> get dailyList {
     return [..._dailyList];
   }
 }

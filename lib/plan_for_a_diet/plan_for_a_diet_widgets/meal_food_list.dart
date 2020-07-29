@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import '../../providers/user_health_data.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,7 +10,7 @@ class MealFoodList extends StatelessWidget {
   final String _mealType;
   final int _index;
   final int _mealTypeIndex;
-  DietPlanData _dietPlanData;
+  DietPlan _dietPlanData;
 
   MealFoodList(
       this._index, this._mealTypeIndex, this._mealType, this._dietPlanData);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -7,7 +7,7 @@ class MealViewItem extends StatelessWidget {
   final MealSearchList mealSearchList;
   final int _index;
   final int _mealType;
-  final DietPlanData _dietPlanData;
+  final DietPlan _dietPlanData;
 
   @override
   MealViewItem(
