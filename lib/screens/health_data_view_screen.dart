@@ -455,7 +455,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userLBCarbohydrate} - ${userHealthData.userUBCarbohydrate} (g carbohydrates/day)',
+                          '${userHealthData.userLBCarbohydrate} - ${userHealthData.userUBCarbohydrate} (g carbs/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
