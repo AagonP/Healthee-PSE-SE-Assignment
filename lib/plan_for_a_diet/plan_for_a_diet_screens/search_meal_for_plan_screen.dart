@@ -83,6 +83,22 @@ class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
                 'vegetable',
               ];
 
+    Future<void> _chooseMealTag(String chosenOption) async {
+      setState(() {
+        _chosenSearchTag = chosenOption;
+        _isLoading = true;
+      });
+
+      await _mealSearchList.getMealsFromTag(
+        userHealthData,
+        _mealType,
+        _chosenSearchTag,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
     return ModalProgressHUD(
       progressIndicator: SpinKitDualRing(
         color: Color(0xFFFCECC5),
@@ -146,19 +162,7 @@ class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
                               elevation: 15,
                               isExpanded: true,
                               onChanged: (String chosenOption) async {
-                                setState(() {
-                                  _chosenSearchTag = chosenOption;
-                                  _isLoading = true;
-                                });
-
-                                await _mealSearchList.getMealsFromTag(
-                                  userHealthData,
-                                  _mealType,
-                                  _chosenSearchTag,
-                                );
-                                setState(() {
-                                  _isLoading = false;
-                                });
+                                _chooseMealTag(chosenOption);
                               },
                               items: tagList.map<DropdownMenuItem<String>>(
                                   (String option) {
@@ -191,7 +195,12 @@ class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
               ),
             ),
             Expanded(
-              child: MealViewItem(_index, _mealType, dietPlanData, _mealSearchList),
+              child: MealViewItem(
+                _index,
+                _mealType,
+                dietPlanData,
+                _mealSearchList,
+              ),
             ),
           ],
         ),

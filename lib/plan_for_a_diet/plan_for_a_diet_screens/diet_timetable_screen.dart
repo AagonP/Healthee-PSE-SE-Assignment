@@ -49,6 +49,19 @@ class _DietTimetableScreenState extends State<DietTimetableScreen> {
     30
   ];
 
+  Future<void> _clickResetPlan(
+      DietPlan dietPlanData, UserHealthData userHealthData) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await dietPlanData.resetPlan(userHealthData);
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -127,15 +140,10 @@ class _DietTimetableScreenState extends State<DietTimetableScreen> {
                               height: 40.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                _isLoading = true;
-                              });
-
-                              await dietPlanData.resetPlan(userHealthData);
-
-                              setState(() {
-                                _isLoading = false;
-                              });
+                              await _clickResetPlan(
+                                dietPlanData,
+                                userHealthData,
+                              );
                             },
                             elevation: 1.0,
                             fillColor: Colors.white,
