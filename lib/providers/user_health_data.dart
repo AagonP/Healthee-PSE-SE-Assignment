@@ -15,6 +15,12 @@ class UserHealthData with ChangeNotifier {
   double _userDailyCalory = 0;
   double _userLBCalory = 0;
   double _userUBCalory = 0;
+  double _userLBProtein = 0;
+  double _userUBProtein = 0;
+  double _userLBFat = 0;
+  double _userUBFat = 0;
+  double _userLBCarbohydrate = 0;
+  double _userUBCarbohydrate = 0;
 
   ///////////////////////
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,7 +28,7 @@ class UserHealthData with ChangeNotifier {
   // This is the function used to estimate Calories needed for a day,
   // using Harris Benedict equation.
 
-  void _postUserHealthData() async {
+  void postUserHealthData() async {
     var firebaseUser = await _auth.currentUser();
     //Firestore.instance.collection("users").document(firebaseUser.uid).updateData(data);
     await Firestore.instance
@@ -53,7 +59,7 @@ class UserHealthData with ChangeNotifier {
       _userIsMale = tempMap['userHealthData']['userIsMale'];
       _userExerciseFre = tempMap['userHealthData']['userExerciseFreq'];
 
-      _estimateCalory();
+      estimateNutrients();
       _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(4));
       notifyListeners();
 
@@ -63,7 +69,7 @@ class UserHealthData with ChangeNotifier {
     }
   }
 
-  void _estimateCalory() {
+  void estimateNutrients() {
     double temp;
     if (_userIsMale == true) {
       temp = 88.362 +
@@ -94,6 +100,12 @@ class UserHealthData with ChangeNotifier {
     _userLBCalory = double.parse(_userLBCalory.toStringAsFixed(2));
     _userUBCalory = _userDailyCalory * 107.5 / 100;
     _userUBCalory = double.parse(_userUBCalory.toStringAsFixed(2));
+    _userLBProtein = double.parse((_userDailyCalory * 10 / 400).toStringAsFixed(2));
+    _userUBProtein = double.parse((_userDailyCalory * 35 / 400).toStringAsFixed(2));
+    _userLBFat = double.parse((_userDailyCalory * 25 / 900).toStringAsFixed(2));
+    _userUBFat = double.parse((_userDailyCalory * 35 / 900).toStringAsFixed(2));
+    _userLBCarbohydrate = double.parse((_userDailyCalory * 10 / 400).toStringAsFixed(2));
+    _userUBCarbohydrate = double.parse((_userDailyCalory * 35 / 400).toStringAsFixed(2));
   }
 
   double get userHeight {
@@ -128,7 +140,31 @@ class UserHealthData with ChangeNotifier {
     return _userLBCalory;
   }
 
-  void updateHealthData(
+  double get userLBProtein {
+    return _userLBProtein;
+  }
+
+  double get userUBProtein {
+    return _userUBProtein;
+  }
+
+  double get userLBFat {
+    return _userLBFat;
+  }
+
+  double get userUBFat {
+    return _userUBFat;
+  }
+
+  double get userLBCarbohydrate {
+    return _userLBCarbohydrate;
+  }
+
+  double get userUBCarbohydrate {
+    return _userUBCarbohydrate;
+  }
+
+  void setHealthData(
     double userHeight,
     double userWeight,
     int userAge,
@@ -137,12 +173,12 @@ class UserHealthData with ChangeNotifier {
     _userWeight = userWeight;
     _userAge = userAge;
 
-    _estimateCalory();
+    estimateNutrients();
     notifyListeners();
-    _postUserHealthData();
+    postUserHealthData();
   }
 
-  void updateGenderData(
+  void setGenderData(
     bool userIsMale,
   ) {
     _userIsMale = userIsMale;
@@ -150,7 +186,7 @@ class UserHealthData with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateExerciseData(
+  void setExerciseData(
     String userExerciseFre,
   ) {
     _userExerciseFre = userExerciseFre;

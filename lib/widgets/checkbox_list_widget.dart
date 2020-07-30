@@ -43,7 +43,7 @@ class _UserExerciseCheckboxState extends State<UserExerciseCheckbox> {
                     setState(() {
                       _userGender = chosenOption;
                       _userIsMale = _userGender == 'Male' ? true : false;
-                      userHealthData.updateGenderData(_userIsMale);
+                      userHealthData.setGenderData(_userIsMale);
                     });
                   },
                   items: <String>[
@@ -82,7 +82,7 @@ class _UserExerciseCheckboxState extends State<UserExerciseCheckbox> {
                   onChanged: (String chosenOption) {
                     setState(() {
                       _userExercise = chosenOption;
-                      userHealthData.updateExerciseData(_userExercise);
+                      userHealthData.setExerciseData(_userExercise);
                     });
                   },
                   items: <String>[

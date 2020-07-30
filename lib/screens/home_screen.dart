@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/drawer.dart';
 import '../plan_for_a_diet/plan_for_a_diet_logic_handler/plan_a_diet_click_handler.dart';
+import '../providers/products.dart';
+import 'package:provider/provider.dart';
 
 class NavigatePage extends StatefulWidget {
   @override
@@ -31,6 +33,10 @@ class _NavigatePageState extends State<NavigatePage> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void clearProduct() {
+    Provider.of<Products>(context).clearProduct();
   }
 
   @override
@@ -102,6 +108,7 @@ class _NavigatePageState extends State<NavigatePage> {
                       height: 60.0,
                       image: AssetImage('image/recipe.png'),
                     ),
+                    function: clearProduct,
                   ),
                   NavigateTab(
                     color: Colors.red[50],
@@ -147,6 +154,7 @@ class _NavigatePageState extends State<NavigatePage> {
 }
 
 class NavigateTab extends StatelessWidget {
+  final Function function;
   final Color color;
   final String title;
   final String description;
@@ -158,7 +166,8 @@ class NavigateTab extends StatelessWidget {
       @required this.title,
       @required this.navigatePage,
       this.image,
-      this.description});
+      this.description,
+      this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +176,9 @@ class NavigateTab extends StatelessWidget {
         // Condition before moving into Plan A Diet
         if (navigatePage == '/plan-a-diet') {
           PADClickHandler().clickFAP(context);
+        } else if (navigatePage == 'HomePage') {
+          function();
+          Navigator.pushNamed(context, navigatePage);
         } else {
           Navigator.pushNamed(context, navigatePage);
         }

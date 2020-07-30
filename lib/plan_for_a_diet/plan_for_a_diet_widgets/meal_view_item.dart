@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -8,7 +7,7 @@ class MealViewItem extends StatelessWidget {
   final MealSearchList mealSearchList;
   final int _index;
   final int _mealType;
-  final DietPlanData _dietPlanData;
+  final DietPlan _dietPlanData;
 
   @override
   MealViewItem(
@@ -26,7 +25,7 @@ class MealViewItem extends StatelessWidget {
         Color backgroundColor;
         String textString;
         if (mealSearchList.list[index].title ==
-            _dietPlanData.dailyList[_index].threeMeals[_mealType].title) {
+            _dietPlanData.dailyList[_index].dailyMealList[_mealType].title) {
           backgroundColor = Colors.blueAccent;
           textString = 'Current meal';
         } else if (mealSearchList.recommendations[index] == 0) {

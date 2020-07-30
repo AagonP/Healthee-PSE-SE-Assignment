@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:pse_assignment/plan_for_a_diet/plan_for_a_diet_widgets/meal_view_item.dart';
+import '../plan_for_a_diet_widgets/meal_view_item.dart';
 import 'package:provider/provider.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../../providers/user_health_data.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class SearchFoodForPlanScreen extends StatefulWidget {
+class SearchMealForPlanScreen extends StatefulWidget {
   @override
-  _SearchFoodForPlanScreenState createState() =>
-      _SearchFoodForPlanScreenState();
+  _SearchMealForPlanScreenState createState() =>
+      _SearchMealForPlanScreenState();
 }
 
-class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
+class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
   String _chosenSearchTag;
   int _mealType;
   int _index;
@@ -45,7 +45,7 @@ class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
   @override
   Widget build(BuildContext context) {
     final userHealthData = Provider.of<UserHealthData>(context, listen: false);
-    final dietPlanData = Provider.of<DietPlanData>(context, listen: false);
+    final dietPlanData = Provider.of<DietPlan>(context, listen: false);
 
     final List<String> tagList = _mealType == 0
         ? [
@@ -82,6 +82,22 @@ class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
                 'tuna',
                 'vegetable',
               ];
+
+    Future<void> _chooseMealTag(String chosenOption) async {
+      setState(() {
+        _chosenSearchTag = chosenOption;
+        _isLoading = true;
+      });
+
+      await _mealSearchList.getMealsFromTag(
+        userHealthData,
+        _mealType,
+        _chosenSearchTag,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+    }
 
     return ModalProgressHUD(
       progressIndicator: SpinKitDualRing(
@@ -146,19 +162,7 @@ class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
                               elevation: 15,
                               isExpanded: true,
                               onChanged: (String chosenOption) async {
-                                setState(() {
-                                  _chosenSearchTag = chosenOption;
-                                  _isLoading = true;
-                                });
-
-                                await _mealSearchList.getMealsFromTag(
-                                  userHealthData,
-                                  _mealType,
-                                  _chosenSearchTag,
-                                );
-                                setState(() {
-                                  _isLoading = false;
-                                });
+                                _chooseMealTag(chosenOption);
                               },
                               items: tagList.map<DropdownMenuItem<String>>(
                                   (String option) {
@@ -191,7 +195,12 @@ class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
               ),
             ),
             Expanded(
-              child: MealViewItem(_index, _mealType, dietPlanData, _mealSearchList),
+              child: MealViewItem(
+                _index,
+                _mealType,
+                dietPlanData,
+                _mealSearchList,
+              ),
             ),
           ],
         ),

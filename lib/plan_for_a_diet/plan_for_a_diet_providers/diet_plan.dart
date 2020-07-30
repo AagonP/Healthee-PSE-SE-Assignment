@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'daily_data.dart';
+import 'daily_plan.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../providers/user_health_data.dart';
 
-class DietPlanData with ChangeNotifier {
-  List<DailyData> _dailyList = List(30);
+class DietPlan with ChangeNotifier {
+  List<DailyPlan> _dailyList = List(30);
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -53,7 +53,7 @@ class DietPlanData with ChangeNotifier {
     var dietPlanMap = tempMap['dietPlan'];
     if (dietPlanMap != null) {
       for (int i = 0; i < 30; i++) {
-        _dailyList[i] = DailyData(i);
+        _dailyList[i] = DailyPlan(i);
 
         _dailyList[i].setAllForDay(
           calory: dietPlanMap['$i']['calory'],
@@ -63,7 +63,7 @@ class DietPlanData with ChangeNotifier {
           isChecked: dietPlanMap['$i']['isChecked'],
         );
 
-        _dailyList[i].accessMeals[0].setAllForMeal(
+        _dailyList[i].accessMealList[0].setAllForMeal(
               title: dietPlanMap['$i']['breakfast']['title'],
               imageUrl: dietPlanMap['$i']['breakfast']['imageUrl'],
               servings: dietPlanMap['$i']['breakfast']['servings'],
@@ -85,11 +85,11 @@ class DietPlanData with ChangeNotifier {
                   ['amount'],
               unit: dietPlanMap['$i']['breakfast']['ingredients']['$j']['unit'],
             );
-            _dailyList[i].accessMeals[0].accessIngredients.add(tempIngre);
+            _dailyList[i].accessMealList[0].accessIngredients.add(tempIngre);
           }
         }
 
-        _dailyList[i].accessMeals[1].setAllForMeal(
+        _dailyList[i].accessMealList[1].setAllForMeal(
               title: dietPlanMap['$i']['lunch']['title'],
               imageUrl: dietPlanMap['$i']['lunch']['imageUrl'],
               servings: dietPlanMap['$i']['lunch']['servings'],
@@ -110,11 +110,11 @@ class DietPlanData with ChangeNotifier {
               amount: dietPlanMap['$i']['lunch']['ingredients']['$j']['amount'],
               unit: dietPlanMap['$i']['lunch']['ingredients']['$j']['unit'],
             );
-            _dailyList[i].accessMeals[1].accessIngredients.add(tempIngre);
+            _dailyList[i].accessMealList[1].accessIngredients.add(tempIngre);
           }
         }
 
-        _dailyList[i].accessMeals[2].setAllForMeal(
+        _dailyList[i].accessMealList[2].setAllForMeal(
               title: dietPlanMap['$i']['dinner']['title'],
               imageUrl: dietPlanMap['$i']['dinner']['imageUrl'],
               servings: dietPlanMap['$i']['dinner']['servings'],
@@ -136,7 +136,7 @@ class DietPlanData with ChangeNotifier {
                   ['amount'],
               unit: dietPlanMap['$i']['dinner']['ingredients']['$j']['unit'],
             );
-            _dailyList[i].accessMeals[2].accessIngredients.add(tempIngre);
+            _dailyList[i].accessMealList[2].accessIngredients.add(tempIngre);
           }
         }
       }
@@ -208,7 +208,7 @@ class DietPlanData with ChangeNotifier {
 
     String userOnlineId = firebaseUser.uid;
     for (int i = 0; i < 30; i++) {
-      _dailyList[i] = DailyData(i);
+      _dailyList[i] = DailyPlan(i);
       _dailyList[i].setDailyPlan(
         userOnlineId,
         documents,
@@ -231,18 +231,18 @@ class DietPlanData with ChangeNotifier {
     int mealType,
     Meal meal,
   ) async {
-    int servingIndex = _dailyList[index].accessMeals[mealType].servings;
+    int servingIndex = _dailyList[index].accessMealList[mealType].servings;
     _dailyList[index].setCalory =
-        -(_dailyList[index].accessMeals[mealType].calory * servingIndex);
+        -(_dailyList[index].accessMealList[mealType].calory * servingIndex);
     _dailyList[index].setProtein =
-        -(_dailyList[index].accessMeals[mealType].protein * servingIndex);
+        -(_dailyList[index].accessMealList[mealType].protein * servingIndex);
     _dailyList[index].setFat =
-        -(_dailyList[index].accessMeals[mealType].fat * servingIndex);
+        -(_dailyList[index].accessMealList[mealType].fat * servingIndex);
     _dailyList[index].setCarbohydrate =
-        -(_dailyList[index].accessMeals[mealType].carbohydrate * servingIndex);
+        -(_dailyList[index].accessMealList[mealType].carbohydrate * servingIndex);
 
-    _dailyList[index].accessMeals[mealType].accessIngredients.clear();
-    _dailyList[index].accessMeals[mealType].setAllForMeal(
+    _dailyList[index].accessMealList[mealType].accessIngredients.clear();
+    _dailyList[index].accessMealList[mealType].setAllForMeal(
           title: meal.title,
           imageUrl: meal.imageUrl,
           servings: meal.servings,
@@ -254,15 +254,15 @@ class DietPlanData with ChangeNotifier {
           servingSize: meal.servingSize,
         );
 
-    servingIndex = _dailyList[index].accessMeals[mealType].servings;
+    servingIndex = _dailyList[index].accessMealList[mealType].servings;
     _dailyList[index].setCalory =
-        (_dailyList[index].accessMeals[mealType].calory * servingIndex);
+        (_dailyList[index].accessMealList[mealType].calory * servingIndex);
     _dailyList[index].setProtein =
-        (_dailyList[index].accessMeals[mealType].protein * servingIndex);
+        (_dailyList[index].accessMealList[mealType].protein * servingIndex);
     _dailyList[index].setFat =
-        (_dailyList[index].accessMeals[mealType].fat * servingIndex);
+        (_dailyList[index].accessMealList[mealType].fat * servingIndex);
     _dailyList[index].setCarbohydrate =
-        (_dailyList[index].accessMeals[mealType].carbohydrate * servingIndex);
+        (_dailyList[index].accessMealList[mealType].carbohydrate * servingIndex);
 
     for (int i = 0; i < meal.ingredients.length; i++) {
       Ingredient tempIngre = Ingredient();
@@ -271,7 +271,7 @@ class DietPlanData with ChangeNotifier {
         amount: meal.ingredients[i].amount,
         unit: meal.ingredients[i].unit,
       );
-      _dailyList[index].accessMeals[mealType].accessIngredients.add(tempIngre);
+      _dailyList[index].accessMealList[mealType].accessIngredients.add(tempIngre);
     }
 
     var firebaseUser = await _auth.currentUser();
@@ -279,7 +279,11 @@ class DietPlanData with ChangeNotifier {
     notifyListeners();
   }
 
-  List<DailyData> get dailyList {
+  List<DailyPlan> get dailyList {
     return [..._dailyList];
+  }
+
+  List<DailyPlan> get accessDailyList {
+    return _dailyList;
   }
 }

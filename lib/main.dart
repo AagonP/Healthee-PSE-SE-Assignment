@@ -20,11 +20,11 @@ import 'package:flutter/services.dart';
 // The following are all the files supporting for Plan For A Diet.
 import 'screens/health_data_input_screen.dart';
 import 'screens/health_data_view_screen.dart';
-import './plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
+import './plan_for_a_diet/plan_for_a_diet_providers/diet_plan.dart';
 import './plan_for_a_diet/plan_for_a_diet_providers/meal_search_list.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/daily_detail_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/diet_timetable_screen.dart';
-import './plan_for_a_diet/plan_for_a_diet_screens/search_food_for_plan_screen.dart';
+import './plan_for_a_diet/plan_for_a_diet_screens/search_meal_for_plan_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/searched_meal_info_screen.dart';
 import './plan_for_a_diet/plan_for_a_diet_screens/meal_info_screen.dart';
 import 'providers/user_health_data.dart';
@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserHealthData>(
           builder: (context) => UserHealthData(),
         ),
-        ChangeNotifierProvider<DietPlanData>(
-          builder: (context) => DietPlanData(),
+        ChangeNotifierProvider<DietPlan>(
+          builder: (context) => DietPlan(),
         ),
         ChangeNotifierProvider<MealSearchList>(
           builder: (context) => MealSearchList(),
@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
           '/daily-detail-screen': (context) => DailyDetailScreen(),
           '/health-data-view-screen': (context) => HealthDataViewScreen(),
           '/meal-info-screen': (context) => MealInfoScreen(),
-          '/search-food-for-plan-screen': (context) => SearchFoodForPlanScreen(),
+          '/search-food-for-plan-screen': (context) => SearchMealForPlanScreen(),
           '/searched-meal-info-screen': (context) => SearchedMealInfoScreen(),
 
           // 'HealthInput': (context) => InputText().

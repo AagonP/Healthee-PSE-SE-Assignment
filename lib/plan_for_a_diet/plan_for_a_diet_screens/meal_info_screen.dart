@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_providers/daily_data.dart';
+import '../plan_for_a_diet_providers/daily_plan.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import '../plan_for_a_diet_widgets/container_refactor.dart';
 
 class MealInfoScreen extends StatelessWidget {
   @override
@@ -148,22 +149,22 @@ class MealInfoScreen extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  _ContainerRefactor(
+                  ContainerRefactor(
                     title: 'Calories: ',
                     amount: double.parse(meal.calory.toStringAsFixed(2)),
                     unit: ' (calories)',
                   ),
-                  _ContainerRefactor(
+                  ContainerRefactor(
                     title: 'Protein: ',
                     amount: double.parse(meal.protein.toStringAsFixed(2)),
                     unit: ' (g)',
                   ),
-                  _ContainerRefactor(
+                  ContainerRefactor(
                     title: 'Fat: ',
                     amount: double.parse(meal.fat.toStringAsFixed(2)),
                     unit: ' (g)',
                   ),
-                  _ContainerRefactor(
+                  ContainerRefactor(
                     title: 'Carbohydrate: ',
                     amount: double.parse(meal.carbohydrate.toStringAsFixed(2)),
                     unit: ' (g)',
@@ -216,41 +217,6 @@ class MealInfoScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ContainerRefactor extends StatelessWidget {
-  final String title;
-  final double amount;
-  final String unit;
-
-  _ContainerRefactor(
-      {@required this.title, @required this.amount, @required this.unit});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Icon(
-            Icons.star,
-            color: Colors.yellow,
-            size: 20.0,
-          ),
-          SizedBox(
-            width: 5.0,
-          ),
-          Expanded(
-            child: Text(
-              title + amount.toString() + unit,
-              style: TextStyle(fontSize: 18.0),
-            ),
-          ),
-        ],
       ),
     );
   }

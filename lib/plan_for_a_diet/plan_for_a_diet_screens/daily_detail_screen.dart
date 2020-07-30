@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import 'package:provider/provider.dart';
 import '../plan_for_a_diet_widgets/meal_food_list.dart';
 
@@ -9,7 +9,7 @@ class DailyDetailScreen extends StatelessWidget {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     final index = routeArgs['index'];
-    final dietPlanData = Provider.of<DietPlanData>(
+    final dietPlanData = Provider.of<DietPlan>(
       context,
     );
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 
 class DailyDietItem extends StatefulWidget {
   final int _index;
   Color _itemColor = Colors.black;
   Color _backgroundColor = Colors.white;
-  DietPlanData _dietPlanData;
+  DietPlan _dietPlanData;
 
   DailyDietItem(this._index, this._dietPlanData) {
     if (_dietPlanData.dailyList[_index - 1].isChecked == true) {
@@ -29,6 +29,20 @@ class _DailyDietItemState extends State<DailyDietItem> {
         'index': widget._index,
       },
     );
+  }
+
+  void _clickCheckDay() {
+    setState(() {
+      if (widget._backgroundColor == Colors.white) {
+        widget._backgroundColor = Colors.green[100];
+        widget._itemColor = Colors.green[600];
+        widget._dietPlanData.checkDay(widget._index - 1);
+      } else {
+        widget._backgroundColor = Colors.white;
+        widget._itemColor = Colors.black;
+        widget._dietPlanData.uncheckDay(widget._index - 1);
+      }
+    });
   }
 
   @override
@@ -115,18 +129,7 @@ class _DailyDietItemState extends State<DailyDietItem> {
                           height: 28.0,
                         ),
                         onPressed: () {
-                          setState(() {
-                            if (widget._backgroundColor == Colors.white) {
-                              widget._backgroundColor = Colors.green[100];
-                              widget._itemColor = Colors.green[600];
-                              widget._dietPlanData.checkDay(widget._index - 1);
-                            } else {
-                              widget._backgroundColor = Colors.white;
-                              widget._itemColor = Colors.black;
-                              widget._dietPlanData
-                                  .uncheckDay(widget._index - 1);
-                            }
-                          });
+                          _clickCheckDay();
                         },
                         elevation: 1.0,
                         fillColor: widget._backgroundColor,

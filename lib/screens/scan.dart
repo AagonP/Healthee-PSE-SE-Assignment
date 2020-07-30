@@ -18,6 +18,7 @@ class ScanProduct {
   final String fat;
   final String image;
   final String protein;
+  final String carbohydrate;
   // final List<String> ingredients;
   ScanProduct(
       {this.name,
@@ -25,7 +26,8 @@ class ScanProduct {
         this.cholesterol,
         this.fat,
         this.image,
-        this.protein
+        this.protein,
+        this.carbohydrate
       }
       );
   Future<Map<String, dynamic>> toJson() async => {
@@ -34,7 +36,8 @@ class ScanProduct {
     'image': this.image,
     'cholesterol': this.cholesterol,
     'protein': this.protein,
-    'fat': this.fat
+    'fat': this.fat,
+    'carbohydrate': this.carbohydrate
   };
 }
 
@@ -46,13 +49,15 @@ ScanProduct decodeProduct(dynamic json)
   String fat = json["fat"];
   String image = json["image"];
   String protein = json["protein"];
+  String carbohydrate = json["carbohydrate"];
   ScanProduct product = ScanProduct(
     name: name,
     calories: calories,
     cholesterol: cholesterol,
     fat: fat,
     image: image,
-    protein: protein
+    protein: protein,
+    carbohydrate: carbohydrate
   );
   return product;
 }

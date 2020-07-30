@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 
@@ -130,7 +129,7 @@ class Meal {
     return _ingredients;
   }
 
-  void setServings(int servings) {
+  void setServingsOnly(int servings) {
     _servings = servings;
   }
 
@@ -156,29 +155,28 @@ class Meal {
     _servingSize = servingSize;
   }
 
-  void setIngredients(String name, String unit, double amount) {}
 }
 
-class DailyData {
+class DailyPlan {
   int _index;
   double _calory = 0;
   double _protein = 0;
   double _fat = 0;
   double _carbohydrate = 0;
-  List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
+  List<Meal> _dailyMealList = List<Meal>.generate(3, (index) => Meal());
   bool _isChecked = false;
 
-  DailyData(this._index);
+  DailyPlan(this._index);
 
   void postDailyMeal(String userOnlineId, int mealType) {
     String mealTypeName =
         mealType == 0 ? 'breakfast' : mealType == 1 ? 'lunch' : 'dinner';
     Map<String, dynamic> mealIngredients = Map();
-    for (int i = 0; i < _threeMeals[mealType]._ingredients.length; i++) {
+    for (int i = 0; i < _dailyMealList[mealType]._ingredients.length; i++) {
       mealIngredients['$i'] = {
-        'name': _threeMeals[mealType]._ingredients[i].name,
-        'amount': _threeMeals[mealType]._ingredients[i].amount,
-        'unit': _threeMeals[mealType]._ingredients[i].unit,
+        'name': _dailyMealList[mealType]._ingredients[i].name,
+        'amount': _dailyMealList[mealType]._ingredients[i].amount,
+        'unit': _dailyMealList[mealType]._ingredients[i].unit,
       };
     }
 
@@ -191,14 +189,14 @@ class DailyData {
           'protein': _protein,
           'isChecked': _isChecked,
           mealTypeName: {
-            'title': _threeMeals[mealType]._title,
-            'imageUrl': _threeMeals[mealType]._imageUrl,
-            'servings': _threeMeals[mealType]._servings,
-            'servingSize': _threeMeals[mealType]._servingSize,
-            'calory': _threeMeals[mealType]._calory,
-            'carbohydrate': _threeMeals[mealType]._carbohydrate,
-            'fat': _threeMeals[mealType]._fat,
-            'protein': _threeMeals[mealType]._protein,
+            'title': _dailyMealList[mealType]._title,
+            'imageUrl': _dailyMealList[mealType]._imageUrl,
+            'servings': _dailyMealList[mealType]._servings,
+            'servingSize': _dailyMealList[mealType]._servingSize,
+            'calory': _dailyMealList[mealType]._calory,
+            'carbohydrate': _dailyMealList[mealType]._carbohydrate,
+            'fat': _dailyMealList[mealType]._fat,
+            'protein': _dailyMealList[mealType]._protein,
             'ingredients': mealIngredients,
           },
         }
@@ -208,27 +206,27 @@ class DailyData {
 
   void _postDailyPlan(String userOnlineId) {
     Map<String, dynamic> breakfastIngredients = Map();
-    for (int i = 0; i < _threeMeals[0]._ingredients.length; i++) {
+    for (int i = 0; i < _dailyMealList[0]._ingredients.length; i++) {
       breakfastIngredients['$i'] = {
-        'name': _threeMeals[0]._ingredients[i].name,
-        'amount': _threeMeals[0]._ingredients[i].amount,
-        'unit': _threeMeals[0]._ingredients[i].unit,
+        'name': _dailyMealList[0]._ingredients[i].name,
+        'amount': _dailyMealList[0]._ingredients[i].amount,
+        'unit': _dailyMealList[0]._ingredients[i].unit,
       };
     }
     Map<String, dynamic> lunchIngredients = Map();
-    for (int i = 0; i < _threeMeals[1]._ingredients.length; i++) {
+    for (int i = 0; i < _dailyMealList[1]._ingredients.length; i++) {
       lunchIngredients['$i'] = {
-        'name': _threeMeals[1]._ingredients[i].name,
-        'amount': _threeMeals[1]._ingredients[i].amount,
-        'unit': _threeMeals[1]._ingredients[i].unit,
+        'name': _dailyMealList[1]._ingredients[i].name,
+        'amount': _dailyMealList[1]._ingredients[i].amount,
+        'unit': _dailyMealList[1]._ingredients[i].unit,
       };
     }
     Map<String, dynamic> dinnerIngredients = Map();
-    for (int i = 0; i < _threeMeals[2]._ingredients.length; i++) {
+    for (int i = 0; i < _dailyMealList[2]._ingredients.length; i++) {
       dinnerIngredients['$i'] = {
-        'name': _threeMeals[2]._ingredients[i].name,
-        'amount': _threeMeals[2]._ingredients[i].amount,
-        'unit': _threeMeals[2]._ingredients[i].unit,
+        'name': _dailyMealList[2]._ingredients[i].name,
+        'amount': _dailyMealList[2]._ingredients[i].amount,
+        'unit': _dailyMealList[2]._ingredients[i].unit,
       };
     }
     Firestore.instance.collection('users').document(userOnlineId).setData({
@@ -240,36 +238,36 @@ class DailyData {
           'protein': _protein,
           'isChecked': _isChecked,
           'breakfast': {
-            'title': _threeMeals[0]._title,
-            'imageUrl': _threeMeals[0]._imageUrl,
-            'servings': _threeMeals[0]._servings,
-            'servingSize': _threeMeals[0]._servingSize,
-            'calory': _threeMeals[0]._calory,
-            'carbohydrate': _threeMeals[0]._carbohydrate,
-            'fat': _threeMeals[0]._fat,
-            'protein': _threeMeals[0]._protein,
+            'title': _dailyMealList[0]._title,
+            'imageUrl': _dailyMealList[0]._imageUrl,
+            'servings': _dailyMealList[0]._servings,
+            'servingSize': _dailyMealList[0]._servingSize,
+            'calory': _dailyMealList[0]._calory,
+            'carbohydrate': _dailyMealList[0]._carbohydrate,
+            'fat': _dailyMealList[0]._fat,
+            'protein': _dailyMealList[0]._protein,
             'ingredients': breakfastIngredients,
           },
           'lunch': {
-            'title': _threeMeals[1]._title,
-            'imageUrl': _threeMeals[1]._imageUrl,
-            'servings': _threeMeals[1]._servings,
-            'servingSize': _threeMeals[1]._servingSize,
-            'calory': _threeMeals[1]._calory,
-            'carbohydrate': _threeMeals[1]._carbohydrate,
-            'fat': _threeMeals[1]._fat,
-            'protein': _threeMeals[1]._protein,
+            'title': _dailyMealList[1]._title,
+            'imageUrl': _dailyMealList[1]._imageUrl,
+            'servings': _dailyMealList[1]._servings,
+            'servingSize': _dailyMealList[1]._servingSize,
+            'calory': _dailyMealList[1]._calory,
+            'carbohydrate': _dailyMealList[1]._carbohydrate,
+            'fat': _dailyMealList[1]._fat,
+            'protein': _dailyMealList[1]._protein,
             'ingredients': lunchIngredients,
           },
           'dinner': {
-            'title': _threeMeals[2]._title,
-            'imageUrl': _threeMeals[2]._imageUrl,
-            'servings': _threeMeals[2]._servings,
-            'servingSize': _threeMeals[2]._servingSize,
-            'calory': _threeMeals[2]._calory,
-            'carbohydrate': _threeMeals[2]._carbohydrate,
-            'fat': _threeMeals[2]._fat,
-            'protein': _threeMeals[2]._protein,
+            'title': _dailyMealList[2]._title,
+            'imageUrl': _dailyMealList[2]._imageUrl,
+            'servings': _dailyMealList[2]._servings,
+            'servingSize': _dailyMealList[2]._servingSize,
+            'calory': _dailyMealList[2]._calory,
+            'carbohydrate': _dailyMealList[2]._carbohydrate,
+            'fat': _dailyMealList[2]._fat,
+            'protein': _dailyMealList[2]._protein,
             'ingredients': dinnerIngredients,
           },
         }
@@ -372,7 +370,7 @@ class DailyData {
       double mealCalory = recipeJson['nutrition']['nutrients'][0]['amount'];
 
       if (breakfastLBCal <= mealCalory * (breakfastUBCal ~/ mealCalory)) {
-        _threeMeals[0].setAllForMeal(
+        _dailyMealList[0].setAllForMeal(
           title: recipeJson['title'],
           mealType: 0,
           imageUrl: recipeJson['image'],
@@ -391,7 +389,7 @@ class DailyData {
             amount: recipeJson['extendedIngredients'][i]['amount'],
             unit: recipeJson['extendedIngredients'][i]['unit'],
           );
-          _threeMeals[0]._ingredients.add(tempIngre);
+          _dailyMealList[0]._ingredients.add(tempIngre);
         }
         break;
       }
@@ -479,7 +477,7 @@ class DailyData {
       double mealCalory = recipeJson['nutrition']['nutrients'][0]['amount'];
 
       if (lunchLBCal <= mealCalory * (lunchUBCal ~/ mealCalory)) {
-        _threeMeals[1].setAllForMeal(
+        _dailyMealList[1].setAllForMeal(
           title: recipeJson['title'],
           mealType: 1,
           imageUrl: recipeJson['image'],
@@ -498,7 +496,7 @@ class DailyData {
             amount: recipeJson['extendedIngredients'][i]['amount'],
             unit: recipeJson['extendedIngredients'][i]['unit'],
           );
-          _threeMeals[1]._ingredients.add(tempIngre);
+          _dailyMealList[1]._ingredients.add(tempIngre);
         }
         break;
       }
@@ -599,7 +597,7 @@ class DailyData {
       double mealCalory = recipeJson['nutrition']['nutrients'][0]['amount'];
 
       if (dinnerLBCal <= mealCalory * (dinnerUBCal ~/ mealCalory)) {
-        _threeMeals[2].setAllForMeal(
+        _dailyMealList[2].setAllForMeal(
           title: recipeJson['title'],
           mealType: 2,
           imageUrl: recipeJson['image'],
@@ -618,7 +616,7 @@ class DailyData {
             amount: recipeJson['extendedIngredients'][i]['amount'],
             unit: recipeJson['extendedIngredients'][i]['unit'],
           );
-          _threeMeals[2]._ingredients.add(tempIngre);
+          _dailyMealList[2]._ingredients.add(tempIngre);
         }
         break;
       }
@@ -665,11 +663,11 @@ class DailyData {
     );
 
     for (int i = 0; i < 3; i++) {
-      int servings = _threeMeals[i]._servings;
-      _calory += _threeMeals[i]._calory * servings;
-      _fat += _threeMeals[i]._fat * servings;
-      _carbohydrate += _threeMeals[i]._carbohydrate * servings;
-      _protein += _threeMeals[i]._protein * servings;
+      int servings = _dailyMealList[i]._servings;
+      _calory += _dailyMealList[i]._calory * servings;
+      _fat += _dailyMealList[i]._fat * servings;
+      _carbohydrate += _dailyMealList[i]._carbohydrate * servings;
+      _protein += _dailyMealList[i]._protein * servings;
     }
     _calory = double.parse(_calory.toStringAsFixed(2));
     _fat = double.parse(_fat.toStringAsFixed(2));
@@ -724,15 +722,15 @@ class DailyData {
     _carbohydrate = double.parse(_carbohydrate.toStringAsFixed(2));
   }
 
-  List<Meal> get threeMeals {
-    return [..._threeMeals];
+  List<Meal> get dailyMealList {
+    return [..._dailyMealList];
   }
 
   bool get isChecked {
     return _isChecked;
   }
 
-  List<Meal> get accessMeals {
-    return _threeMeals;
+  List<Meal> get accessMealList {
+    return _dailyMealList;
   }
 }

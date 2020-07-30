@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../../providers/user_health_data.dart';
 import 'package:provider/provider.dart';
 import '../plan_for_a_diet_widgets/daily_diet_item.dart';
@@ -49,10 +49,23 @@ class _DietTimetableScreenState extends State<DietTimetableScreen> {
     30
   ];
 
+  Future<void> _clickResetPlan(
+      DietPlan dietPlanData, UserHealthData userHealthData) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await dietPlanData.resetPlan(userHealthData);
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-    final dietPlanData = Provider.of<DietPlanData>(context);
+    final dietPlanData = Provider.of<DietPlan>(context);
     final userHealthData = Provider.of<UserHealthData>(context);
 
     // TODO: implement build of DietTimetableScreen
@@ -127,15 +140,10 @@ class _DietTimetableScreenState extends State<DietTimetableScreen> {
                               height: 40.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                _isLoading = true;
-                              });
-
-                              await dietPlanData.resetPlan(userHealthData);
-
-                              setState(() {
-                                _isLoading = false;
-                              });
+                              await _clickResetPlan(
+                                dietPlanData,
+                                userHealthData,
+                              );
                             },
                             elevation: 1.0,
                             fillColor: Colors.white,
