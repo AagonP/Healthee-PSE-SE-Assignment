@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pse_assignment/providers/data_helper.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
+import '../screens/scan.dart';
 
 int selectedIndex = -1;
 
@@ -20,7 +22,19 @@ class _BottomBarState extends State<BottomBar> {
     Provider.of<Products>(context).clearProduct();
     await foodData.getRandomProduct(context);
   }
-
+  Future <void> scan() async {
+    await Scan.scanner();
+    print(Scan.key);
+    DocumentSnapshot documentSnapshot = await getEntry(Scan.key);
+    print(documentSnapshot["name"]);
+    ScanProduct product = decodeProduct(documentSnapshot);
+    print(product.name);
+    if (Scan.key != null )
+      {
+        print("-100");
+        Navigator.pushNamed(context, "ScanView",arguments: product);
+      }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,6 +76,7 @@ class _BottomBarState extends State<BottomBar> {
               index: 2,
               press: () {
                 print('called $selectedIndex');
+                scan();
                 setState(() {
                   selectedIndex = 2;
                 });

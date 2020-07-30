@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../../providers/user_health_data.dart';
 
 class PADClickHandler {
@@ -11,7 +11,7 @@ class PADClickHandler {
     BuildContext context,
   ) async {
     final userHealthData = Provider.of<UserHealthData>(context, listen: false);
-    final dietPlanData = Provider.of<DietPlanData>(context, listen: false);
+    final dietPlanData = Provider.of<DietPlan>(context, listen: false);
 
     ProgressDialog pr = ProgressDialog(
       context,

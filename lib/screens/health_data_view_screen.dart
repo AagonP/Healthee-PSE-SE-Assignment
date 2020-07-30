@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:progress_dialog/progress_dialog.dart';
-
 import '../providers/user_health_data.dart';
-import '../plan_for_a_diet/plan_for_a_diet_providers/diet_plan_data.dart';
 import '../widgets/checkbox_list_widget.dart';
 
 class HealthDataViewScreen extends StatelessWidget {
@@ -380,7 +377,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userDailyCalory} (calories/day)',
+                          '${userHealthData.userLBCalory} - ${userHealthData.userUBCalory} (calories/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -406,7 +403,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userWeight} (g protein/day)',
+                          '${userHealthData.userLBProtein} - ${userHealthData.userUBProtein} (g protein/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -432,7 +429,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userAge} (g fat/day)',
+                          '${userHealthData.userLBFat} - ${userHealthData.userUBFat} (g fat/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),
@@ -458,7 +455,7 @@ class HealthDataViewScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          '${userHealthData.userAge} (g carbohydrates/day)',
+                          '${userHealthData.userLBCarbohydrate} - ${userHealthData.userUBCarbohydrate} (g carbs/day)',
                           style: TextStyle(
                             fontSize: 18,
                           ),

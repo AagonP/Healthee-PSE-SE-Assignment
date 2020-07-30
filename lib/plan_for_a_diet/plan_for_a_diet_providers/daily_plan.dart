@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 
@@ -159,7 +158,7 @@ class Meal {
   void setIngredients(String name, String unit, double amount) {}
 }
 
-class DailyData {
+class DailyPlan {
   int _index;
   double _calory = 0;
   double _protein = 0;
@@ -168,7 +167,7 @@ class DailyData {
   List<Meal> _threeMeals = List<Meal>.generate(3, (index) => Meal());
   bool _isChecked = false;
 
-  DailyData(this._index);
+  DailyPlan(this._index);
 
   void postDailyMeal(String userOnlineId, int mealType) {
     String mealTypeName =

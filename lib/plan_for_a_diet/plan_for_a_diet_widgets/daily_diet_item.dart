@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../plan_for_a_diet_providers/diet_plan_data.dart';
+import '../plan_for_a_diet_providers/diet_plan.dart';
 
 class DailyDietItem extends StatefulWidget {
   final int _index;
   Color _itemColor = Colors.black;
   Color _backgroundColor = Colors.white;
-  DietPlanData _dietPlanData;
+  DietPlan _dietPlanData;
 
   DailyDietItem(this._index, this._dietPlanData) {
     if (_dietPlanData.dailyList[_index - 1].isChecked == true) {
