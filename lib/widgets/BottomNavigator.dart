@@ -6,6 +6,11 @@ import 'package:pse_assignment/providers/data_helper.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
 import '../screens/scan.dart';
+import '../filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
+import '../filter_by_illness/filter_by_illness_controllers/saved_products_screen_controller.dart';
+import '../models/product.dart';
+import '../providers/user_health_data.dart';
+import '../filter_by_illness/filter_by_illness_screens/saved_products_screen.dart';
 
 int selectedIndex = -1;
 
@@ -25,6 +30,7 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
   }
 
   void autoGenerateProduct(BuildContext context) async {
+    var searchKey = 'apple';
     String key = searchKey;
     print(key);
     if (searchKey == null) return;
