@@ -135,7 +135,8 @@ class _LoginPageState extends State<LoginPage> {
                                 try {
                                   final user =
                                       await _auth.signInWithEmailAndPassword(
-                                          email: email, password: password);
+                                          email: email.trim(),
+                                          password: password);
                                   var isFirstLogin =
                                       await userHealthData.getUserHealthData();
                                   if (user != null) {
