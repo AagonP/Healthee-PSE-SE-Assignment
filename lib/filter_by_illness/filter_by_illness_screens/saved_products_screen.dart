@@ -23,7 +23,7 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
       duration: Duration(milliseconds: 500),
     );
     final List<Product> _savedProducts =
-        Provider.of<SavedProducts>(context).savedProducts;
+        Provider.of<SavedProducts>(context).savedProducts.toSet().toList();
     
 
     return Scaffold(
