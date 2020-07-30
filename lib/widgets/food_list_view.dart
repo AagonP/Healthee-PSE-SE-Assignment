@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -108,86 +107,3 @@ class FoodListView extends StatelessWidget {
     );
   }
 }
-
-//Stack(
-//children: <Widget>[
-//Column(
-////crossAxisAlignment: CrossAxisAlignment.stretch,
-//children: <Widget>[
-//Container(
-//decoration: BoxDecoration(
-//color: Colors.yellowAccent,
-//),
-//margin: EdgeInsets.all(5),
-//child: Column(
-//children: <Widget>[
-//GestureDetector(
-//onTap: () {
-//Navigator.pushNamed(context, 'FoodInfoScreen',
-//arguments: _list.elementAt(index));
-//},
-//// slide image function here
-//child: Slidable(
-//actionPane: SlidableDrawerActionPane(),
-//actionExtentRatio: 0.25,
-//secondaryActions: <Widget>[
-//IconSlideAction(
-//caption: 'Add',
-//color: Colors.green,
-//icon: Icons.add,
-//onTap: () {
-//bool _isDuplicated = false;
-//Provider.of<Products>(context)
-//    .filteringProducts
-//    .forEach((element) {
-//if (element.name ==
-//_list.elementAt(index).name)
-//_isDuplicated = true;
-//});
-//if (!_isDuplicated) {
-//Scaffold.of(context).showSnackBar(
-//addProductToFilteringListSnackBar);
-//Provider.of<Products>(context)
-//    .addFilteringProduct(
-//_list.elementAt(index));
-//}
-//},
-//),
-//],
-//child: ClipRRect(
-//borderRadius: BorderRadius.circular(20.0),
-//child: (_list.elementAt(index).photoURL != null)
-//? Image.network(
-//_list.elementAt(index).photoURL,
-//)
-//: Container(
-//height: 90.0,
-//color: Colors.white,
-//),
-//),
-//),
-//),
-//Row(
-//children: <Widget>[
-//Expanded(
-//child: Container(
-//padding: EdgeInsets.symmetric(
-//vertical: 0, horizontal: 5),
-//child: AutoSizeText(
-//_list.elementAt(index).name,
-//style: TextStyle(fontSize: 15.0),
-//minFontSize: 10.0,
-//maxLines: 2,
-//overflow: TextOverflow.ellipsis,
-//),
-//),
-//),
-//],
-//),
-//],
-//),
-//),
-//],
-//),
-//],
-//),
