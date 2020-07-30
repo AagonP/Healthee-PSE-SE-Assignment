@@ -93,6 +93,21 @@ class ServingDisplayState extends State<ServingDisplay> {
     );
   }
 
+  void _clickSaveMeal() {
+    if (widget._tempServings == 0) {
+      _handleMissingServings(context);
+    } else {
+      widget._meal.setServingsOnly(widget._tempServings);
+      _handleFulfilledServings(
+        context,
+        widget._dietPlanData,
+        widget._index,
+        widget._mealType,
+        widget._meal,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -209,18 +224,7 @@ class ServingDisplayState extends State<ServingDisplay> {
         Center(
           child: RaisedButton.icon(
             onPressed: () {
-              if (widget._tempServings == 0) {
-                _handleMissingServings(context);
-              } else {
-                widget._meal.setServingsOnly(widget._tempServings);
-                _handleFulfilledServings(
-                  context,
-                  widget._dietPlanData,
-                  widget._index,
-                  widget._mealType,
-                  widget._meal,
-                );
-              }
+              _clickSaveMeal();
             },
             icon: Icon(
               Icons.file_upload,
