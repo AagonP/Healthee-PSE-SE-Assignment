@@ -282,4 +282,8 @@ class DietPlan with ChangeNotifier {
   List<DailyPlan> get dailyList {
     return [..._dailyList];
   }
+
+  List<DailyPlan> get accessDailyList {
+    return _dailyList;
+  }
 }

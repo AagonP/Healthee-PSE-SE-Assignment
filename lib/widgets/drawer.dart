@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import '../plan_for_a_diet/plan_for_a_diet_providers/diet_plan.dart';
 
 class CustomDrawer extends StatelessWidget {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
-  Future<void> _signOut() async {
+
+  Future<void> _signOut(DietPlan dietPlan) async {
     try {
+      dietPlan.accessDailyList[29] = null;
       await FirebaseAuth.instance.signOut();
       if (await googleSignIn.isSignedIn()) {
         await googleSignIn.signOut();
@@ -66,6 +70,9 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // This will support Log out function
+    final dietPlanData = Provider.of<DietPlan>(context, listen: false,);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -82,7 +89,7 @@ class CustomDrawer extends StatelessWidget {
               icon: Icons.chevron_left,
               title: 'Sign out',
               ontap: () async {
-                await _signOut();
+                await _signOut(dietPlanData);
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     'WelcomePage', (Route<dynamic> route) => false);
               }),
