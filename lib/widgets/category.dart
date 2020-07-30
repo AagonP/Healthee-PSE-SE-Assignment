@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
 
-
 class RoundTypeButton extends StatefulWidget {
   final Color color;
   final String image;
@@ -25,7 +24,6 @@ class _RoundTypeButtonState extends State<RoundTypeButton> {
     switch (widget.title) {
       case 'Vegan':
         print('vegan called');
-
         Provider.of<Products>(context).map['Vegan'] =
             !Provider.of<Products>(context).map['Vegan'];
         print(Provider.of<Products>(context).map['Vegan']);

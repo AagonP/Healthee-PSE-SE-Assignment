@@ -62,51 +62,7 @@ class LoginRegisterPage extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 15.0),
                 height: 20.0,
                 width: double.infinity,
-                child: Divider(
-                  color: Colors.grey,
-                ),
               ),
-              RoundedButtonLink(
-                color: Color(0xFF3B5999),
-                title: 'Continue with Facebook',
-                image: Image(
-                  image: AssetImage(
-                    'image/facebook.png',
-                  ),
-                ),
-                function: () {},
-              ),
-              RoundedButtonLink(
-                color: Color(0xFF518DF8),
-                title: 'Continue with Google',
-                image: Image.asset(
-                  'image/brands-and-logotypes.png',
-                ),
-                function: () async {
-                  FirebaseUser user =
-                      await firebaseAuthService.signInWithGoogle();
-                  if (user != null) {
-                    Navigator.pushNamed(context, 'NavigatePage');
-                  }
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 10.0,
-                  bottom: 10.0,
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, 'NavigatePage');
-                  },
-                  child: Text(
-                    'Skip for now',
-                    style: TextStyle(
-                        color: Color(0xFFFECC4C), fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
             ],
           ),
         ),

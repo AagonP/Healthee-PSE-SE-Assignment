@@ -15,12 +15,6 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   FoodData foodData = FoodData();
-
-  void displayRandom() async {
-    Provider.of<Products>(context).clearProduct();
-    await foodData.getRandomProduct(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,6 +31,7 @@ class _BottomBarState extends State<BottomBar> {
               svgScr: 'image/sydney-opera-house.svg',
               index: 0,
               press: () {
+                Provider.of<Products>(context).clearProduct();
                 Navigator.pop(context);
               },
             ),
