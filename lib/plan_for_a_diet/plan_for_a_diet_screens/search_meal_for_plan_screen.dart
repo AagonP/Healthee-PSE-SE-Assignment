@@ -7,13 +7,13 @@ import '../plan_for_a_diet_providers/diet_plan.dart';
 import '../../providers/user_health_data.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class SearchFoodForPlanScreen extends StatefulWidget {
+class SearchMealForPlanScreen extends StatefulWidget {
   @override
-  _SearchFoodForPlanScreenState createState() =>
-      _SearchFoodForPlanScreenState();
+  _SearchMealForPlanScreenState createState() =>
+      _SearchMealForPlanScreenState();
 }
 
-class _SearchFoodForPlanScreenState extends State<SearchFoodForPlanScreen> {
+class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
   String _chosenSearchTag;
   int _mealType;
   int _index;

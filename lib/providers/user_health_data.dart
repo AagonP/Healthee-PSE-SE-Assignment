@@ -28,7 +28,7 @@ class UserHealthData with ChangeNotifier {
   // This is the function used to estimate Calories needed for a day,
   // using Harris Benedict equation.
 
-  void _postUserHealthData() async {
+  void postUserHealthData() async {
     var firebaseUser = await _auth.currentUser();
     //Firestore.instance.collection("users").document(firebaseUser.uid).updateData(data);
     await Firestore.instance
@@ -59,7 +59,7 @@ class UserHealthData with ChangeNotifier {
       _userIsMale = tempMap['userHealthData']['userIsMale'];
       _userExerciseFre = tempMap['userHealthData']['userExerciseFreq'];
 
-      _estimateNutrients();
+      estimateNutrients();
       _userDailyCalory = double.parse(_userDailyCalory.toStringAsFixed(4));
       notifyListeners();
 
@@ -69,7 +69,7 @@ class UserHealthData with ChangeNotifier {
     }
   }
 
-  void _estimateNutrients() {
+  void estimateNutrients() {
     double temp;
     if (_userIsMale == true) {
       temp = 88.362 +
@@ -164,7 +164,7 @@ class UserHealthData with ChangeNotifier {
     return _userUBCarbohydrate;
   }
 
-  void updateHealthData(
+  void setHealthData(
     double userHeight,
     double userWeight,
     int userAge,
@@ -173,12 +173,12 @@ class UserHealthData with ChangeNotifier {
     _userWeight = userWeight;
     _userAge = userAge;
 
-    _estimateNutrients();
+    estimateNutrients();
     notifyListeners();
-    _postUserHealthData();
+    postUserHealthData();
   }
 
-  void updateGenderData(
+  void setGenderData(
     bool userIsMale,
   ) {
     _userIsMale = userIsMale;
@@ -186,7 +186,7 @@ class UserHealthData with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateExerciseData(
+  void setExerciseData(
     String userExerciseFre,
   ) {
     _userExerciseFre = userExerciseFre;

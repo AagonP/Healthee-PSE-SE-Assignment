@@ -112,7 +112,7 @@ class MealFoodList extends StatelessWidget {
                             Navigator.of(context).pushNamed(
                               '/meal-info-screen',
                               arguments: _dietPlanData.dailyList[_index - 1]
-                                  .threeMeals[_mealTypeIndex],
+                                  .dailyMealList[_mealTypeIndex],
                             );
                           },
                           elevation: 1.0,
@@ -237,7 +237,7 @@ class MealFoodList extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].title}',
+                              '${_dietPlanData.dailyList[_index - 1].dailyMealList[_mealTypeIndex].title}',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -279,7 +279,7 @@ class MealFoodList extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].servings}',
+                              '${_dietPlanData.dailyList[_index - 1].dailyMealList[_mealTypeIndex].servings}',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -356,7 +356,7 @@ class MealFoodList extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].calory} (calories)',
+                              '${_dietPlanData.dailyList[_index - 1].dailyMealList[_mealTypeIndex].calory} (calories)',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -398,7 +398,7 @@ class MealFoodList extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].protein} (g)',
+                              '${_dietPlanData.dailyList[_index - 1].dailyMealList[_mealTypeIndex].protein} (g)',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -440,7 +440,7 @@ class MealFoodList extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].fat} (g)',
+                              '${_dietPlanData.dailyList[_index - 1].dailyMealList[_mealTypeIndex].fat} (g)',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -482,7 +482,7 @@ class MealFoodList extends StatelessWidget {
                         ),
                         TextSpan(
                           text:
-                              '${_dietPlanData.dailyList[_index - 1].threeMeals[_mealTypeIndex].carbohydrate} (g)',
+                              '${_dietPlanData.dailyList[_index - 1].dailyMealList[_mealTypeIndex].carbohydrate} (g)',
                           style: TextStyle(
                             fontSize: 16.0,
                           ),
@@ -499,12 +499,12 @@ class MealFoodList extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: _dietPlanData.dailyList[_index - 1]
-                          .threeMeals[_mealTypeIndex].imageUrl ==
+                          .dailyMealList[_mealTypeIndex].imageUrl ==
                       null
                   ? Image.asset('image/wp-header-logo-21.png')
                   : Image.network(
                       _dietPlanData.dailyList[_index - 1]
-                          .threeMeals[_mealTypeIndex].imageUrl,
+                          .dailyMealList[_mealTypeIndex].imageUrl,
                     ),
             ),
           ),

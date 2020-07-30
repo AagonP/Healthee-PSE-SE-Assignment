@@ -22,7 +22,7 @@ class HealthDataInputScreen extends StatelessWidget {
     BuildContext context,
     UserHealthData userHealthData,
   ) async {
-    userHealthData.updateHealthData(
+    userHealthData.setHealthData(
       _userHeight,
       _userWeight,
       _userAge,

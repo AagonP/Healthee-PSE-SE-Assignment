@@ -212,7 +212,7 @@ class ServingDisplayState extends State<ServingDisplay> {
               if (widget._tempServings == 0) {
                 _handleMissingServings(context);
               } else {
-                widget._meal.setServings(widget._tempServings);
+                widget._meal.setServingsOnly(widget._tempServings);
                 _handleFulfilledServings(
                   context,
                   widget._dietPlanData,
