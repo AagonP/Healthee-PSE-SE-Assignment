@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:pse_assignment/plan_for_a_diet/plan_for_a_diet_widgets/meal_view_item.dart';
+import '../plan_for_a_diet_widgets/meal_view_item.dart';
 import 'package:provider/provider.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import '../plan_for_a_diet_providers/diet_plan.dart';
