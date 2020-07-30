@@ -22,19 +22,20 @@ class _BottomBarState extends State<BottomBar> {
     Provider.of<Products>(context).clearProduct();
     await foodData.getRandomProduct(context);
   }
-  Future <void> scan() async {
+
+  Future<void> scan() async {
     await Scan.scanner();
     print(Scan.key);
     DocumentSnapshot documentSnapshot = await getEntry(Scan.key);
     print(documentSnapshot["name"]);
     ScanProduct product = decodeProduct(documentSnapshot);
     print(product.name);
-    if (Scan.key != null )
-      {
-        print("-100");
-        Navigator.pushNamed(context, "ScanView",arguments: product);
-      }
+    if (Scan.key != null) {
+      print("-100");
+      Navigator.pushNamed(context, "ScanView", arguments: product);
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,6 +52,7 @@ class _BottomBarState extends State<BottomBar> {
               svgScr: 'image/sydney-opera-house.svg',
               index: 0,
               press: () {
+                Provider.of<Products>(context).clearProduct();
                 Navigator.pop(context);
               },
             ),
