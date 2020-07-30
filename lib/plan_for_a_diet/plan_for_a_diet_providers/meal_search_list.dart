@@ -66,7 +66,7 @@ class MealSearchList with ChangeNotifier {
           _mealSearchList[i].calory *
               (servingsIndex)) {
         _recommendations.add(servingsIndex);
-        _mealSearchList[i].setServings(servingsIndex);
+        _mealSearchList[i].setServingsOnly(servingsIndex);
       }
       else {
         _recommendations.add(0);

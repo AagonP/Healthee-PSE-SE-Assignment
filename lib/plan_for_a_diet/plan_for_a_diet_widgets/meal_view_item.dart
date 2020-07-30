@@ -25,7 +25,7 @@ class MealViewItem extends StatelessWidget {
         Color backgroundColor;
         String textString;
         if (mealSearchList.list[index].title ==
-            _dietPlanData.dailyList[_index].threeMeals[_mealType].title) {
+            _dietPlanData.dailyList[_index].dailyMealList[_mealType].title) {
           backgroundColor = Colors.blueAccent;
           textString = 'Current meal';
         } else if (mealSearchList.recommendations[index] == 0) {
