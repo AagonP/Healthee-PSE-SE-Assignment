@@ -201,6 +201,10 @@ class UserSavedProductsDataHelper {
     List<String> amountList = [];
     List<String> unitList = [];
     int numberofIngredients = jsonData['ingredients'].length;
+    double calory = jsonData['calories'];
+    double fat = jsonData['fat'];
+    double carbohydrate = jsonData['carbohydrate'];
+    double protein = jsonData['protein'];
     for (int j = 0; j < numberofIngredients; j++) {
       String ingredient = jsonData['ingredients'][j];
       var amount = jsonData['amount'][j];
@@ -228,6 +232,10 @@ class UserSavedProductsDataHelper {
       unit: unitList,
       illness:
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
+      calories: calory,
+      fat: fat,
+      carbohydrate: carbohydrate,
+      protein: protein,
     );
     return product;
   }

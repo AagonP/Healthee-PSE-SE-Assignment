@@ -168,8 +168,6 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
                             child: GestureDetector(
                               onTap: () async {
                                 //Function goes here,
-                                Scaffold.of(context)
-                                    .showSnackBar(removeFromSavedProducts);
                                 removeUserSavedProduct(
                                     index, context, _savedProducts);
                               },
