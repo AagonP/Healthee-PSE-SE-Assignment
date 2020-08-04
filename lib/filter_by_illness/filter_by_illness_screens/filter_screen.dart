@@ -94,7 +94,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 410,
+              width: 360,
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
                 border: Border.symmetric(
@@ -106,7 +106,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                     borderRadius: BorderRadius.circular(15)),
                 borderOnForeground: true,
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Text(
                     getFilterStatus(_isFilterOn, context),
                     style: TextStyle(fontSize: 16),
