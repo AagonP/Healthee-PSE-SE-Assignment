@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../models/product.dart';
 import 'dart:math';
 import 'user_health_data.dart';
