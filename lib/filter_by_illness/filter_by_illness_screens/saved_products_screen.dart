@@ -165,25 +165,29 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
                         children: <Widget>[
                           Expanded(child: Container()),
                           Expanded(
-                            child: GestureDetector(
-                              onTap: () async {
-                                //Function goes here,
-                                removeUserSavedProduct(
-                                    index, context, _savedProducts);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF393939),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    bottomRight: Radius.circular(20.0),
+                            child: Builder(
+                              builder: (context) => GestureDetector(
+                                onTap: () async {
+                                  //Function goes here,
+                                  Scaffold.of(context)
+                                      .showSnackBar(removeFromSavedProducts);
+                                  removeUserSavedProduct(
+                                      index, context, _savedProducts);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF393939),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0),
+                                    ),
                                   ),
-                                ),
-                                child: Text(
-                                  'Del',
-                                  style: TextStyle(color: Colors.white),
+                                  child: Text(
+                                    'Del',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),

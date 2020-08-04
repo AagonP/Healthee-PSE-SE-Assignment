@@ -11,13 +11,12 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../providers/list_of_entry.dart';
 
-
-class HomePage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SearchPageState extends State<SearchPage> {
   final TextEditingController _typeAheadController = TextEditingController();
   bool isLoading = false;
   String res = "Sample code";
