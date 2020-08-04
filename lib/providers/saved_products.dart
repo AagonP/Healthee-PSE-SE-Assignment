@@ -5,7 +5,7 @@ import '../models/product.dart';
 class SavedProducts with ChangeNotifier {
   List<Product> _savedProducts = [];
   List<Product> get savedProducts {
-    return [..._savedProducts];
+    return [..._savedProducts.toSet().toList()];
   }
 
   void saveProduct(Product product) {
