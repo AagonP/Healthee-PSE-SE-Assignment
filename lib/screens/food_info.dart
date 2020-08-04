@@ -171,6 +171,50 @@ class FoodInfo extends StatelessWidget {
                   ),
                 ],
               ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                height: 20.0,
+                width: double.infinity,
+                child: Divider(
+                  color: Colors.teal.shade200,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Nutrition',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  ContainerRefactor(
+                      title: 'Calories: ',
+                      value: double.parse(product.calories.toStringAsFixed(2))
+                          .toString()),
+                  ContainerRefactor(
+                    title: 'Protein: ',
+                    value: double.parse(product.protein.toStringAsFixed(2))
+                            .toString() +
+                        ' (g)',
+                  ),
+                  ContainerRefactor(
+                    title: 'Fat: ',
+                    value: double.parse(product.fat.toStringAsFixed(2))
+                            .toString() +
+                        ' (g)',
+                  ),
+                  ContainerRefactor(
+                    title: 'Carbohydrate: ',
+                    value: double.parse(product.carbohydrate.toStringAsFixed(2))
+                            .toString() +
+                        ' (g)',
+                  ),
+                ],
+              ),
             ],
           ),
         ),
