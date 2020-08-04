@@ -11,8 +11,8 @@ class FoodListView extends StatelessWidget with FilterScreenController {
   @override
   Widget build(BuildContext context) {
     final addProductSnackBar = SnackBar(
-      content: Text('You have added a product!'),
-      duration: Duration(milliseconds: 500),
+      content: Text('You have added a recipe!'),
+      duration: Duration(milliseconds: 1000),
     );
     List<Product> _list = Provider.of<Products>(context).displayProducts;
     return GridView.count(
@@ -85,7 +85,6 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                           Scaffold.of(context).showSnackBar(addProductSnackBar);
                           Provider.of<SavedProducts>(context)
                               .saveProduct(_list.elementAt(index));
-
                           updateUserSavedProductsToFirebase(
                               await UserSavedProductsDataHelper
                                   .getCurrentUser(),

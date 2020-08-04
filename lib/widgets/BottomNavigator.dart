@@ -55,7 +55,7 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
     Provider.of<Products>(context).updateDisplayProduct('all');
   }
 
-  Future <void> scan() async {
+  Future<void> scan() async {
     await Scan.scanner();
     print(Scan.key);
     DocumentSnapshot documentSnapshot = await getEntry(Scan.key);
@@ -110,7 +110,6 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
               svgScr: 'image/price.svg',
               index: 2,
               press: () {
-                print('called $selectedIndex');
                 scan();
                 setState(() {
                   selectedIndex = 2;
@@ -136,7 +135,6 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SavedProductsScreen()));
-
                 setState(() {
                   selectedIndex = 3;
                 });
