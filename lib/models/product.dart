@@ -63,5 +63,9 @@ class Product {
         'ingredients': this.ingredients,
         'amount': this.amount,
         'unit': this.unit,
+        'calories': this.calories,
+        'protein': this.protein,
+        'fat': this.fat,
+        'carbohydrate': this.carbohydrate,
       };
 }
