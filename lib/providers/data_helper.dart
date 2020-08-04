@@ -57,6 +57,10 @@ class FoodData {
     bool lowFodmap = jsonRecipe['lowFodmap'];
     String title = jsonRecipe['title'];
     String photoURL = jsonRecipe['image'];
+    double calory = jsonRecipe['nutrition']['nutrients'][0]['amount'];
+    double fat = jsonRecipe['nutrition']['nutrients'][1]['amount'];
+    double carbohydrate = jsonRecipe['nutrition']['nutrients'][3]['amount'];
+    double protein = jsonRecipe['nutrition']['nutrients'][6]['amount'];
     List<String> ingredientList = [];
     List<String> amountList = [];
     List<String> unitList = [];
@@ -86,6 +90,10 @@ class FoodData {
       ingredients: ingredientList,
       amount: amountList,
       unit: unitList,
+      calories: calory,
+      protein: protein,
+      fat: fat,
+      carbohydrate: carbohydrate,
       illness:
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
