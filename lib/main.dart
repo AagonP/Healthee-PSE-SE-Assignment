@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.white,
           fontFamily: 'Montserrat',
         ),
-        home: NavigatePage(),
+        home: WelcomePage(),
         //Setting route for pages here
         routes: {
           'LoginPage': (context) => LoginPage(),
