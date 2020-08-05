@@ -133,7 +133,7 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                             ),
                           ),
                           child: Text(
-                            'Add',
+                            'Save',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
