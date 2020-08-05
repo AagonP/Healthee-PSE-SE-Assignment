@@ -154,26 +154,27 @@ class FoodData {
     return documentSnapshot;
   }
 
-  void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {
-    List<String> id = List(num);
-    id.forEach((element) {});
-    DataHelper dataHelper = DataHelper();
-    for (int i = 0; i < num; i++) {
-      var foodId = data['results'][i]['id'];
-      id[i] = foodId.toString();
-      String recipeUrl =
-          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information?includeNutrition=true';
-      Map jsonRecipe = await dataHelper.fetchData(recipeUrl);
-      jsonRecipe.removeWhere((key, value) => removeEntry.contains(key));
-      jsonRecipe['nutrition'].remove('ingredients');
-      jsonRecipe['nutrition']['nutrients']
-          .removeWhere((value) => !keepNutrient.contains(value['title']));
-      jsonRecipe['extendedIngredients'].forEach((element) {
-        element.removeWhere((key, value) => !keepIngredientValue.contains(key));
-      });
-      addRecipeToList(jsonRecipe, name);
-    }
-  }
+//  void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {
+//    List<String> id = List(num);
+//    id.forEach((element) {});
+//    DataHelper dataHelper = DataHelper();
+//    for (int i = 0; i < num; i++) {
+//      var foodId = data['results'][i]['id'];
+//      id[i] = foodId.toString();
+//      String recipeUrl =
+//          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information?includeNutrition=true';
+//      Map jsonRecipe = await dataHelper.fetchData(recipeUrl);
+//      jsonRecipe.removeWhere((key, value) => removeEntry.contains(key));
+//      jsonRecipe['nutrition'].remove('ingredients');
+//      jsonRecipe['nutrition']['nutrients']
+//          .removeWhere((value) => !keepNutrient.contains(value['title']));
+//      jsonRecipe['extendedIngredients'].forEach((element) {
+//        element.removeWhere((key, value) => !keepIngredientValue.contains(key));
+//      });
+//      addRecipeToList(jsonRecipe, name);
+//    }
+//  }
+//
 }
 
 class UserSavedProductsDataHelper {
