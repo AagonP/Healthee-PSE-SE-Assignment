@@ -13,15 +13,18 @@ class SavedProductsScreenController {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  width: 100,
-                  height: 100,
+                  padding: EdgeInsets.all(5.0),
+                  width: 50,
+                  height: 50,
+
                   child: CircularProgressIndicator(),
                 ),
+                SizedBox(width: 10,),
+                Text("Loading"),
               ],
             ));
       },

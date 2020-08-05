@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../models/product.dart';
 import 'dart:math';
 import 'user_health_data.dart';
@@ -57,6 +56,10 @@ class FoodData {
     bool lowFodmap = jsonRecipe['lowFodmap'];
     String title = jsonRecipe['title'];
     String photoURL = jsonRecipe['image'];
+    double calory = jsonRecipe['nutrition']['nutrients'][0]['amount'];
+    double fat = jsonRecipe['nutrition']['nutrients'][1]['amount'];
+    double carbohydrate = jsonRecipe['nutrition']['nutrients'][3]['amount'];
+    double protein = jsonRecipe['nutrition']['nutrients'][6]['amount'];
     List<String> ingredientList = [];
     List<String> amountList = [];
     List<String> unitList = [];
@@ -86,6 +89,10 @@ class FoodData {
       ingredients: ingredientList,
       amount: amountList,
       unit: unitList,
+      calories: calory,
+      protein: protein,
+      fat: fat,
+      carbohydrate: carbohydrate,
       illness:
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
     );
@@ -147,26 +154,27 @@ class FoodData {
     return documentSnapshot;
   }
 
-  void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {
-    List<String> id = List(num);
-    id.forEach((element) {});
-    DataHelper dataHelper = DataHelper();
-    for (int i = 0; i < num; i++) {
-      var foodId = data['results'][i]['id'];
-      id[i] = foodId.toString();
-      String recipeUrl =
-          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information?includeNutrition=true';
-      Map jsonRecipe = await dataHelper.fetchData(recipeUrl);
-      jsonRecipe.removeWhere((key, value) => removeEntry.contains(key));
-      jsonRecipe['nutrition'].remove('ingredients');
-      jsonRecipe['nutrition']['nutrients']
-          .removeWhere((value) => !keepNutrient.contains(value['title']));
-      jsonRecipe['extendedIngredients'].forEach((element) {
-        element.removeWhere((key, value) => !keepIngredientValue.contains(key));
-      });
-      addRecipeToList(jsonRecipe, name);
-    }
-  }
+//  void uploadDataFromApiToFireBase(dynamic data, int num, String name) async {
+//    List<String> id = List(num);
+//    id.forEach((element) {});
+//    DataHelper dataHelper = DataHelper();
+//    for (int i = 0; i < num; i++) {
+//      var foodId = data['results'][i]['id'];
+//      id[i] = foodId.toString();
+//      String recipeUrl =
+//          'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${id[i]}/information?includeNutrition=true';
+//      Map jsonRecipe = await dataHelper.fetchData(recipeUrl);
+//      jsonRecipe.removeWhere((key, value) => removeEntry.contains(key));
+//      jsonRecipe['nutrition'].remove('ingredients');
+//      jsonRecipe['nutrition']['nutrients']
+//          .removeWhere((value) => !keepNutrient.contains(value['title']));
+//      jsonRecipe['extendedIngredients'].forEach((element) {
+//        element.removeWhere((key, value) => !keepIngredientValue.contains(key));
+//      });
+//      addRecipeToList(jsonRecipe, name);
+//    }
+//  }
+//
 }
 
 class UserSavedProductsDataHelper {
@@ -193,6 +201,10 @@ class UserSavedProductsDataHelper {
     List<String> amountList = [];
     List<String> unitList = [];
     int numberofIngredients = jsonData['ingredients'].length;
+    double calory = jsonData['calories'];
+    double fat = jsonData['fat'];
+    double carbohydrate = jsonData['carbohydrate'];
+    double protein = jsonData['protein'];
     for (int j = 0; j < numberofIngredients; j++) {
       String ingredient = jsonData['ingredients'][j];
       var amount = jsonData['amount'][j];
@@ -220,6 +232,10 @@ class UserSavedProductsDataHelper {
       unit: unitList,
       illness:
           setIllnessBasedOnAPI(vegetarian, glutenFree, dairyFree, lowFodmap),
+      calories: calory,
+      fat: fat,
+      carbohydrate: carbohydrate,
+      protein: protein,
     );
     return product;
   }

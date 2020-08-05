@@ -82,7 +82,6 @@ class UserHealthData with ChangeNotifier {
           (3.098 * _userHeight) -
           (4.330 * _userAge);
     }
-
     if (_userExerciseFre == 'Sedentary') {
       _userDailyCalory = temp * 1.2;
     } else if (_userExerciseFre == 'Mild activity') {
@@ -100,12 +99,16 @@ class UserHealthData with ChangeNotifier {
     _userLBCalory = double.parse(_userLBCalory.toStringAsFixed(2));
     _userUBCalory = _userDailyCalory * 107.5 / 100;
     _userUBCalory = double.parse(_userUBCalory.toStringAsFixed(2));
-    _userLBProtein = double.parse((_userDailyCalory * 10 / 400).toStringAsFixed(2));
-    _userUBProtein = double.parse((_userDailyCalory * 35 / 400).toStringAsFixed(2));
+    _userLBProtein =
+        double.parse((_userDailyCalory * 10 / 400).toStringAsFixed(2));
+    _userUBProtein =
+        double.parse((_userDailyCalory * 35 / 400).toStringAsFixed(2));
     _userLBFat = double.parse((_userDailyCalory * 25 / 900).toStringAsFixed(2));
     _userUBFat = double.parse((_userDailyCalory * 35 / 900).toStringAsFixed(2));
-    _userLBCarbohydrate = double.parse((_userDailyCalory * 10 / 400).toStringAsFixed(2));
-    _userUBCarbohydrate = double.parse((_userDailyCalory * 35 / 400).toStringAsFixed(2));
+    _userLBCarbohydrate =
+        double.parse((_userDailyCalory * 10 / 400).toStringAsFixed(2));
+    _userUBCarbohydrate =
+        double.parse((_userDailyCalory * 35 / 400).toStringAsFixed(2));
   }
 
   double get userHeight {
@@ -193,8 +196,9 @@ class UserHealthData with ChangeNotifier {
 
     notifyListeners();
   }
+
   // User's illnesses selection
-   int _numberOfIllness = 10;
+  int _numberOfIllness = 10;
   int get numberOfIllness {
     return _numberOfIllness;
   }
