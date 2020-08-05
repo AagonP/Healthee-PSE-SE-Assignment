@@ -74,84 +74,59 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
       //padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       height: 70,
       color: Colors.white,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//        scrollDirection: Axis.horizontal,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: BottomNavItem(
-              title: 'Homepage',
-              svgScr: 'image/sydney-opera-house.svg',
-              index: 0,
-              press: () {
-                Provider.of<Products>(context).clearProduct();
-                Navigator.pop(context);
-              },
-            ),
+          BottomNavItem(
+            title: 'Homepage',
+            svgScr: 'image/sydney-opera-house.svg',
+            index: 0,
+            press: () {
+              Provider.of<Products>(context).clearProduct();
+              Navigator.pop(context);
+            },
           ),
-//          Padding(
-//            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-//            child: BottomNavItem(
-//              title: 'Generate',
-//              svgScr: 'image/search.svg',
-//              index: 1,
-//              press: () {
-//                autoGenerateProduct(context);
-//                setState(() {
-//                  selectedIndex = 1;
-//                });
-//              },
-//            ),
-//          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: BottomNavItem(
-              title: 'Scan',
-              svgScr: 'image/price.svg',
-              index: 2,
-              press: () {
-                scan();
-                setState(() {
-                  selectedIndex = 2;
-                });
-              },
-            ),
+          BottomNavItem(
+            title: 'Scan',
+            svgScr: 'image/price.svg',
+            index: 2,
+            press: () {
+              scan();
+              setState(() {
+                selectedIndex = 2;
+              });
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: BottomNavItem(
-              title: 'Favorite',
-              svgScr: 'image/love-and-romance.svg',
-              index: 3,
-              press: () async {
-                // Navigate to favorite products
-                await updateUserSavedProductsToFirebase(
-                    UserSavedProductsDataHelper.getCurrentUser().toString(),
-                    context);
-                await SavedProductsScreenController.updateDataFromFirebase(
-                    UserSavedProductsDataHelper.getCurrentUser().toString(),
-                    context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SavedProductsScreen()));
-                setState(() {
-                  selectedIndex = 3;
-                });
-              },
-            ),
+          BottomNavItem(
+            title: 'Favorite',
+            svgScr: 'image/love-and-romance.svg',
+            index: 3,
+            press: () async {
+              // Navigate to favorite products
+              await updateUserSavedProductsToFirebase(
+                  UserSavedProductsDataHelper.getCurrentUser().toString(),
+                  context);
+              await SavedProductsScreenController.updateDataFromFirebase(
+                  UserSavedProductsDataHelper.getCurrentUser().toString(),
+                  context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SavedProductsScreen()));
+              setState(() {
+                selectedIndex = 3;
+              });
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: BottomNavItem(
-              title: 'Random',
-              svgScr: 'image/dice.svg',
-              index: 4,
-              press: () {
-                widget.callback();
-                selectedIndex = 4;
-              },
-            ),
+          BottomNavItem(
+            title: 'Random',
+            svgScr: 'image/dice.svg',
+            index: 4,
+            press: () {
+              widget.callback();
+              selectedIndex = 4;
+            },
           ),
         ],
       ),
