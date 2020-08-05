@@ -6,8 +6,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import '../filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
 import '../providers/saved_products.dart';
 import '../providers/data_helper.dart';
+import '../providers/user_health_data.dart';
 
 class FoodListView extends StatelessWidget with FilterScreenController {
+  bool isRecommended(BuildContext context, Product product) {
+    UserHealthData userHealthData = Provider.of<UserHealthData>(context);
+    if (userHealthData.userAge == 0) return false;
+    int mealType;
+    int mealIndex = mealType == 0 ? 35 : mealType == 1 ? 35 : 30;
+    int servingsIndex =
+        (userHealthData.userUBCalory * mealIndex / 100) ~/ product.calories;
+    if ((userHealthData.userLBCalory * mealIndex / 100) <=
+        product.calories * (servingsIndex)) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final addProductSnackBar = SnackBar(
@@ -77,7 +92,18 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Expanded(child: Container()),
+                    Expanded(
+                      child: Container(
+                        child: Icon(
+                          Icons.star,
+                          //color: Color(0xFFFECC4C),
+                          size: 20.0,
+                          color: isRecommended(context, _list.elementAt(index))
+                              ? Color(0xFFFECC4C)
+                              : Colors.transparent,
+                        ),
+                      ),
+                    ),
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {

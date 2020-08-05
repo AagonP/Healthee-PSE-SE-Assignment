@@ -29,31 +29,31 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
     await foodData.getRandomProduct(context);
   }
 
-  void autoGenerateProduct(BuildContext context) async {
-    var searchKey = 'apple';
-    String key = searchKey;
-    print(key);
-    if (searchKey == null) return;
-    FoodData foodData = FoodData();
-    Provider.of<Products>(context).clearProduct();
-
-    //Get a new random food name
-    DocumentSnapshot documentSnapshot = await foodData.getEntry(key);
-    List<dynamic> recipe = documentSnapshot.data['Recipe'];
-    for (int i = 0; i < 10; i++) {
-      Product product = await foodData.decodeProduct(recipe[i]);
-      if (product.name != null)
-        //check if product is approriate to user illness input
-        Provider.of<Products>(context)
-            .doFilter(Provider.of<UserHealthData>(context), product);
-      print(product.name);
-      if (product.isHealthy != false) {
-        Provider.of<Products>(context).addProduct(product);
-      }
-    }
-
-    Provider.of<Products>(context).updateDisplayProduct('all');
-  }
+//  void autoGenerateProduct(BuildContext context) async {
+//    var searchKey = 'apple';
+//    String key = searchKey;
+//    print(key);
+//    if (searchKey == null) return;
+//    FoodData foodData = FoodData();
+//    Provider.of<Products>(context).clearProduct();
+//
+//    //Get a new random food name
+//    DocumentSnapshot documentSnapshot = await foodData.getEntry(key);
+//    List<dynamic> recipe = documentSnapshot.data['Recipe'];
+//    for (int i = 0; i < 10; i++) {
+//      Product product = await foodData.decodeProduct(recipe[i]);
+//      if (product.name != null)
+//        //check if product is approriate to user illness input
+//        Provider.of<Products>(context)
+//            .doFilter(Provider.of<UserHealthData>(context), product);
+//      print(product.name);
+//      if (product.isHealthy != false) {
+//        Provider.of<Products>(context).addProduct(product);
+//      }
+//    }
+//
+//    Provider.of<Products>(context).updateDisplayProduct('all');
+//  }
 
   Future<void> scan() async {
     await Scan.scanner();
@@ -89,20 +89,20 @@ class _BottomBarState extends State<BottomBar> with FilterScreenController {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: BottomNavItem(
-              title: 'Generate',
-              svgScr: 'image/search.svg',
-              index: 1,
-              press: () {
-                autoGenerateProduct(context);
-                setState(() {
-                  selectedIndex = 1;
-                });
-              },
-            ),
-          ),
+//          Padding(
+//            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//            child: BottomNavItem(
+//              title: 'Generate',
+//              svgScr: 'image/search.svg',
+//              index: 1,
+//              press: () {
+//                autoGenerateProduct(context);
+//                setState(() {
+//                  selectedIndex = 1;
+//                });
+//              },
+//            ),
+//          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: BottomNavItem(
