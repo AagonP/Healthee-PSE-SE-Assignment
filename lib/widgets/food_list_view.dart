@@ -9,15 +9,9 @@ import '../providers/data_helper.dart';
 import '../providers/user_health_data.dart';
 
 class FoodListView extends StatelessWidget with FilterScreenController {
-  final UserHealthData userHealthData = UserHealthData();
-  Future<void> getUserData() async {
-    await userHealthData.getUserHealthData();
-  }
-
-  bool isRecommended(Product product) {
-    if (userHealthData.userAge == 0) {
-      getUserData();
-    }
+  bool isRecommended(BuildContext context, Product product) {
+    UserHealthData userHealthData = Provider.of<UserHealthData>(context);
+    if (userHealthData.userAge == 0) return false;
     int mealType;
     int mealIndex = mealType == 0 ? 35 : mealType == 1 ? 35 : 30;
     int servingsIndex =
@@ -104,7 +98,7 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                           Icons.star,
                           //color: Color(0xFFFECC4C),
                           size: 20.0,
-                          color: isRecommended(_list.elementAt(index))
+                          color: isRecommended(context, _list.elementAt(index))
                               ? Color(0xFFFECC4C)
                               : Colors.transparent,
                         ),
@@ -133,7 +127,7 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                             ),
                           ),
                           child: Text(
-                            'Save',
+                            'Add',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
