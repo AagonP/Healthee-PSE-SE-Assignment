@@ -142,6 +142,7 @@ class _NavigatePageState extends State<NavigatePage> {
                       height: 60.0,
                       image: AssetImage('image/photograph.png'),
                     ),
+                    function: clearProduct,
                   ),
                 ],
               ),
