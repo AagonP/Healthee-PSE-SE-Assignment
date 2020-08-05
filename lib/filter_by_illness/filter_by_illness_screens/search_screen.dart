@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +6,6 @@ import '../../models/product.dart';
 import '../../providers/products.dart';
 import '../../providers/data_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -26,11 +24,11 @@ class _SearchScreenState extends State<SearchScreen> {
   FoodData foodData = FoodData();
 
   //this function is for uploading data to firebase
-  void uploadData(String name) async {
-    var data = await foodData.getFoodData(name, 10, 0);
-    print(data);
-    foodData.uploadDataFromApiToFireBase(data, 10, name);
-  }
+//  void uploadData(String name) async {
+//    var data = await foodData.getFoodData(name, 10, 0);
+//    print(data);
+//    foodData.uploadDataFromApiToFireBase(data, 10, name);
+//  }
 
   //Update UI when loading product list
   void updateUI(String name) async {

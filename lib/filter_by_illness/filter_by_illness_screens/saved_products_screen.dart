@@ -27,8 +27,20 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
 
     return Scaffold(
         appBar: AppBar(
+          leading: Icon(
+            Icons.arrow_back,
+            color: Colors.black38,
+          ),
           centerTitle: true,
-          title: Text('My saved products'),
+          title: Text(
+            'My saved products',
+            style: TextStyle(
+              color: Colors.black38,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          backgroundColor: Color(0xFFFCECC5),
+          elevation: 0,
         ),
         body: GridView.count(
           childAspectRatio: 0.85,
@@ -36,74 +48,6 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
           children: List.generate(
             _savedProducts.length,
             (index) {
-              // return Card(
-              //   shadowColor: Colors.grey,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(20.0),
-              //   ),
-              //   margin: EdgeInsets.all(15),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.stretch,
-              //     children: <Widget>[
-              //       Container(
-              //         padding: EdgeInsets.all(5),
-              //         child: GestureDetector(
-              //           onTap: () {
-              //             navigateToFoodInfoScreen(
-              //                 index, context, _savedProducts);
-              //           },
-              //           // slide image function here
-              //           child: ClipRRect(
-              //             borderRadius: BorderRadius.circular(20.0),
-              //             child: getProductImage(index, _savedProducts),
-              //           ),
-              //         ),
-              //       ),
-              //       Container(
-              //         margin: EdgeInsets.symmetric(horizontal: 5),
-              //         width: 150,
-              //         height: 35,
-              //         child: AutoSizeText(
-              //           _savedProducts.elementAt(index).name,
-              //           style: TextStyle(fontSize: 15.0),
-              //           minFontSize: 10.0,
-              //           maxLines: 2,
-              //           overflow: TextOverflow.ellipsis,
-              //         ),
-              //       ),
-              //       Expanded(
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.end,
-              //           children: <Widget>[
-              //             Container(
-              //               width: 50,
-              //               height: 50,
-              //               margin: EdgeInsets.all(1),
-              //               child: Card(
-              //                 elevation: 5,
-              //                 shape: RoundedRectangleBorder(
-              //                     borderRadius: BorderRadius.circular(10.0)),
-              //                 color: Colors.white,
-              //                 child: Builder(
-              //                   builder: (context) => IconButton(
-              //                     iconSize: 15,
-              //                     onPressed: () {
-              //                       Scaffold.of(context)
-              //                           .showSnackBar(removeFromSavedProducts);
-              //                       removeUserSavedProduct(
-              //                           index, context, _savedProducts);
-              //                     },
-              //                     icon: Icon(Icons.delete),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // );
               return Container(
                 margin: EdgeInsets.all(15),
                 child: Container(
@@ -185,7 +129,7 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
                                     ),
                                   ),
                                   child: Text(
-                                    'Del',
+                                    'Delete',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ),
