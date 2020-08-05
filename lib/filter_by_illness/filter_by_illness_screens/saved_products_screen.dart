@@ -27,9 +27,12 @@ class _SavedProductsScreenState extends State<SavedProductsScreen>
 
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(
-            Icons.arrow_back,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
             color: Colors.black38,
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
           centerTitle: true,
           title: Text(
