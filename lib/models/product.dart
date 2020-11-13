@@ -7,6 +7,7 @@ class Product {
   final String photoURL;
   final String barCode;
   final String qrCode;
+  //final List<String> tags;
   final Illness illness;
   final bool vegetarian;
   final bool glutenFree;
@@ -18,10 +19,6 @@ class Product {
   final List<String> ingredients;
   final List<String> amount;
   final List<String> unit;
-  final double calories;
-  final double protein;
-  final double fat;
-  final double carbohydrate;
   bool isHealthy = true;
   Product(
       {this.type,
@@ -40,11 +37,7 @@ class Product {
       this.lowFodmap,
       this.ingredients,
       this.amount,
-      this.unit,
-      this.calories,
-      this.fat,
-      this.carbohydrate,
-      this.protein});
+      this.unit});
   Future<Map<String, dynamic>> toJson() async => {
         'type': this.type,
         'name': this.name,
@@ -63,9 +56,5 @@ class Product {
         'ingredients': this.ingredients,
         'amount': this.amount,
         'unit': this.unit,
-        'calories': this.calories,
-        'protein': this.protein,
-        'fat': this.fat,
-        'carbohydrate': this.carbohydrate,
       };
 }

@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           'LoginRegisterPage': (context) => LoginRegisterPage(),
           'NavigatePage': (context) => NavigatePage(),
           'WelcomePage': (context) => WelcomePage(),
-          'HomePage': (context) => SearchPage(),
+          'HomePage': (context) => HomePage(),
           'FilterScreen': (context) => FilterScreen(),
           'FilterHealthInputScreen': (context) => Wrapper(),
           'FoodInfoScreen': (context) => FoodInfo(),
@@ -79,8 +79,7 @@ class MyApp extends StatelessWidget {
           '/daily-detail-screen': (context) => DailyDetailScreen(),
           '/health-data-view-screen': (context) => HealthDataViewScreen(),
           '/meal-info-screen': (context) => MealInfoScreen(),
-          '/search-food-for-plan-screen': (context) =>
-              SearchMealForPlanScreen(),
+          '/search-food-for-plan-screen': (context) => SearchMealForPlanScreen(),
           '/searched-meal-info-screen': (context) => SearchedMealInfoScreen(),
 
           // 'HealthInput': (context) => InputText().

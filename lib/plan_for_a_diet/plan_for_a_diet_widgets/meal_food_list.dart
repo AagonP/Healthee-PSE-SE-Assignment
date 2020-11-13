@@ -37,32 +37,6 @@ class MealFoodList extends StatelessWidget {
     }
   }
 
-  Future<void> _clickEdit(
-    BuildContext context,
-    ProgressDialog pr,
-    MealSearchList mealSearchList,
-    UserHealthData userHealthData,
-  ) async {
-    pr.show();
-    try {
-      await mealSearchList.getMealsFromTag(
-          userHealthData,
-          _mealTypeIndex,
-          _mealTypeIndex == 0
-              ? 'apple'
-              : _mealTypeIndex == 1 ? 'beef' : 'cucumber');
-      pr.hide().whenComplete(() => Navigator.of(context).pushNamed(
-            '/search-food-for-plan-screen',
-            arguments: {
-              'index': _index - 1,
-              'mealType': _mealTypeIndex,
-            },
-          ));
-    } catch (e) {
-      print(e);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final Widget mealIcon = identifyMealIcon();
@@ -176,12 +150,27 @@ class MealFoodList extends StatelessWidget {
                             height: 30.0,
                           ),
                           onPressed: () async {
-                            await _clickEdit(
-                              context,
-                              pr,
-                              mealSearchList,
-                              userHealthData,
-                            );
+                            pr.show();
+                            try {
+                              await mealSearchList.getMealsFromTag(
+                                  userHealthData,
+                                  _mealTypeIndex,
+                                  _mealTypeIndex == 0
+                                      ? 'apple'
+                                      : _mealTypeIndex == 1
+                                          ? 'beef'
+                                          : 'cucumber');
+                              pr.hide().whenComplete(
+                                  () => Navigator.of(context).pushNamed(
+                                        '/search-food-for-plan-screen',
+                                        arguments: {
+                                          'index': _index - 1,
+                                          'mealType': _mealTypeIndex,
+                                        },
+                                      ));
+                            } catch (e) {
+                              print(e);
+                            }
                           },
                           elevation: 1.0,
                           fillColor: Colors.white,

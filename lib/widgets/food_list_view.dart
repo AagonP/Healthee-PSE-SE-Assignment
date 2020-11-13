@@ -1,33 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import '../models/product.dart';
 import '../providers/products.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import '../filter_by_illness/filter_by_illness_controllers/filter_screen_controller.dart';
-import '../providers/saved_products.dart';
-import '../providers/data_helper.dart';
-import '../providers/user_health_data.dart';
 
-class FoodListView extends StatelessWidget with FilterScreenController {
-  bool isRecommended(BuildContext context, Product product) {
-    UserHealthData userHealthData = Provider.of<UserHealthData>(context);
-    if (userHealthData.userAge == 0) return false;
-    int mealType;
-    int mealIndex = mealType == 0 ? 35 : mealType == 1 ? 35 : 30;
-    int servingsIndex =
-        (userHealthData.userUBCalory * mealIndex / 100) ~/ product.calories;
-    if ((userHealthData.userLBCalory * mealIndex / 100) <=
-        product.calories * (servingsIndex)) {
-      return true;
-    }
-    return false;
-  }
-
+class FoodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final addProductSnackBar = SnackBar(
-      content: Text('You have added a recipe!'),
-      duration: Duration(milliseconds: 1000),
+    final addProductToFilteringListSnackBar = SnackBar(
+      content: Text('You have added a product to filtering list!'),
+      duration: Duration(milliseconds: 500),
     );
     List<Product> _list = Provider.of<Products>(context).displayProducts;
     return GridView.count(
@@ -92,29 +75,11 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Icon(
-                          Icons.star,
-                          //color: Color(0xFFFECC4C),
-                          size: 20.0,
-                          color: isRecommended(context, _list.elementAt(index))
-                              ? Color(0xFFFECC4C)
-                              : Colors.transparent,
-                        ),
-                      ),
-                    ),
+                    Expanded(child: Container()),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () async {
+                        onTap: () {
                           //Function goes here,
-                          Scaffold.of(context).showSnackBar(addProductSnackBar);
-                          Provider.of<SavedProducts>(context)
-                              .saveProduct(_list.elementAt(index));
-                          updateUserSavedProductsToFirebase(
-                              await UserSavedProductsDataHelper
-                                  .getCurrentUser(),
-                              context);
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -127,7 +92,7 @@ class FoodListView extends StatelessWidget with FilterScreenController {
                             ),
                           ),
                           child: Text(
-                            'Save',
+                            'Add',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -143,3 +108,86 @@ class FoodListView extends StatelessWidget with FilterScreenController {
     );
   }
 }
+
+//Stack(
+//children: <Widget>[
+//Column(
+////crossAxisAlignment: CrossAxisAlignment.stretch,
+//children: <Widget>[
+//Container(
+//decoration: BoxDecoration(
+//color: Colors.yellowAccent,
+//),
+//margin: EdgeInsets.all(5),
+//child: Column(
+//children: <Widget>[
+//GestureDetector(
+//onTap: () {
+//Navigator.pushNamed(context, 'FoodInfoScreen',
+//arguments: _list.elementAt(index));
+//},
+//// slide image function here
+//child: Slidable(
+//actionPane: SlidableDrawerActionPane(),
+//actionExtentRatio: 0.25,
+//secondaryActions: <Widget>[
+//IconSlideAction(
+//caption: 'Add',
+//color: Colors.green,
+//icon: Icons.add,
+//onTap: () {
+//bool _isDuplicated = false;
+//Provider.of<Products>(context)
+//    .filteringProducts
+//    .forEach((element) {
+//if (element.name ==
+//_list.elementAt(index).name)
+//_isDuplicated = true;
+//});
+//if (!_isDuplicated) {
+//Scaffold.of(context).showSnackBar(
+//addProductToFilteringListSnackBar);
+//Provider.of<Products>(context)
+//    .addFilteringProduct(
+//_list.elementAt(index));
+//}
+//},
+//),
+//],
+//child: ClipRRect(
+//borderRadius: BorderRadius.circular(20.0),
+//child: (_list.elementAt(index).photoURL != null)
+//? Image.network(
+//_list.elementAt(index).photoURL,
+//)
+//: Container(
+//height: 90.0,
+//color: Colors.white,
+//),
+//),
+//),
+//),
+//Row(
+//children: <Widget>[
+//Expanded(
+//child: Container(
+//padding: EdgeInsets.symmetric(
+//vertical: 0, horizontal: 5),
+//child: AutoSizeText(
+//_list.elementAt(index).name,
+//style: TextStyle(fontSize: 15.0),
+//minFontSize: 10.0,
+//maxLines: 2,
+//overflow: TextOverflow.ellipsis,
+//),
+//),
+//),
+//],
+//),
+//],
+//),
+//),
+//],
+//),
+//],
+//),

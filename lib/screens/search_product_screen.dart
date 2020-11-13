@@ -11,12 +11,12 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../providers/list_of_entry.dart';
 
-class SearchPage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _HomePageState extends State<HomePage> {
   final TextEditingController _typeAheadController = TextEditingController();
   bool isLoading = false;
   String res = "Sample code";
@@ -102,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                await foodData.getRecipe(context, value.trim());
+                                await foodData.getRecipe(context, value);
                                 setState(() {
                                   isLoading = false;
                                 });
@@ -144,7 +144,6 @@ class _SearchPageState extends State<SearchPage> {
                             });
                             await foodData.getRecipe(
                                 context, suggestion.toString());
-                            suggestion = '';
                             setState(() {
                               isLoading = false;
                             });
@@ -216,3 +215,100 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
+
+//
+//Row(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              Expanded(
+//                child: Card(
+//                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+//                  //Search input field
+//                  child: Container(
+//                    height: 45.0,
+//                    child: TextField(
+//                      autofocus: false,
+//                      onSubmitted: (context) {
+//                        searchOnSubmitted(context);
+//                      },
+//                      controller: _controller,
+//                      decoration: InputDecoration(
+//                        suffixIcon: IconButton(
+//                          onPressed: () => _controller.clear(),
+//                          icon: Icon(
+//                            Icons.clear,
+//                            color: Colors.grey,
+//                          ),
+//                        ),
+//                        border: OutlineInputBorder(
+//                          borderSide: BorderSide.none,
+//                        ),
+//                        hintText: 'Search product..',
+//                        hintStyle: TextStyle(
+//                          color: Colors.grey,
+//                        ),
+//                        prefixIcon: Icon(Icons.search),
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              ),
+//              // Filter search
+//              Card(
+//                child: IconButton(
+//                  onPressed: () {
+//                    navigateToFilterScreen(context);
+//                  },
+//                  icon: Badge(
+//                      badgeColor: Colors.white,
+//                      animationType: BadgeAnimationType.scale,
+//                      badgeContent: Text((Provider.of<Products>(context)
+//                              .filteringProducts
+//                              .length)
+//                          .toString()),
+//                      child: Icon(Icons.shopping_cart)), //filter
+//                ),
+//              ),
+//              //Scan screen
+//              Card(
+//                child: IconButton(
+//                  onPressed: () {
+//                    doScanning();
+//                  },
+//                  icon: Icon(Icons.camera_alt),
+//                ),
+//              ),
+//            ],
+//          ),
+//          //Food filter
+//          Row(
+//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//            children: <Widget>[
+//              RoundTypeButton(
+//                color: Color(0xFFF7F6C5),
+//                image: 'image/food.png',
+//                title: 'Vegan',
+//              ),
+//              RoundTypeButton(
+//                color: Color(0xFFCEFFC0),
+//                image: 'image/dairy.png',
+//                title: 'DairyFree',
+//              ),
+//              RoundTypeButton(
+//                color: Color(0xFFFEE1C7),
+//                image: 'image/fruit.png',
+//                title: 'LowFodMap',
+//              ),
+//              RoundTypeButton(
+//                color: Color(0xFFFDDFFA),
+//                image: 'image/coin.png',
+//                title: 'Cheap',
+//              ),
+//            ],
+//          ),
+//          Padding(
+//            padding: EdgeInsets.all(10),
+//          ),
+//          Expanded(
+//            child: FoodListView(),
+//          ),

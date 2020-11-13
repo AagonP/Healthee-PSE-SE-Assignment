@@ -31,20 +31,6 @@ class _DailyDietItemState extends State<DailyDietItem> {
     );
   }
 
-  void _clickCheckDay() {
-    setState(() {
-      if (widget._backgroundColor == Colors.white) {
-        widget._backgroundColor = Colors.green[100];
-        widget._itemColor = Colors.green[600];
-        widget._dietPlanData.checkDay(widget._index - 1);
-      } else {
-        widget._backgroundColor = Colors.white;
-        widget._itemColor = Colors.black;
-        widget._dietPlanData.uncheckDay(widget._index - 1);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement DailyDietItem build
@@ -129,7 +115,18 @@ class _DailyDietItemState extends State<DailyDietItem> {
                           height: 28.0,
                         ),
                         onPressed: () {
-                          _clickCheckDay();
+                          setState(() {
+                            if (widget._backgroundColor == Colors.white) {
+                              widget._backgroundColor = Colors.green[100];
+                              widget._itemColor = Colors.green[600];
+                              widget._dietPlanData.checkDay(widget._index - 1);
+                            } else {
+                              widget._backgroundColor = Colors.white;
+                              widget._itemColor = Colors.black;
+                              widget._dietPlanData
+                                  .uncheckDay(widget._index - 1);
+                            }
+                          });
                         },
                         elevation: 1.0,
                         fillColor: widget._backgroundColor,

@@ -8,7 +8,6 @@ import '../filter_by_illness_widgets/filtered_food_list_view.dart';
 import '../../providers/products.dart';
 import 'saved_products_screen.dart';
 import '../filter_by_illness_controllers/saved_products_screen_controller.dart';
-import './search_screen.dart';
 
 class FilterScreen extends StatelessWidget with FilterScreenController {
   static bool _isFilterOn = false;
@@ -33,10 +32,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                 tooltip: 'Search products',
                 icon: Icon(Icons.search),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchScreen()));
+                  Navigator.pushNamed(context, 'HomePage');
                 },
               ),
             ),
@@ -47,7 +43,12 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                 tooltip: 'Set your illnesses',
                 icon: Icon(Icons.mode_edit),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'FilterHealthInputScreen');
+                  if (Provider.of<Products>(context).filteringProducts.length ==
+                      0) {
+                    showAlertOnEmptySelectingList(context);
+                  } else {
+                    Navigator.pushNamed(context, 'FilterHealthInputScreen');
+                  }
                 },
               ),
             ),
@@ -94,7 +95,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 360,
+              width: 410,
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
                 border: Border.symmetric(
@@ -106,7 +107,7 @@ class FilterScreen extends StatelessWidget with FilterScreenController {
                     borderRadius: BorderRadius.circular(15)),
                 borderOnForeground: true,
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: Text(
                     getFilterStatus(_isFilterOn, context),
                     style: TextStyle(fontSize: 16),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import '../plan_for_a_diet_widgets/meal_view_item.dart';
+import 'package:pse_assignment/plan_for_a_diet/plan_for_a_diet_widgets/meal_view_item.dart';
 import 'package:provider/provider.dart';
 import '../plan_for_a_diet_providers/meal_search_list.dart';
 import '../plan_for_a_diet_providers/diet_plan.dart';
@@ -83,22 +83,6 @@ class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
                 'vegetable',
               ];
 
-    Future<void> _chooseMealTag(String chosenOption) async {
-      setState(() {
-        _chosenSearchTag = chosenOption;
-        _isLoading = true;
-      });
-
-      await _mealSearchList.getMealsFromTag(
-        userHealthData,
-        _mealType,
-        _chosenSearchTag,
-      );
-      setState(() {
-        _isLoading = false;
-      });
-    }
-
     return ModalProgressHUD(
       progressIndicator: SpinKitDualRing(
         color: Color(0xFFFCECC5),
@@ -162,7 +146,19 @@ class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
                               elevation: 15,
                               isExpanded: true,
                               onChanged: (String chosenOption) async {
-                                _chooseMealTag(chosenOption);
+                                setState(() {
+                                  _chosenSearchTag = chosenOption;
+                                  _isLoading = true;
+                                });
+
+                                await _mealSearchList.getMealsFromTag(
+                                  userHealthData,
+                                  _mealType,
+                                  _chosenSearchTag,
+                                );
+                                setState(() {
+                                  _isLoading = false;
+                                });
                               },
                               items: tagList.map<DropdownMenuItem<String>>(
                                   (String option) {
@@ -195,12 +191,7 @@ class _SearchMealForPlanScreenState extends State<SearchMealForPlanScreen> {
               ),
             ),
             Expanded(
-              child: MealViewItem(
-                _index,
-                _mealType,
-                dietPlanData,
-                _mealSearchList,
-              ),
+              child: MealViewItem(_index, _mealType, dietPlanData, _mealSearchList),
             ),
           ],
         ),
